@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative px-1.5 py-1 font-heading text-[15px] font-extrabold tracking-tight transition-colors xl:text-base ${
+  `relative whitespace-nowrap px-2 py-1 font-heading text-base font-extrabold tracking-tight transition-colors xl:text-[17px] ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -32,12 +32,12 @@ export default function Navbar() {
           scrolled ? 'shadow-soft' : 'shadow-[0_1px_0_0_rgba(17,17,17,0.06)]'
         }`}
       >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-8">
+        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-10 lg:py-5">
           {/* Logo — top left: Nano Spark logo image + wordmark (no box) */}
           <Link
             to="/"
             aria-label={`${SITE.name} — home`}
-            className="flex shrink-0 items-center gap-2.5 leading-tight"
+            className="flex shrink-0 items-center gap-3 pl-1 leading-tight"
           >
             <motion.img
               src={SITE.logo}
@@ -59,8 +59,8 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop centered links */}
-          <div className="hidden items-center justify-center gap-0.5 lg:flex lg:flex-1">
+          {/* Desktop centered links — scrolls within its own space on narrow laptops */}
+          <div className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex">
             {NAV_LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
                 {({ isActive }) => (
@@ -69,7 +69,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
+                        className="absolute -bottom-1 left-2 right-2 h-1 rounded-full bg-nsYellow"
                       />
                     )}
                   </>
@@ -78,10 +78,15 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop right CTA */}
-          <div className="hidden xl:block">
-            <Link to="/contact" className="btn-yellow !px-5 !py-2.5 text-[15px]">
-              Book a Workshop
+          {/* Desktop right CTA — Book a Session, yellow with black corner lines */}
+          <div className="hidden shrink-0 lg:block">
+            <Link
+              to="/contact"
+              className="relative inline-flex items-center gap-2 rounded-xl bg-nsYellow px-5 py-2.5 font-heading text-[15px] font-extrabold text-nsBlack shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+            >
+              Book a Session <FiArrowRight size={18} />
+              <span className="pointer-events-none absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-[3px] border-t-[3px] border-nsBlack" />
+              <span className="pointer-events-none absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-[3px] border-r-[3px] border-nsBlack" />
             </Link>
           </div>
 
@@ -153,8 +158,13 @@ export default function Navbar() {
                 ))}
               </div>
               <div className="border-t border-nsBlack/10 px-6 py-5">
-                <Link to="/contact" className="btn-yellow w-full">
-                  Book a Workshop
+                <Link
+                  to="/contact"
+                  className="relative flex w-full items-center justify-center gap-2 rounded-xl bg-nsYellow px-5 py-3 font-heading font-extrabold text-nsBlack"
+                >
+                  Book a Session <FiArrowRight size={18} />
+                  <span className="pointer-events-none absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-[3px] border-t-[3px] border-nsBlack" />
+                  <span className="pointer-events-none absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-[3px] border-r-[3px] border-nsBlack" />
                 </Link>
               </div>
             </motion.div>
