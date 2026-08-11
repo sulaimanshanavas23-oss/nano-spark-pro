@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body bg-nsWhite text-nsBlack antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-bold;
+  }
+}
+
+@layer components {
+  /* Brochure-style section heading: ▶ bullet + bold heading + yellow underline */
+  .section-heading {
+    @apply flex flex-col items-start gap-2;
+  }
+
+  .section-heading-bullet {
+    @apply text-nsYellow flex items-center gap-2 font-heading font-bold text-sm tracking-[0.15em] uppercase;
+  }
+
+  .section-heading-title {
+    @apply font-heading text-3xl sm:text-4xl font-extrabold text-nsBlack leading-tight;
+  }
+
+  .section-heading-underline {
+    @apply h-1.5 w-16 rounded-full bg-gold-gradient;
+  }
+
+  /* Button styles */
+  .btn-yellow {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-nsYellow px-6 py-3 font-heading font-bold text-nsBlack shadow-soft transition-colors hover:bg-nsBlack hover:text-nsYellow;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-nsBlack px-6 py-3 font-heading font-bold text-nsWhite shadow-soft transition-colors hover:bg-nsYellow hover:text-nsBlack;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-nsBlack px-6 py-3 font-heading font-bold text-nsBlack transition-colors hover:border-nsBlack hover:bg-nsBlack hover:text-nsYellow;
+  }
+}
+
+/* Subtle circuit-board background pattern (gray/yellow traces with nodes) */
+.circuit-bg-light {
+  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.1) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+.circuit-bg-dark {
+  background-image: radial-gradient(circle, rgba(255, 193, 7, 0.18) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+/* Scrollbar polish (thin, yellow on dark) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 9999px;
+  border: 2px solid #f5f5f4;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffc107;
+}
