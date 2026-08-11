@@ -107,7 +107,7 @@ export default function Services() {
               <Link to="/contact" className="btn-yellow">
                 Set Up a STEM Lab <FiArrowRight />
               </Link>
-              <Link to="/workshops" className="btn-outline">
+              <Link to="/book" className="btn-outline">
                 Book a Workshop
               </Link>
             </div>
@@ -133,7 +133,7 @@ export default function Services() {
                       <p className="text-[11px] text-nsBlack/55">{f.when}</p>
                     </div>
                     <Link
-                      to="/contact"
+                      to="/book"
                       className="shrink-0 rounded-lg bg-nsBlack px-3 py-1.5 text-xs font-bold text-nsYellow transition-colors hover:bg-nsYellow hover:text-nsBlack"
                     >
                       Book

@@ -124,7 +124,7 @@ export default function About() {
                 >
                   Talk to the Founder <FiArrowRight />
                 </a>
-                <Link to="/contact" className="btn-outline w-full justify-center">
+                <Link to="/book" className="btn-outline w-full justify-center">
                   Book a Session
                 </Link>
               </div>

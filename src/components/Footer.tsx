@@ -24,6 +24,7 @@ const PROGRAM_LINKS = [
   { label: 'STEM Kits', to: '/products' },
   { label: 'School STEM Labs', to: '/services' },
   { label: 'Robotics Workshops', to: '/workshops' },
+  { label: 'Book a Session', to: '/book' },
   { label: 'Community', to: '/community' },
   { label: 'Achievements', to: '/achievements' },
   { label: 'Careers & Internships', to: '/careers' },

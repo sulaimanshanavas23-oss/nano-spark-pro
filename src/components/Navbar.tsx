@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap px-2 py-1 font-heading text-[16px] font-extrabold tracking-tight transition-colors xl:text-[17px] 2xl:text-lg ${
+  `relative whitespace-nowrap px-2 py-1 font-heading text-[14px] font-extrabold tracking-tight transition-colors xl:text-[15px] 2xl:text-base ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 

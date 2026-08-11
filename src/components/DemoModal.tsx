@@ -1,8 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { FiX, FiMapPin, FiArrowRight } from 'react-icons/fi'
-import { FaWhatsapp } from 'react-icons/fa'
-import { WHATSAPP_LINK } from '../lib/site'
+import { useNavigate } from 'react-router-dom'
+import { FiX, FiMapPin, FiArrowRight, FiMonitor } from 'react-icons/fi'
 
 interface DemoModalProps {
   open: boolean
@@ -10,10 +8,18 @@ interface DemoModalProps {
 }
 
 /**
- * Pop-up shown when the site opens: "Book a FREE Demo Session" —
- * choose Offline (contact page) or Online (WhatsApp). Skip via ✕.
+ * Pop-up shown when the site opens: "Book a FREE Demo Session".
+ * Choosing Offline or Online closes the pop-up and redirects to the
+ * dedicated booking page (/book) with the mode pre-selected. Skip via ✕.
  */
 export default function DemoModal({ open, onClose }: DemoModalProps) {
+  const navigate = useNavigate()
+
+  const book = (mode: 'offline' | 'online') => {
+    onClose()
+    navigate(`/book?mode=${mode}`)
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -59,17 +65,16 @@ export default function DemoModal({ open, onClose }: DemoModalProps) {
             </p>
 
             <div className="mt-6 grid gap-3">
-              <Link to="/contact" className="btn-yellow w-full !py-3.5">
+              <button type="button" onClick={() => book('offline')} className="btn-yellow w-full !py-3.5">
                 <FiMapPin /> Book Offline Demo
-              </Link>
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noreferrer noopener"
+              </button>
+              <button
+                type="button"
+                onClick={() => book('online')}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 font-heading font-bold text-white shadow-soft transition-colors hover:bg-nsBlack hover:text-nsYellow"
               >
-                <FaWhatsapp size={20} /> Book Online Demo
-              </a>
+                <FiMonitor size={20} /> Book Online Demo
+              </button>
             </div>
 
             <button
