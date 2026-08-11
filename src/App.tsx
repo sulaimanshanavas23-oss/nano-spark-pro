@@ -15,6 +15,7 @@ import Services from './pages/Services'
 import Workshops from './pages/Workshops'
 import Community from './pages/Community'
 import Achievements from './pages/Achievements'
+import Careers from './pages/Careers'
 import Support from './pages/Support'
 import Contact from './pages/Contact'
 import Feedback from './pages/Feedback'
@@ -31,6 +32,7 @@ function AnimatedRoutes() {
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/community" element={<Community />} />
         <Route path="/achievements" element={<Achievements />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/feedback" element={<Feedback />} />

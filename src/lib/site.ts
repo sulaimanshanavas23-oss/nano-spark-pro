@@ -1,11 +1,12 @@
 export const NAV_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
-  { label: 'Products', to: '/products' },
   { label: 'Services', to: '/services' },
+  { label: 'Products', to: '/products' },
   { label: 'Workshops', to: '/workshops' },
   { label: 'Community', to: '/community' },
   { label: 'Achievements', to: '/achievements' },
+  { label: 'Careers', to: '/careers' },
   { label: 'Feedback', to: '/feedback' },
   { label: 'Contact', to: '/contact' },
   { label: 'Support', to: '/support' },

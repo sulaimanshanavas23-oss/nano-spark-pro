@@ -4,7 +4,6 @@ import {
   FiArrowRight,
   FiBookOpen,
   FiCpu,
-  FiMonitor,
   FiTool,
   FiWifi,
   FiZap,
@@ -17,6 +16,7 @@ import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
+import { ConnectedSteps } from '../components/ConnectedSteps'
 import { FOUNDER, SITE } from '../lib/site'
 
 const FOCUS_AREAS = [
@@ -29,13 +29,6 @@ const FOCUS_AREAS = [
 ]
 
 const ECOSYSTEM = ['STEM Kits', 'Workshops', 'Projects', 'Innovation', 'Prototypes']
-
-const VISUAL_CHIPS = [
-  { icon: <FiCpu size={16} />, label: 'ESP32 & Sensors' },
-  { icon: <FiWifi size={16} />, label: 'IoT Cloud' },
-  { icon: <FiZap size={16} />, label: 'Arduino' },
-  { icon: <FiMonitor size={16} />, label: 'Coding' },
-]
 
 export default function Home() {
   return (
@@ -56,13 +49,13 @@ export default function Home() {
               {SITE.tagline}
             </motion.span>
 
-            {/* Headline: Inter bold 700, revealing one word at a time */}
-            <h1 className="mt-5 font-body font-bold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
+            {/* Headline: site font (Baloo 2), revealing one word at a time */}
+            <h1 className="mt-5 font-heading font-extrabold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
               {[
                 { w: 'Turning', c: 'text-nsBlack' },
                 { w: 'Curiosity', c: 'text-nsBlack' },
                 { w: 'Into', c: 'text-nsBlack' },
-                { w: 'Innovation', c: 'text-nsYellow' },
+                { w: 'Action', c: 'text-nsYellow' },
               ].map((word, i) => (
                 <span key={word.w}>
                   <motion.span
@@ -144,21 +137,6 @@ export default function Home() {
                   Young Innovators!
                 </p>
               </motion.div>
-
-              {/* Floating chips */}
-              <div className="absolute -right-3 top-6 hidden flex-col gap-2 sm:flex">
-                {VISUAL_CHIPS.map((chip, i) => (
-                  <motion.span
-                    key={chip.label}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + i * 0.15 }}
-                    className="flex items-center gap-2 rounded-xl border border-nsBlack/10 bg-white px-3 py-2 text-xs font-bold text-nsBlack shadow-soft"
-                  >
-                    <span className="text-nsYellow">{chip.icon}</span> {chip.label}
-                  </motion.span>
-                ))}
-              </div>
             </motion.div>
           </div>
         </div>
@@ -219,37 +197,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ FOUNDER APPROACH ============ */}
+      {/* ============ FOUNDER APPROACH / HOW WE WORK ============ */}
       <section className="bg-nsWhite py-20">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
           <SectionHeading
             eyebrow="How We Work"
             title="Learn - Build - Experiment - Debug - Innovate - Solve"
-            subtitle="The Nano Spark learning journey, inspired by our founder's approach — every young innovator follows the same path: understand it, make it, improve it, and use it to solve real problems."
+            subtitle="The Nano Spark learning journey, inspired by our founder's approach — every young innovator follows the same path: understand it, make it, improve it, and use it to solve real problems. The line connects one step at a time as you scroll."
           />
-          <div className="mt-12 flex flex-col items-stretch gap-3 sm:grid sm:grid-cols-2 lg:flex lg:flex-row lg:items-center lg:justify-between">
-            {FOUNDER.approach.map((step, i) => (
-              <Reveal key={step} delay={i * 0.08} className="flex flex-1 lg:flex-row lg:items-center lg:gap-3">
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  className="flex flex-1 items-center justify-center gap-3 rounded-2xl border border-nsBlack/10 bg-nsGray-light px-5 py-5"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-nsYellow font-heading font-extrabold text-nsBlack">
-                    {i + 1}
-                  </span>
-                  <span className="font-heading text-lg font-extrabold text-nsBlack">{step}</span>
-                </motion.div>
-                {i < FOUNDER.approach.length - 1 && (
-                  <motion.span
-                    animate={{ x: [0, 6, 0] }}
-                    transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="mx-auto mt-2 rotate-90 text-nsYellow lg:mt-0 lg:rotate-0"
-                  >
-                    <FiArrowRight size={22} />
-                  </motion.span>
-                )}
-              </Reveal>
-            ))}
+          <div className="mt-14">
+            <ConnectedSteps steps={FOUNDER.approach} />
           </div>
         </div>
       </section>
@@ -325,7 +282,7 @@ export default function Home() {
               <span className="underline decoration-nsBlack/30">they build it</span>.
             </p>
             <p className="mt-6 font-heading text-xl font-bold text-nsBlack/70">
-              Nano Spark — Turning curiosity into innovation.
+              Nano Spark — Turning curiosity into action.
             </p>
           </Reveal>
         </div>

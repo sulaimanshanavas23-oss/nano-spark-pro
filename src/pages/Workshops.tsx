@@ -158,6 +158,12 @@ export default function Workshops() {
                     <p className="flex gap-2"><FiTool className="mt-0.5 shrink-0 text-nsYellow" /><span><strong className="text-nsBlack">Build challenge:</strong> {format.details.build}</span></p>
                     <p className="flex gap-2"><FiAward className="mt-0.5 shrink-0 text-nsYellow" /><span><strong className="text-nsBlack">Take-home:</strong> {format.details.takeHome}</span></p>
                   </div>
+                  <Link
+                    to="/contact"
+                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-nsBlack px-4 py-3 font-heading font-extrabold text-nsYellow transition-colors hover:bg-nsYellow hover:text-nsBlack"
+                  >
+                    Book Now <FiArrowRight />
+                  </Link>
                 </Card>
               </Reveal>
             ))}
