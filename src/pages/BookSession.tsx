@@ -140,7 +140,7 @@ export default function BookSession() {
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
               <LetterReveal
                 texts={[
-                  { text: 'Let's bring the' },
+                  { text: "Let's bring the" },
                   { text: 'spark', color: 'text-nsYellow' },
                   { text: 'to you' },
                 ]}

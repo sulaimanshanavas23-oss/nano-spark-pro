@@ -7,6 +7,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { SITE } from '../lib/site'
 
 // TODO: Fill remaining stats with REAL, verified numbers once confirmed.

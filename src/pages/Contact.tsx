@@ -97,7 +97,7 @@ export default function Contact() {
             <h1 className="mt-3 font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
               <LetterReveal
                 texts={[
-                  { text: 'Let's build the' },
+                  { text: "Let's build the" },
                   { text: 'future', color: 'text-nsYellow' },
                   { text: 'together' },
                 ]}
