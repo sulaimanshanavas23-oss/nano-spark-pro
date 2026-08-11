@@ -5,7 +5,7 @@ import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap px-2 py-1 font-heading text-base font-extrabold tracking-tight transition-colors xl:text-[17px] ${
+  `relative whitespace-nowrap px-1.5 py-1 font-heading text-[15px] font-extrabold tracking-tight transition-colors xl:text-base ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -32,7 +32,7 @@ export default function Navbar() {
           scrolled ? 'shadow-soft' : 'shadow-[0_1px_0_0_rgba(17,17,17,0.06)]'
         }`}
       >
-        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-10 lg:py-5">
+        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8 lg:py-5 xl:px-10">
           {/* Logo — top left: Nano Spark logo image + wordmark (no box) */}
           <Link
             to="/"
@@ -61,7 +61,7 @@ export default function Navbar() {
 
           {/* Desktop centered links — scrolls within its own space on narrow laptops */}
           <div
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-0 overflow-x-auto lg:flex"
             style={{ scrollbarWidth: 'none' }}
           >
             {NAV_LINKS.map((link) => (
@@ -72,7 +72,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute -bottom-1 left-2 right-2 h-1 rounded-full bg-nsYellow"
+                        className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
                       />
                     )}
                   </>
@@ -85,9 +85,9 @@ export default function Navbar() {
           <div className="hidden shrink-0 lg:block">
             <Link
               to="/contact"
-              className="relative inline-flex items-center gap-2 rounded-xl bg-nsYellow px-5 py-2.5 font-heading text-[15px] font-extrabold text-nsBlack shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+              className="relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-nsYellow px-4 py-2 font-heading text-sm font-extrabold text-nsBlack shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
             >
-              Book a Session <FiArrowRight size={18} />
+              Book a Session <FiArrowRight size={17} />
               <span className="pointer-events-none absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-[3px] border-t-[3px] border-nsBlack" />
               <span className="pointer-events-none absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-[3px] border-r-[3px] border-nsBlack" />
             </Link>
