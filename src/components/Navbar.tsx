@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap px-1.5 py-1 font-heading text-[15px] font-extrabold tracking-tight transition-colors xl:text-base ${
+  `relative whitespace-nowrap px-2 py-1 font-heading text-[16px] font-extrabold tracking-tight transition-colors xl:text-[17px] 2xl:text-lg ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -61,7 +61,7 @@ export default function Navbar() {
 
           {/* Desktop centered links — scrolls within its own space on narrow laptops */}
           <div
-            className="hidden min-w-0 flex-1 items-center justify-center gap-0 overflow-x-auto px-2 lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-0 overflow-x-auto px-2 xl:flex"
             style={{ scrollbarWidth: 'none' }}
           >
             {NAV_LINKS.map((link) => (
@@ -87,7 +87,7 @@ export default function Navbar() {
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
             whileTap={{ scale: 0.88 }}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-nsBlack/15 bg-nsWhite text-nsBlack shadow-soft lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-nsBlack/15 bg-nsWhite text-nsBlack shadow-soft xl:hidden"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
