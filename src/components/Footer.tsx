@@ -26,6 +26,7 @@ const PROGRAM_LINKS = [
   { label: 'Robotics Workshops', to: '/workshops' },
   { label: 'Book a Session', to: '/book' },
   { label: 'Community', to: '/community' },
+  { label: 'Ambassador Program', to: '/ambassador' },
   { label: 'Achievements', to: '/achievements' },
   { label: 'Careers & Internships', to: '/careers' },
   { label: 'Feedback', to: '/feedback' },

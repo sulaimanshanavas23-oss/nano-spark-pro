@@ -130,7 +130,7 @@ export default function Community() {
               ))}
             </ul>
             <div className="mt-8">
-              <Link to="/contact" className="btn-dark">
+              <Link to="/ambassador" className="btn-dark">
                 Become an Ambassador <FiArrowRight />
               </Link>
             </div>

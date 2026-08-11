@@ -197,8 +197,8 @@ export default function About() {
             <span className="section-heading-bullet justify-center">
               <span className="text-nsYellow">&#9654;</span> {FOUNDER.visionHeading}
             </span>
-            <blockquote className="mt-6 font-heading text-2xl font-extrabold leading-snug sm:text-3xl">
-              <WordReveal text={FOUNDER.visionQuote} /> 
+            <blockquote className="mx-auto mt-6 max-w-3xl font-heading text-2xl font-extrabold leading-relaxed text-nsWhite [text-wrap:balance] sm:text-3xl">
+              {FOUNDER.visionQuote}
             </blockquote>
             <div className="mt-8 flex items-center justify-center gap-3">
               <img

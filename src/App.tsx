@@ -20,6 +20,7 @@ import BookSession from './pages/BookSession'
 import Support from './pages/Support'
 import Contact from './pages/Contact'
 import Feedback from './pages/Feedback'
+import Ambassador from './pages/Ambassador'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -38,6 +39,7 @@ function AnimatedRoutes() {
         <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/ambassador" element={<Ambassador />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </AnimatePresence>
