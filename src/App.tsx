@@ -9,9 +9,12 @@ import ScrollToTopOnRoute from './components/ScrollToTopOnRoute'
 import Preloader, { LOADER_DURATION_MS } from './components/Preloader'
 import DemoModal from './components/DemoModal'
 import Home from './pages/Home'
+import About from './pages/About'
 import Products from './pages/Products'
 import Services from './pages/Services'
 import Workshops from './pages/Workshops'
+import Community from './pages/Community'
+import Achievements from './pages/Achievements'
 import Support from './pages/Support'
 import Contact from './pages/Contact'
 import Feedback from './pages/Feedback'
@@ -22,9 +25,12 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/services" element={<Services />} />
         <Route path="/workshops" element={<Workshops />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/achievements" element={<Achievements />} />
         <Route path="/support" element={<Support />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/feedback" element={<Feedback />} />

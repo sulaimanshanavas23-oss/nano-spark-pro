@@ -18,6 +18,7 @@ export default function SmartImage({ src, alt, className = '', fallback }: Smart
 
   if (failed) {
     if (fallback) return <>{fallback}</>
+    const expectedFile = src.split('/').pop() ?? 'photo'
     return (
       <div
         role="img"
@@ -27,8 +28,11 @@ export default function SmartImage({ src, alt, className = '', fallback }: Smart
         <div className="text-center">
           <span className="font-heading text-sm font-bold text-nsBlack/50">{alt}</span>
           <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-nsYellow/70" />
+          <span className="mt-2 block rounded-lg bg-nsBlack px-2.5 py-1 text-[11px] font-bold text-nsYellow">
+            save photo as {expectedFile}
+          </span>
           <span className="mt-1 block text-[10px] font-semibold text-nsBlack/40">
-            drop photo here
+            in public/images/
           </span>
         </div>
       </div>

@@ -20,11 +20,14 @@ const ICONS: Record<string, IconType> = {
 }
 
 const PROGRAM_LINKS = [
+  { label: 'About Us', to: '/about' },
   { label: 'STEM Kits', to: '/products' },
   { label: 'School STEM Labs', to: '/services' },
   { label: 'Robotics Workshops', to: '/workshops' },
-  { label: 'Support & FAQ', to: '/support' },
+  { label: 'Community', to: '/community' },
+  { label: 'Achievements', to: '/achievements' },
   { label: 'Feedback', to: '/feedback' },
+  { label: 'Support & FAQ', to: '/support' },
 ]
 
 export default function Footer() {

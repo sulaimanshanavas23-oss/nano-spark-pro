@@ -56,16 +56,27 @@ export default function Home() {
               {SITE.tagline}
             </motion.span>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-              className="mt-5 font-heading text-5xl font-extrabold leading-[1.05] text-nsBlack sm:text-6xl lg:text-7xl"
-            >
-              Turning Curiosity
-              <br />
-              Into <span className="text-nsYellow">Innovation</span>
-            </motion.h1>
+            {/* Headline: Inter bold 700, revealing one word at a time */}
+            <h1 className="mt-5 font-body font-bold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
+              {[
+                { w: 'Turning', c: 'text-nsBlack' },
+                { w: 'Curiosity', c: 'text-nsBlack' },
+                { w: 'Into', c: 'text-nsBlack' },
+                { w: 'Innovation', c: 'text-nsYellow' },
+              ].map((word, i) => (
+                <span key={word.w}>
+                  <motion.span
+                    className={`mr-3 inline-block ${word.c}`}
+                    initial={{ opacity: 0, y: 34, rotateX: 60 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15 + i * 0.18, ease: 'easeOut' }}
+                  >
+                    {word.w}
+                  </motion.span>
+                  {i === 1 && <br className="hidden sm:block" />}
+                </span>
+              ))}
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24 }}

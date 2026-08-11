@@ -5,8 +5,8 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative px-1 py-1 font-heading font-bold text-sm tracking-wide transition-colors ${
-    isActive ? 'text-nsBlack' : 'text-nsBlack/70 hover:text-nsBlack'
+  `relative px-1.5 py-1 font-heading text-[15px] font-extrabold tracking-tight transition-colors xl:text-base ${
+    isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
 export default function Navbar() {
@@ -45,13 +45,13 @@ export default function Navbar() {
             >
               Nano Spark<span className="text-nsYellow">.</span>
             </motion.span>
-            <span className="mt-0.5 hidden text-[10px] font-bold tracking-[0.22em] text-nsBlack/60 sm:block">
+            <span className="mt-0.5 hidden text-[10px] font-bold tracking-[0.22em] text-nsBlack/60 xl:block">
               TECHNOLOGY · INNOVATIONS · SOLUTIONS
             </span>
           </Link>
 
           {/* Desktop centered links */}
-          <div className="hidden items-center gap-2 lg:flex lg:flex-1 lg:justify-center">
+          <div className="hidden items-center justify-center gap-0.5 lg:flex lg:flex-1">
             {NAV_LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
                 {({ isActive }) => (
@@ -60,7 +60,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-nsYellow"
+                        className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
                       />
                     )}
                   </>
@@ -70,8 +70,8 @@ export default function Navbar() {
           </div>
 
           {/* Desktop right CTA */}
-          <div className="hidden lg:block">
-            <Link to="/contact" className="btn-yellow !px-4 !py-2 text-sm">
+          <div className="hidden xl:block">
+            <Link to="/contact" className="btn-yellow !px-5 !py-2.5 text-[15px]">
               Book a Workshop
             </Link>
           </div>
