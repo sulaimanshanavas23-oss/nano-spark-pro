@@ -44,7 +44,7 @@ export default function Navbar() {
               alt={SITE.name}
               draggable={false}
               whileHover={{ scale: 1.06, rotate: -2 }}
-              className="h-11 w-11 object-contain sm:h-12 sm:w-12"
+              className="h-14 w-14 object-contain sm:h-16 sm:w-16"
             />
             <span className="flex flex-col">
               <motion.span
