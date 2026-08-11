@@ -22,6 +22,10 @@ import { sanitizeText, validateEmail, validateRequired } from '../lib/validate'
 const inputClass =
   'w-full rounded-xl border border-nsBlack/15 bg-nsWhite px-4 py-3 text-sm text-nsBlack placeholder:text-nsBlack/40 focus:border-nsYellow focus:outline-none focus:ring-2 focus:ring-nsYellow/40 transition'
 
+// Sends booking requests straight to nanospark46@gmail.com via FormSubmit
+// (no account needed — the owner confirms the first submission by email once).
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/nanospark46@gmail.com'
+
 const FORMATS = [
   'School Workshop',
   'Free Demo Session',
@@ -48,7 +52,7 @@ export default function BookSession() {
     message: '',
   })
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const name = validateRequired(form.name, 'Name', 100)
     const email = validateEmail(form.email)
@@ -74,22 +78,49 @@ export default function BookSession() {
 
     setStatus('sending')
 
-    // Opens the visitor's mail client with a ready-made booking request
-    // and opens WhatsApp with the same message for a quick reply.
-    const subject = encodeURIComponent(`Session booking request — ${payload.name} (${payload.format})`)
-    const body = encodeURIComponent(
-      `BOOK A SESSION REQUEST\n\nName: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nSchool / Organization: ${payload.school || 'Not provided'}\nFormat: ${payload.format}\nMode: ${payload.mode}\nPreferred date: ${payload.date || 'Flexible'}\n\nDetails:\n${payload.message}\n\n— Sent via the Nano Spark website booking page`,
-    )
+    // 1) Send the booking straight to nanospark46@gmail.com (FormSubmit → direct email)
+    let emailed = false
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `SESSION BOOKING — ${payload.name} (${payload.format})`,
+          _template: 'table',
+          _captcha: 'false',
+          Name: payload.name,
+          Email: payload.email,
+          Phone: payload.phone,
+          'School / Organization': payload.school || 'Not provided',
+          Format: payload.format,
+          Mode: payload.mode,
+          'Preferred date': payload.date || 'Flexible',
+          'About the session': payload.message,
+        }),
+      })
+      const data = await res.json()
+      emailed = data?.success === 'true'
+    } catch {
+      emailed = false
+    }
+
+    // 2) Fallback if the email service couldn't be reached: open the visitor's
+    // mail client with the same booking request, so nothing gets lost.
+    if (!emailed) {
+      const subject = encodeURIComponent(`Session booking request — ${payload.name} (${payload.format})`)
+      const body = encodeURIComponent(
+        `BOOK A SESSION REQUEST\n\nName: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nSchool / Organization: ${payload.school || 'Not provided'}\nFormat: ${payload.format}\nMode: ${payload.mode}\nPreferred date: ${payload.date || 'Flexible'}\n\nDetails:\n${payload.message}\n\n— Sent via the Nano Spark website booking page`,
+      )
+      window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`
+    }
+
+    // 3) Open WhatsApp with the same message for a quick reply.
     const whatsappText = encodeURIComponent(
       `Hi Nano Spark! I'd like to book a session.\n\nName: ${payload.name}\nPhone: ${payload.phone}${payload.school ? `\nSchool: ${payload.school}` : ''}\nFormat: ${payload.format} (${payload.mode})\nPreferred date: ${payload.date || 'Flexible'}\n\n${payload.message}`,
     )
-
-    // TODO: also POST to Formspree / Google Apps Script / backend here when ready so
-    // bookings arrive even if the visitor has no mail client configured.
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`
     window.open(`https://wa.me/918148774546?text=${whatsappText}`, '_blank')
 
-    setTimeout(() => setStatus('sent'), 700)
+    setStatus('sent')
   }
 
   return (
@@ -173,7 +204,8 @@ export default function BookSession() {
             <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
               <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Book your session</h2>
               <p className="mt-1 text-sm text-nsBlack/60">
-                Your booking request opens in Gmail ({SITE.email}) and WhatsApp automatically.
+                Your booking request is sent straight to our Gmail ({SITE.email}) and opens WhatsApp
+                automatically for a quick reply.
               </p>
 
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -329,9 +361,9 @@ export default function BookSession() {
                   disabled={status === 'sending'}
                 >
                   {status === 'sending'
-                    ? 'Opening Gmail & WhatsApp…'
+                    ? 'Sending your request…'
                     : status === 'sent'
-                      ? 'Booking Request Ready!'
+                      ? 'Booking Request Sent!'
                       : 'Request My Session'}
                   {status === 'sent' ? <FiCheck /> : <FiSend />}
                 </motion.button>
@@ -342,8 +374,9 @@ export default function BookSession() {
                     animate={{ opacity: 1, y: 0 }}
                     className="rounded-xl bg-nsYellow/15 px-4 py-3 text-center text-sm font-semibold text-nsBlack"
                   >
-                    Your booking request has been opened in Gmail and WhatsApp,{' '}
-                    {form.name.split(' ')[0]}. Hit send there and we'll confirm your session soon!
+                    Your booking request has been sent to Nano Spark, {form.name.split(' ')[0]}.
+                    We'll confirm your session soon — WhatsApp has also opened with the same
+                    details for a faster reply!
                   </motion.p>
                 )}
               </form>
