@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  /* Slightly larger base type — everything a touch bigger, per Nano Spark request */
   html {
+    font-size: 106.25%;
     scroll-behavior: smooth;
   }
 
@@ -30,7 +32,7 @@
   }
 
   .section-heading-title {
-    @apply font-heading text-3xl sm:text-4xl font-extrabold text-nsBlack leading-tight;
+    @apply font-heading text-4xl sm:text-5xl font-extrabold text-nsBlack leading-tight;
   }
 
   .section-heading-underline {
@@ -76,4 +78,18 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #ffc107;
+}
+
+/* Floating feedback marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
 }

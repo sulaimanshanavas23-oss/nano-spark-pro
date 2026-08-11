@@ -20,8 +20,8 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
+import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
-import { SITE } from '../lib/site'
 
 const LAB_SERVICES = [
   'Lab equipment & kits',
@@ -110,27 +110,20 @@ export default function Services() {
             </div>
           </Reveal>
 
-          {/* TODO: replace framed logo with stem-lab-isometric.png when supplied */}
+          {/* TODO: drop real STEM lab photo as public/images/stem-lab.jpg */}
           <Reveal delay={0.15}>
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className="circuit-bg-light relative mx-auto flex aspect-[4/3] max-w-md items-center justify-center rounded-3xl border-4 border-nsYellow bg-nsGray-light shadow-lift"
+              className="relative mx-auto max-w-md"
             >
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="flex flex-col items-center gap-3"
-              >
-                <img
-                  src={SITE.logo}
-                  alt="Nano Spark STEM Lab"
-                  className="h-28 w-28 object-contain"
-                  draggable={false}
+              <div className="circuit-bg-light absolute -inset-4 rounded-3xl bg-nsYellow/10" />
+              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border-4 border-nsYellow bg-nsGray-light shadow-lift">
+                <SmartImage
+                  src="/images/stem-lab.jpg"
+                  alt="The Nano Spark STEM Lab"
+                  className="h-full w-full object-cover"
                 />
-                <span className="font-heading text-sm font-bold text-nsBlack/60">
-                  The Nano Spark STEM Lab
-                </span>
-              </motion.div>
+              </div>
               <motion.span
                 className="absolute -bottom-3 left-6 -rotate-2 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft"
                 animate={{ rotate: [-2, -6, -2] }}
@@ -203,6 +196,44 @@ export default function Services() {
                 </Link>
               </Card>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ LAB GALLERY ============ */}
+      <section className="bg-nsGray-light py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="In the Lab"
+            title="Our STEM labs"
+            highlight="in action"
+            subtitle="Drop lab and session photos into public/images/ and they'll appear here."
+          />
+          <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-3">
+            {[
+              { src: '/images/lab-1.jpg', label: 'Lab Equipment & Kits' },
+              { src: '/images/lab-2.jpg', label: 'Robotics Setup' },
+              { src: '/images/lab-3.jpg', label: 'Electronics Workbench' },
+              { src: '/images/stem-lab-2.jpg', label: '3D & IoT Stations' },
+              { src: '/images/workshop-2.jpg', label: 'Hands-on Building' },
+              { src: '/images/workshop-3.jpg', label: 'Student Projects' },
+            ].map((item, i) => (
+              <Reveal key={item.src} delay={(i % 3) * 0.08}>
+                <motion.figure
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+                >
+                  <SmartImage
+                    src={item.src}
+                    alt={item.label}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/80 to-transparent px-4 pb-3 pt-10 text-xs font-bold text-nsWhite">
+                    {item.label}
+                  </figcaption>
+                </motion.figure>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

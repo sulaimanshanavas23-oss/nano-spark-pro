@@ -32,25 +32,28 @@ export default function Navbar() {
           scrolled ? 'shadow-soft' : 'shadow-[0_1px_0_0_rgba(17,17,17,0.06)]'
         }`}
       >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 sm:px-8">
-          {/* Mobile left: hamburger + wordmark */}
-          <div className="flex items-center gap-3 lg:hidden">
-            <button
-              type="button"
-              aria-label="Toggle menu"
-              onClick={() => setOpen((v) => !v)}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack"
+        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-8">
+          {/* Logo — top left */}
+          <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${SITE.name} — home`}>
+            <motion.span
+              className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsYellow bg-white p-1 shadow-soft"
+              whileHover={{ scale: 1.05, rotate: -3 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {open ? <FiX size={22} /> : <FiMenu size={22} />}
-            </button>
-            <Link to="/" className="font-heading text-lg font-extrabold text-nsBlack">
-              {SITE.name}
-              <span className="text-nsYellow">.</span>
-            </Link>
-          </div>
+              <img src={SITE.logo} alt={SITE.name} className="h-full w-full object-contain" draggable={false} />
+            </motion.span>
+            <span className="leading-tight">
+              <span className="block font-heading text-xl font-extrabold text-nsBlack">
+                Nano Spark<span className="text-nsYellow">.</span>
+              </span>
+              <span className="block text-[10px] font-bold tracking-[0.22em] text-nsBlack/60">
+                TECHNOLOGY · INNOVATIONS · SOLUTIONS
+              </span>
+            </span>
+          </Link>
 
           {/* Desktop centered links */}
-          <div className="hidden items-center gap-2 lg:flex lg:justify-center lg:flex-1 lg:pl-24">
+          <div className="hidden items-center gap-2 lg:flex lg:flex-1 lg:justify-center">
             {NAV_LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
                 {({ isActive }) => (
@@ -74,6 +77,16 @@ export default function Navbar() {
               Book a Workshop
             </Link>
           </div>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack lg:hidden"
+          >
+            {open ? <FiX size={22} /> : <FiMenu size={22} />}
+          </button>
         </nav>
       </header>
 
@@ -87,10 +100,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div
-              className="absolute inset-0 bg-nsBlack/60 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-            />
+            <div className="absolute inset-0 bg-nsBlack/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
             <motion.div
               className="absolute inset-y-0 right-0 flex w-[78%] max-w-sm flex-col bg-nsWhite shadow-lift"
               initial={{ x: '100%' }}
@@ -125,14 +135,12 @@ export default function Navbar() {
                       end={link.to === '/'}
                       className={({ isActive }) =>
                         `flex items-center justify-between rounded-xl px-4 py-3 font-heading font-bold ${
-                          isActive
-                            ? 'bg-nsYellow text-nsBlack'
-                            : 'text-nsBlack hover:bg-nsGray-light'
+                          isActive ? 'bg-nsYellow text-nsBlack' : 'text-nsBlack hover:bg-nsGray-light'
                         }`
                       }
                     >
                       {link.label}
-                      <span className="text-nsYellow text-xs">&#9654;</span>
+                      <span className="text-xs text-nsYellow">&#9654;</span>
                     </NavLink>
                   </motion.div>
                 ))}

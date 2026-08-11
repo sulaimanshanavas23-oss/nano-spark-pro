@@ -49,6 +49,14 @@ export default function Footer() {
               Practical technology education for students, schools, and aspiring innovators —
               STEM, robotics, electronics, embedded systems, IoT and emerging tech.
             </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full border border-nsYellow/40 bg-nsYellow/10 px-3 py-1 text-[11px] font-bold text-nsYellow">
+                MSME Registered
+              </span>
+              <span className="rounded-full border border-nsYellow/40 bg-nsYellow/10 px-3 py-1 text-[11px] font-bold text-nsYellow">
+                StartupTN Recognized
+              </span>
+            </div>
           </div>
 
           {/* Quick links */}

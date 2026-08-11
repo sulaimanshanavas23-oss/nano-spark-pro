@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom'
 import {
   FiArrowRight,
   FiBookOpen,
-  FiCode,
   FiCpu,
-  FiSun,
   FiMonitor,
   FiTool,
   FiWifi,
   FiZap,
+  FiSun,
 } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
+import SmartImage from '../components/SmartImage'
+import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
-import { SITE } from '../lib/site'
+import { FOUNDER, SITE } from '../lib/site'
 
 const FOCUS_AREAS = [
   { icon: <FiBookOpen size={26} />, title: 'STEM & Electronics Education', desc: 'Hands-on learning programs that make electronics and science fun, practical and accessible.' },
@@ -25,13 +26,6 @@ const FOCUS_AREAS = [
   { icon: <FiWifi size={26} />, title: 'IoT & Smart Technology', desc: 'Connect devices to the internet and build smart, sensor-driven solutions.' },
   { icon: <FiZap size={26} />, title: 'AI & Emerging Technologies', desc: 'Introductions to AI, agentic AI, automation and the technologies of tomorrow.' },
   { icon: <FiSun size={26} />, title: 'Innovation & Project Development', desc: 'Turn ideas into working prototypes through guided project development.' },
-]
-
-const BELIEFS = [
-  { icon: <FiCode size={26} />, label: 'Learn' },
-  { icon: <FiTool size={26} />, label: 'Build' },
-  { icon: <FiSun size={26} />, label: 'Innovate' },
-  { icon: <FiZap size={26} />, label: 'Solve' },
 ]
 
 const ECOSYSTEM = ['STEM Kits', 'Workshops', 'Projects', 'Innovation', 'Prototypes']
@@ -49,7 +43,7 @@ export default function Home() {
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden bg-nsWhite">
         <CircuitBackground variant="light" className="opacity-70" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-2 lg:py-24">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:py-24">
           {/* Hero text */}
           <div>
             <motion.span
@@ -66,7 +60,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.1 }}
-              className="mt-5 font-heading text-4xl font-extrabold leading-[1.05] text-nsBlack sm:text-5xl lg:text-6xl"
+              className="mt-5 font-heading text-5xl font-extrabold leading-[1.05] text-nsBlack sm:text-6xl lg:text-7xl"
             >
               Turning Curiosity
               <br />
@@ -77,7 +71,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.2 }}
-              className="mt-5 text-lg font-semibold tracking-[0.15em] text-nsBlack/70"
+              className="mt-5 text-lg font-semibold tracking-[0.14em] text-nsBlack/70"
             >
               STEM EDUCATION &middot; ROBOTICS &middot; IOT &middot; EMBEDDED SYSTEMS
             </motion.p>
@@ -97,10 +91,10 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Hero visual — TODO: replace framed logo with the real hero photo (hero-kids-circuit.jpg) when supplied */}
+          {/* Hero visual — TODO: drop real photo as public/images/hero.jpg */}
           <div className="relative">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative mx-auto max-w-md"
@@ -109,13 +103,20 @@ export default function Home() {
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative flex aspect-square items-center justify-center rounded-3xl border-4 border-nsYellow bg-white shadow-lift"
+                className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border-4 border-nsYellow bg-white shadow-lift"
               >
-                <img
-                  src={SITE.logo}
-                  alt={SITE.name}
-                  className="h-4/5 w-4/5 object-contain"
-                  draggable={false}
+                <SmartImage
+                  src="/images/hero.jpg"
+                  alt="Nano Spark students building a project"
+                  className="h-full w-full object-cover"
+                  fallback={
+                    <img
+                      src={SITE.logo}
+                      alt={SITE.name}
+                      className="h-4/5 w-4/5 object-contain object-center"
+                      draggable={false}
+                    />
+                  }
                 />
               </motion.div>
 
@@ -152,6 +153,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
+      <section className="bg-nsBlack py-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-3 px-6 text-center sm:flex-row sm:gap-8 sm:px-8">
+          <p className="font-heading text-3xl font-extrabold text-nsYellow sm:text-4xl">
+            {SITE.studentsTrained}+
+          </p>
+          <p className="font-heading text-lg font-bold text-white">
+            Students trained through Nano Spark workshops &amp; programs
+          </p>
+        </div>
+      </section>
+
+      {/* ============ VOICE OF STUDENTS & PARENTS ============ */}
+      <section className="bg-nsYellow/15 py-10">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="What Students & Parents Say"
+            title="Feedback from our"
+            highlight="workshops"
+          />
+          <div className="mt-8">
+            <TestimonialMarquee />
+          </div>
+        </div>
+      </section>
+
       {/* ============ WHO WE ARE ============ */}
       <section className="relative bg-nsGray-light py-20">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
@@ -181,42 +208,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ WHAT WE BELIEVE ============ */}
+      {/* ============ FOUNDER APPROACH ============ */}
       <section className="bg-nsWhite py-20">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
           <SectionHeading
-            eyebrow="What We Believe"
-            title="Learn - Build - Innovate - Solve"
-            subtitle="Every young innovator follows the same journey we believe in — understand it, make it, improve it, and use it to solve real problems."
+            eyebrow="How We Work"
+            title="Learn - Build - Experiment - Debug - Innovate - Solve"
+            subtitle="The Nano Spark learning journey, inspired by our founder's approach — every young innovator follows the same path: understand it, make it, improve it, and use it to solve real problems."
           />
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {BELIEFS.map((belief, i) => (
-              <Reveal key={belief.label} delay={i * 0.1}>
+          <div className="mt-12 flex flex-col items-stretch gap-3 sm:grid sm:grid-cols-2 lg:flex lg:flex-row lg:items-center lg:justify-between">
+            {FOUNDER.approach.map((step, i) => (
+              <Reveal key={step} delay={i * 0.08} className="flex flex-1 lg:flex-row lg:items-center lg:gap-3">
                 <motion.div
                   whileHover={{ y: -6 }}
-                  className="flex flex-col items-center gap-3 rounded-2xl border border-nsBlack/10 bg-nsGray-light p-6 text-center"
+                  className="flex flex-1 items-center justify-center gap-3 rounded-2xl border border-nsBlack/10 bg-nsGray-light px-5 py-5"
                 >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-nsYellow text-nsBlack shadow-soft">
-                    {belief.icon}
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-nsYellow font-heading font-extrabold text-nsBlack">
+                    {i + 1}
                   </span>
-                  <span className="font-heading text-lg font-extrabold text-nsBlack">
-                    {belief.label}
-                  </span>
+                  <span className="font-heading text-lg font-extrabold text-nsBlack">{step}</span>
                 </motion.div>
+                {i < FOUNDER.approach.length - 1 && (
+                  <motion.span
+                    animate={{ x: [0, 6, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="mx-auto mt-2 rotate-90 text-nsYellow lg:mt-0 lg:rotate-0"
+                  >
+                    <FiArrowRight size={22} />
+                  </motion.span>
+                )}
               </Reveal>
             ))}
           </div>
-          <Reveal delay={0.2}>
-            <div className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-2 font-heading font-bold text-nsBlack">
-              <span>Learn</span>
-              <FiArrowRight className="text-nsYellow" />
-              <span>Build</span>
-              <FiArrowRight className="text-nsYellow" />
-              <span>Innovate</span>
-              <FiArrowRight className="text-nsYellow" />
-              <span>Solve</span>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -229,7 +252,7 @@ export default function Home() {
             eyebrow="Our Focus Areas"
             title="Where we"
             highlight="innovate"
-            subtitle="Seven areas of focus spanning everything a young builder needs to go from first spark to finished prototype."
+            subtitle="Six areas of focus spanning everything a young builder needs to go from first spark to finished prototype."
           />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FOCUS_AREAS.map((area, i) => (
@@ -270,7 +293,7 @@ export default function Home() {
                   <motion.span
                     animate={{ x: [0, 6, 0] }}
                     transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="mx-auto mt-2 text-nsYellow rotate-90 lg:mt-0 lg:rotate-0"
+                    className="mx-auto mt-2 rotate-90 text-nsYellow lg:mt-0 lg:rotate-0"
                   >
                     <FiArrowRight size={22} />
                   </motion.span>

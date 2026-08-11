@@ -4,7 +4,10 @@ import { FiCheck, FiStar } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
+import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
+import { SITE } from '../lib/site'
+import { sanitizeText, validateRequired } from '../lib/validate'
 
 const inputClass =
   'w-full rounded-xl border border-nsBlack/15 bg-nsWhite px-4 py-3 text-sm text-nsBlack placeholder:text-nsBlack/40 focus:border-nsYellow focus:outline-none focus:ring-2 focus:ring-nsYellow/40 transition'
@@ -109,17 +112,33 @@ function StarsInput({ value, onChange }: { value: number; onChange: (v: number) 
 
 export default function Feedback() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [error, setError] = useState('')
   const [rating, setRating] = useState(0)
   const [form, setForm] = useState({ name: '', org: '', workshop: '', comments: '' })
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (rating === 0) return
+    const name = validateRequired(form.name, 'Name', 100)
+    const comments = validateRequired(form.comments, 'Comments', 1000)
+
+    if (rating === 0) return setError('Please pick a star rating.')
+    if (!name.valid) return setError(name.message ?? 'Please enter your name.')
+    if (!comments.valid) return setError(comments.message ?? 'Please share a comment.')
+    setError('')
+
+    const payload = {
+      name: sanitizeText(form.name, 100),
+      org: sanitizeText(form.org, 150),
+      workshop: sanitizeText(form.workshop, 150),
+      comments: sanitizeText(form.comments, 1000),
+      rating,
+    }
+
     setStatus('sending')
 
     // TODO: connect form endpoint — post to Formspree, Google Apps Script,
     // or your own backend here. Log for now.
-    console.log('TODO: send feedback to endpoint', { ...form, rating })
+    console.log('TODO: send feedback to endpoint', payload)
     setTimeout(() => setStatus('sent'), 700)
   }
 
@@ -147,6 +166,26 @@ export default function Feedback() {
             <p className="mx-auto mt-4 max-w-2xl text-nsBlack/70">
               Your feedback helps us make every workshop, kit and program better for the next
               young innovator.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ FLOATING FEEDBACK ============ */}
+      <section className="bg-nsYellow/15 py-14">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Voices From Our Workshops"
+            title="Feedback that floats in"
+            highlight="from students & parents"
+            subtitle="We've attended Nano Spark workshops and gained valuable experience — from our first introduction to electronics to building complete projects."
+          />
+          <div className="mt-8">
+            <TestimonialMarquee />
+          </div>
+          <Reveal delay={0.15}>
+            <p className="mt-8 text-center font-heading text-2xl font-extrabold text-nsBlack">
+              {SITE.studentsTrained}+ <span className="text-nsYellow">students trained</span> and counting!
             </p>
           </Reveal>
         </div>
@@ -223,6 +262,17 @@ export default function Feedback() {
                   <label htmlFor="f-comments" className="mb-1.5 block text-sm font-bold text-nsBlack">Comments</label>
                   <textarea id="f-comments" required rows={4} value={form.comments} onChange={(e) => setForm({ ...form, comments: e.target.value })} placeholder="What did you enjoy? What could we improve?" className={inputClass} />
                 </div>
+
+                {error && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    role="alert"
+                    className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm font-semibold text-red-600"
+                  >
+                    {error}
+                  </motion.p>
+                )}
 
                 <motion.button
                   type="submit"

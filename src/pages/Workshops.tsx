@@ -17,6 +17,8 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
+import SmartImage from '../components/SmartImage'
+import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
 import { WHATSAPP_LINK } from '../lib/site'
 
@@ -56,23 +58,13 @@ const FORMATS = [
   },
 ]
 
-// TODO: Fill these with REAL, verified numbers from Nano Spark before launch.
-// Do not publish unverified stats.
+// TODO: Fill the rest with REAL, verified numbers from Nano Spark before launch.
+// Do not publish unverified stats. "Students Trained" (550) has been confirmed.
 const STATS: { label: string; value: number | null; suffix: string }[] = [
-  { label: 'Students Trained', value: null, suffix: '+' },
+  { label: 'Students Trained', value: 550, suffix: '+' },
   { label: 'Workshops Conducted', value: null, suffix: '+' },
   { label: 'School Partnerships', value: null, suffix: '+' },
   { label: 'Projects Built', value: null, suffix: '+' },
-]
-
-// TODO: replace brochure/demo images with real workshop gallery photos when available
-const GALLERY_LABELS = [
-  'Brochure · Programs',
-  'Brochure · Innovation',
-  'Brochure · Labs',
-  'Brochure · Workshops',
-  'Brochure · Contact',
-  'Brochure · Journey',
 ]
 
 function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: number }) {
@@ -109,12 +101,20 @@ function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: numbe
 
 export default function Workshops() {
   const gallery = [
-    'brochure-1.jpeg',
-    'brochure-2.jpeg',
-    'brochure-3.jpeg',
-    'brochure-4.jpeg',
-    'weblink.jpeg',
-    'logo-standard.jpeg',
+    'workshop-1.jpg',
+    'workshop-2.jpg',
+    'workshop-3.jpg',
+    'lab-1.jpg',
+    'lab-2.jpg',
+    'stem-lab.jpg',
+  ]
+  const galleryLabels = [
+    'Students Building & Testing',
+    'Hands-on Robotics Session',
+    'Workshop Moments',
+    'STEM Lab Sessions',
+    'Electronics Workbench',
+    'The Nano Spark STEM Lab',
   ]
 
   return (
@@ -226,7 +226,7 @@ export default function Workshops() {
             eyebrow="Our Programs in Pictures"
             title="Moments from Nano"
             highlight="Spark programs"
-            subtitle="A glimpse of our kits, labs and adventures. Real workshop galleries coming soon."
+            subtitle="A glimpse of our kits, labs and adventures. Drop real workshop photos into public/images/ to showcase them here."
           />
           <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {gallery.map((src, i) => (
@@ -235,18 +235,32 @@ export default function Workshops() {
                   whileHover={{ y: -6 }}
                   className="group relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
                 >
-                  <img
+                  <SmartImage
                     src={`/images/${src}`}
-                    alt={GALLERY_LABELS[i]}
-                    loading="lazy"
+                    alt={galleryLabels[i]}
                     className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/80 to-transparent px-4 pb-3 pt-10 text-xs font-bold text-nsWhite">
-                    {GALLERY_LABELS[i]}
+                    {galleryLabels[i]}
                   </figcaption>
                 </motion.figure>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ FLOATING FEEDBACK ============ */}
+      <section className="bg-nsYellow/15 py-14">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Feedback"
+            title="What students & parents"
+            highlight="are saying"
+            subtitle="Real words from workshop participants — gaining valuable experience, from knowing nothing about electronics to building their own projects."
+          />
+          <div className="mt-8">
+            <TestimonialMarquee />
           </div>
         </div>
       </section>
@@ -258,9 +272,9 @@ export default function Workshops() {
           <SectionHeading
             dark
             eyebrow="Our Impact"
-            title="Verified numbers,"
-            highlight="coming soon"
-            subtitle="We only publish real, verified impact data. These counters will start ticking as soon as our numbers are confirmed."
+            title="550+ students"
+            highlight="and counting"
+            subtitle="We only publish real, verified impact data. Counters for the remaining numbers will start ticking as soon as they are confirmed."
           />
           <div className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {STATS.map((stat, i) => (

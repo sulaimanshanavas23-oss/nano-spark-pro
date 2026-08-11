@@ -16,8 +16,8 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
+import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
-import { SITE } from '../lib/site'
 
 const KIT_CATEGORIES = [
   { icon: <FiZap size={24} />, title: 'Beginner Electronics Kits', desc: 'First steps into circuits, LEDs, switches and sensors — safe and exciting for new learners.' },
@@ -92,19 +92,18 @@ export default function Products() {
             </div>
           </Reveal>
 
-          {/* TODO: replace framed logo with stem-kit-product.png when supplied */}
+          {/* TODO: drop real kit photo as public/images/product-1.jpg */}
           <Reveal delay={0.15}>
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="relative mx-auto max-w-md"
             >
               <div className="circuit-bg-light absolute -inset-4 rounded-3xl bg-nsYellow/10" />
-              <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border-4 border-nsBlack bg-white shadow-lift">
-                <img
-                  src={SITE.logo}
+              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border-4 border-nsBlack bg-white shadow-lift">
+                <SmartImage
+                  src="/images/product-1.jpg"
                   alt="Nano Spark STEM Kit"
-                  className="h-3/5 w-3/5 object-contain"
-                  draggable={false}
+                  className="h-full w-full object-cover"
                 />
               </div>
               <motion.span
@@ -161,6 +160,53 @@ export default function Products() {
                   </span>
                   <span className="font-heading font-bold">{project}</span>
                 </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ KITS & LABS GALLERY ============ */}
+      <section className="bg-nsGray-light py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Gallery"
+            title="Kits & labs"
+            highlight="in action"
+            subtitle="Real builds, real labs. Drop your product and lab photos into public/images/ to showcase them here."
+          />
+          <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-3">
+            {[
+              { src: '/images/lab-1.jpg', label: 'STEM Lab Station' },
+              { src: '/images/product-2.jpg', label: 'STEM Kits on Display' },
+              { src: '/images/lab-2.jpg', label: 'Robotics Build Session' },
+              { src: '/images/product-3.jpg', label: 'Mini Projects' },
+              { src: '/images/lab-3.jpg', label: 'IoT & Sensor Lab' },
+              { src: '/images/workshop-1.jpg', label: 'Students in Action' },
+            ].map((item, i) => (
+              <Reveal key={item.src} delay={(i % 3) * 0.08}>
+                <motion.figure
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+                >
+                  <SmartImage
+                    src={item.src}
+                    alt={item.label}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fallback={
+                      <div className="circuit-bg-light flex h-full aspect-[4/3] items-center justify-center rounded-2xl border-2 border-dashed border-nsYellow/60 bg-nsGray-light p-6">
+                        <div className="text-center">
+                          <span className="font-heading text-sm font-bold text-nsBlack/50">{item.label}</span>
+                          <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-nsYellow/70" />
+                          <span className="mt-1 block text-[10px] font-semibold text-nsBlack/40">drop photo here</span>
+                        </div>
+                      </div>
+                    }
+                  />
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/80 to-transparent px-4 pb-3 pt-10 text-xs font-bold text-nsWhite">
+                    {item.label}
+                  </figcaption>
+                </motion.figure>
               </Reveal>
             ))}
           </div>
