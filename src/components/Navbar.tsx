@@ -60,7 +60,10 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop centered links — scrolls within its own space on narrow laptops */}
-          <div className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex">
+          <div
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex"
+            style={{ scrollbarWidth: 'none' }}
+          >
             {NAV_LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
                 {({ isActive }) => (
@@ -90,15 +93,27 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
+          {/* Mobile hamburger with toggle animation */}
+          <motion.button
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack lg:hidden"
+            whileTap={{ scale: 0.88 }}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-nsBlack/15 bg-nsWhite text-nsBlack shadow-soft lg:hidden"
           >
-            {open ? <FiX size={22} /> : <FiMenu size={22} />}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={open ? 'close' : 'open'}
+                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="flex"
+              >
+                {open ? <FiX size={22} /> : <FiMenu size={22} />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </nav>
       </header>
 
