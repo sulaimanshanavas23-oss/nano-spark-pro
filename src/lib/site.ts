@@ -21,6 +21,7 @@ export const SITE = {
   phoneDisplay: '+91 8148774546',
   phoneTel: '+918148774546',
   whatsapp: 'https://wa.me/918148774546?text=Hi%20Nano%20Spark%2C%20I%27m%20interested%20in%20your%20STEM%20programs.',
+  communityWhatsApp: 'https://chat.whatsapp.com/C6UsIxqwc4O3BXVBLAmxIR',
   founder: {
     name: 'S. Shanavas',
     role: 'Founder & CEO',

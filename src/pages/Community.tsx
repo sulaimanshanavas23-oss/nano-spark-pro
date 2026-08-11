@@ -9,7 +9,7 @@ import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
-import { SITE, WHATSAPP_LINK } from '../lib/site'
+import { SITE } from '../lib/site'
 
 const COMMUNITY_PERKS = [
   { icon: <FiMic size={24} />, title: 'Community Events', desc: 'Regular meetups, demo days and technology exhibitions for young builders.' },
@@ -40,12 +40,12 @@ export default function Community() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <a
-                href={WHATSAPP_LINK}
+                href={SITE.communityWhatsApp}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 font-heading font-bold text-white shadow-soft transition-colors hover:bg-nsYellow hover:text-nsBlack"
               >
-                <FaWhatsapp size={20} /> Join on WhatsApp
+                <FaWhatsapp size={20} /> Join the WhatsApp Community
               </a>
               <Link to="/contact" className="btn-outline !border-nsWhite/40 !text-nsWhite hover:!border-nsYellow hover:!bg-nsYellow hover:!text-nsBlack">
                 Contact Us
@@ -53,6 +53,36 @@ export default function Community() {
             </div>
           </Reveal>
         </div>
+      </section>
+
+      {/* ============ WHATSAPP COMMUNITY BANNER ============ */}
+      <section className="bg-nsWhite py-14">
+        <motion.div
+          whileHover={{ scale: 1.01 }}
+          className="mx-auto max-w-4xl overflow-hidden rounded-3xl bg-[#25D366] p-8 text-center text-white shadow-lift sm:p-10"
+        >
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-[#25D366] shadow-soft">
+            <FaWhatsapp size={34} />
+          </span>
+          <h2 className="mt-5 font-heading text-3xl font-extrabold sm:text-4xl">
+            Nano Spark Community
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-white/90">
+            Join my WhatsApp community — get updates on workshops, events, project ideas, kit
+            drops and connect with fellow young innovators.
+          </p>
+          <a
+            href={SITE.communityWhatsApp}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-nsBlack px-8 py-3.5 font-heading text-lg font-extrabold text-nsYellow shadow-soft transition-colors hover:bg-nsYellow hover:text-nsBlack"
+          >
+            <FaWhatsapp size={22} /> Join Community
+          </a>
+          <p className="mt-4 text-xs font-bold text-white/70">
+            Opens the official Nano Spark WhatsApp group
+          </p>
+        </motion.div>
       </section>
 
       {/* ============ WHAT YOU GET ============ */}
@@ -150,7 +180,7 @@ export default function Community() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
-              href={WHATSAPP_LINK}
+              href={SITE.communityWhatsApp}
               target="_blank"
               rel="noreferrer noopener"
               className="btn-yellow"
