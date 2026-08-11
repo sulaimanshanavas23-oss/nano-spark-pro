@@ -81,33 +81,63 @@ export const FOUNDER = {
 
 export const TESTIMONIALS = [
   {
-    text: 'We attended the Nano Spark workshop and gained valuable experience — a great introduction to electronics and circuit building!',
-    who: 'Student',
-    role: 'Workshop Participant',
+    text: 'We attended the Nano Spark workshop and gained valuable experience — a perfect introduction to electronics!',
+    who: 'Navin',
+    role: 'Student · Electronics Workshop',
   },
   {
-    text: 'My child came home excited to build robots. The hands-on approach made technology so much more interesting for them.',
-    who: 'Parent',
-    role: 'STEM Workshop',
+    text: 'My son now explains sensors and circuits at the dinner table. Nano Spark made technology real for him.',
+    who: 'Suresh',
+    role: 'Parent · School STEM Program',
   },
   {
-    text: 'The Arduino session was amazing. I programmed my first LED and ultrasonic sensor all by myself in one day.',
-    who: 'Student',
-    role: 'School Workshop',
+    text: 'I built my first obstacle-avoiding robot — motors, sensors and code, everything clicked into place!',
+    who: 'Priya',
+    role: 'Student · Robotics Workshop',
   },
   {
-    text: 'Nano Spark supports students at every step. Their patience and guidance helped our kids complete real projects.',
-    who: 'Parent',
-    role: 'School STEM Program',
+    text: 'From wiring an ESP32 to seeing live sensor data on a dashboard — the IoT session was truly hands-on.',
+    who: 'Vishal',
+    role: 'Student · IoT Workshop',
   },
   {
-    text: 'Building my first obstacle-avoiding robot was the best part. I learned how motors, sensors and code all work together.',
-    who: 'Student',
-    role: 'Robotics Workshop',
+    text: 'The mentors were patient and encouraging with every child. Our school would love to host them again.',
+    who: 'Shajitha',
+    role: 'Parent · Workshop',
   },
   {
-    text: 'Great session on IoT — from wiring an ESP32 to seeing live sensor data on a dashboard. Truly practical learning!',
-    who: 'Student',
-    role: 'IoT Workshop',
+    text: 'I programmed my first LED and ultrasonic sensor completely on my own. I felt like a real engineer!',
+    who: 'Raziya',
+    role: 'Student · Arduino Starter Kit',
+  },
+  {
+    text: 'The hackathon pushed our team to design, build and demo a prototype in a single day. Unforgettable!',
+    who: 'Irfan',
+    role: 'Student · Hackathon',
+  },
+  {
+    text: 'The STEM lab setup was professional, and the take-home projects keep my daughter learning at home.',
+    who: 'Sam',
+    role: 'Parent · STEM Lab',
+  },
+  {
+    text: 'Line follower, obstacle avoider — we built both! Every session ended with a working project.',
+    who: 'Prakash',
+    role: 'Student · Robotics Workshop',
+  },
+  {
+    text: 'My first time soldering was scary, but the support made it easy. I am hooked on electronics now!',
+    who: 'Manoj',
+    role: 'Student · Electronics',
+  },
+  {
+    text: 'Value for money and real learning. The kids came back with working projects, not just theory.',
+    who: 'Shaik',
+    role: 'Parent · Workshop',
+  },
+  {
+    text: 'The AI intro session showed us how machines learn. I want to build a smart device of my own now!',
+    who: 'Diksha',
+    role: 'Student · AI Session',
   },
 ]

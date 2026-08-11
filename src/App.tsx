@@ -7,6 +7,7 @@ import WhatsAppButton from './components/WhatsAppButton'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import ScrollToTopOnRoute from './components/ScrollToTopOnRoute'
 import Preloader, { LOADER_DURATION_MS } from './components/Preloader'
+import DemoModal from './components/DemoModal'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import Services from './pages/Services'
@@ -34,20 +35,27 @@ function AnimatedRoutes() {
 }
 
 /**
- * Shows the Nano Spark loading animation on first open and on every route
- * change, then automatically proceeds to the website.
+ * Loading animation shown ONLY when the site first opens (not on page
+ * switching). Once it finishes, the "Book a Free Demo Session" pop-up appears.
  */
 function LoaderOverlay() {
-  const location = useLocation()
   const [loading, setLoading] = useState(true)
+  const [showDemo, setShowDemo] = useState(false)
 
   useEffect(() => {
-    setLoading(true)
-    const t = setTimeout(() => setLoading(false), LOADER_DURATION_MS)
+    const t = setTimeout(() => {
+      setLoading(false)
+      setShowDemo(true)
+    }, LOADER_DURATION_MS)
     return () => clearTimeout(t)
-  }, [location.pathname])
+  }, [])
 
-  return <AnimatePresence>{loading && <Preloader key="preloader" />}</AnimatePresence>
+  return (
+    <>
+      <AnimatePresence>{loading && <Preloader key="preloader" />}</AnimatePresence>
+      <DemoModal open={showDemo} onClose={() => setShowDemo(false)} />
+    </>
+  )
 }
 
 export default function App() {

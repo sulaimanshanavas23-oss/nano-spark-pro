@@ -63,6 +63,35 @@ export default function Products() {
               component to complete working projects.
             </p>
           </Reveal>
+
+          {/* Product image strip right at the top of the page — drop photos into
+              public/images/product-1.jpg … product-6.jpg */}
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              { src: '/images/product-1.jpg', label: 'STEM Kit' },
+              { src: '/images/product-2.jpg', label: 'Robotics Kit' },
+              { src: '/images/product-3.jpg', label: 'IoT Kit' },
+              { src: '/images/product-4.jpg', label: 'Arduino Kit' },
+              { src: '/images/product-5.jpg', label: 'Electronics Kit' },
+              { src: '/images/product-6.jpg', label: 'Innovation Kit' },
+            ].map((p, i) => (
+              <Reveal key={p.src} delay={i * 0.06}>
+                <motion.figure
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+                >
+                  <SmartImage
+                    src={p.src}
+                    alt={p.label}
+                    className="aspect-square w-full object-cover"
+                  />
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/85 to-transparent px-3 pb-2.5 pt-8 text-xs font-bold text-nsWhite">
+                    {p.label}
+                  </figcaption>
+                </motion.figure>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -92,7 +121,8 @@ export default function Products() {
             </div>
           </Reveal>
 
-          {/* TODO: drop real kit photo as public/images/product-1.jpg */}
+          {/* TODO: drop the young-innovators photo as public/images/hero.jpg
+              (same image as the homepage hero — one file, two places) */}
           <Reveal delay={0.15}>
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -101,8 +131,8 @@ export default function Products() {
               <div className="circuit-bg-light absolute -inset-4 rounded-3xl bg-nsYellow/10" />
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border-4 border-nsBlack bg-white shadow-lift">
                 <SmartImage
-                  src="/images/product-1.jpg"
-                  alt="Nano Spark STEM Kit"
+                  src="/images/hero.jpg"
+                  alt="Nano Spark young innovators build"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -114,6 +144,39 @@ export default function Products() {
                 New!
               </motion.span>
             </motion.div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ STEM LAB KITS BANNER ============ */}
+      {/* TODO: drop the STEM lab kits image as public/images/stem-lab-kit.jpg */}
+      <section className="bg-nsYellow/15 py-16">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2">
+          <Reveal>
+            <div className="circuit-bg-light relative mx-auto max-w-md overflow-hidden rounded-3xl border-4 border-nsBlack bg-white shadow-lift">
+              <SmartImage
+                src="/images/stem-lab-kit.jpg"
+                alt="Nano Spark STEM Lab Kits"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <SectionHeading
+              align="left"
+              eyebrow="STEM Lab Kits"
+              title="Kits built for"
+              highlight="complete STEM labs"
+              subtitle="Lab-grade kit bundles — electronics, robotics, Arduino, IoT and innovation kits with project resources and teacher support, ready for your school's practical learning space."
+            />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/contact" className="btn-yellow">
+                Get Lab Kits <FiArrowRight />
+              </Link>
+              <Link to="/services" className="btn-outline">
+                See STEM Lab Setup
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

@@ -103,10 +103,44 @@ export default function Services() {
                 </li>
               ))}
             </ul>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link to="/contact" className="btn-yellow">
                 Set Up a STEM Lab <FiArrowRight />
               </Link>
+              <Link to="/workshops" className="btn-outline">
+                Book a Workshop
+              </Link>
+            </div>
+
+            {/* Pick the format that fits your school */}
+            <div className="mt-8 rounded-2xl border border-nsYellow/60 bg-nsYellow/10 p-5">
+              <p className="flex items-center gap-2 font-heading font-extrabold text-nsBlack">
+                <span className="text-nsYellow">&#9654;</span> Pick the format that fits your school
+              </p>
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                {[
+                  { name: 'Free Demo Session', when: '2–3 hours · online or offline' },
+                  { name: 'Half-Day Workshop', when: 'Half-day hands-on session' },
+                  { name: 'Multi-Day Program', when: 'Weekly course over a term' },
+                  { name: 'Full STEM Lab Setup', when: 'Lab + kits + training + support' },
+                ].map((f) => (
+                  <div
+                    key={f.name}
+                    className="flex items-center justify-between gap-2 rounded-xl bg-nsWhite px-4 py-3 shadow-soft"
+                  >
+                    <div>
+                      <p className="text-sm font-bold text-nsBlack">{f.name}</p>
+                      <p className="text-[11px] text-nsBlack/55">{f.when}</p>
+                    </div>
+                    <Link
+                      to="/contact"
+                      className="shrink-0 rounded-lg bg-nsBlack px-3 py-1.5 text-xs font-bold text-nsYellow transition-colors hover:bg-nsYellow hover:text-nsBlack"
+                    >
+                      Book
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
 

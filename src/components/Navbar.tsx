@@ -33,22 +33,20 @@ export default function Navbar() {
         }`}
       >
         <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-8">
-          {/* Logo — top left */}
-          <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${SITE.name} — home`}>
+          {/* Logo — top left, plain bold branding (no box) */}
+          <Link
+            to="/"
+            aria-label={`${SITE.name} — home`}
+            className="flex shrink-0 flex-col leading-tight"
+          >
             <motion.span
-              className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsYellow bg-white p-1 shadow-soft"
-              whileHover={{ scale: 1.05, rotate: -3 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              className="font-heading text-3xl font-extrabold text-nsBlack sm:text-[2rem]"
             >
-              <img src={SITE.logo} alt={SITE.name} className="h-full w-full object-contain" draggable={false} />
+              Nano Spark<span className="text-nsYellow">.</span>
             </motion.span>
-            <span className="leading-tight">
-              <span className="block font-heading text-xl font-extrabold text-nsBlack">
-                Nano Spark<span className="text-nsYellow">.</span>
-              </span>
-              <span className="block text-[10px] font-bold tracking-[0.22em] text-nsBlack/60">
-                TECHNOLOGY · INNOVATIONS · SOLUTIONS
-              </span>
+            <span className="mt-0.5 hidden text-[10px] font-bold tracking-[0.22em] text-nsBlack/60 sm:block">
+              TECHNOLOGY · INNOVATIONS · SOLUTIONS
             </span>
           </Link>
 
