@@ -18,7 +18,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import { Reveal } from '../components/Reveal'
-import { WordReveal } from '../components/WordReveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { WHATSAPP_LINK, SITE } from '../lib/site'
 
 const INTERNSHIPS = [
@@ -78,7 +78,7 @@ export default function Careers() {
               <span className="text-nsYellow">&#9654;</span> Careers at Nano Spark
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
-              <WordReveal text="Build, teach & grow with us" />
+              <LetterReveal texts={[{ text: 'Build, teach & grow with us' }]} />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
               Join the Nano Spark ecosystem as an intern, ambassador or collaborator — and help

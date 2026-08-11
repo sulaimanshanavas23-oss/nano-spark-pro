@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap px-2 py-1 font-heading text-[14px] font-extrabold tracking-tight transition-colors xl:text-[15px] 2xl:text-base ${
+  `relative whitespace-nowrap px-1.5 py-1 font-heading text-[13px] font-extrabold tracking-tight transition-colors xl:text-[14px] 2xl:text-[15px] ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -59,26 +59,29 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop centered links — scrolls within its own space on narrow laptops */}
-          <div
-            className="hidden min-w-0 flex-1 items-center justify-center gap-0 overflow-x-auto px-2 xl:flex"
-            style={{ scrollbarWidth: 'none' }}
-          >
-            {NAV_LINKS.map((link) => (
-              <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-underline"
-                        className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
-                      />
-                    )}
-                  </>
-                )}
-              </NavLink>
-            ))}
+          {/* Desktop centered links — never clips the first (Home) tab:
+          centered when there is room, scrolls from the left when narrow */}
+          <div className="hidden min-w-0 flex-1 xl:block">
+            <div
+              className="mx-auto flex w-max max-w-full items-center gap-0 overflow-x-auto px-1"
+              style={{ scrollbarWidth: 'none' }}
+            >
+              {NAV_LINKS.map((link) => (
+                <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
+                  {({ isActive }) => (
+                    <>
+                      {link.label}
+                      {isActive && (
+                        <motion.span
+                          layoutId="nav-underline"
+                          className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
+                        />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
           </div>
 
           {/* Mobile hamburger with toggle animation */}

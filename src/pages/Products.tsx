@@ -18,6 +18,7 @@ import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 
 const KIT_CATEGORIES = [
   { icon: <FiZap size={24} />, title: 'Beginner Electronics Kits', desc: 'First steps into circuits, LEDs, switches and sensors — safe and exciting for new learners.' },
@@ -56,7 +57,9 @@ export default function Products() {
               <span className="text-nsYellow">&#9654;</span> Products
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
-              Nano Spark <span className="text-nsYellow">STEM Kits</span>
+              <LetterReveal
+                texts={[{ text: 'Nano Spark' }, { text: 'STEM Kits', color: 'text-nsYellow' }]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsBlack/70">
               Hands-on kits and technology solutions that take young innovators from their first

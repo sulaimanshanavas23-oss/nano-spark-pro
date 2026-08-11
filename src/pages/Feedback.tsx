@@ -6,6 +6,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { SITE } from '../lib/site'
 import { sanitizeText, validateRequired } from '../lib/validate'
 
@@ -161,7 +162,7 @@ export default function Feedback() {
               <span className="text-nsYellow">&#9654;</span> Feedback
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
-              Tell us how it went
+              <LetterReveal texts={[{ text: 'Tell us how it went' }]} />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsBlack/70">
               Your feedback helps us make every workshop, kit and program better for the next

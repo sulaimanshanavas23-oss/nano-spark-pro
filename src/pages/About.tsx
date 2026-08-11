@@ -18,6 +18,7 @@ import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import { Reveal } from '../components/Reveal'
 import { WordReveal } from '../components/WordReveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { WHATSAPP_LINK, FOUNDER, SITE } from '../lib/site'
 
@@ -48,7 +49,9 @@ export default function About() {
               <span className="text-nsYellow">&#9654;</span> About Us
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
-              About <span className="text-nsYellow">Nano Spark</span>
+              <LetterReveal
+                texts={[{ text: 'About' }, { text: 'Nano Spark', color: 'text-nsYellow' }]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
               {SITE.name} — {SITE.tagline}. A technology and STEM innovation startup from Chennai,

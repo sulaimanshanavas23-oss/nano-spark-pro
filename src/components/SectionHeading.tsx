@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Reveal } from './Reveal'
+import { LetterReveal } from './LetterReveal'
 
 interface SectionHeadingProps {
   eyebrow?: string
@@ -33,13 +34,12 @@ export default function SectionHeading({
           dark ? 'text-nsWhite' : 'text-nsBlack'
         }`}
       >
-        {title}
-        {highlight && (
-          <>
-            {' '}
-            <span className="text-nsYellow">{highlight}</span>
-          </>
-        )}
+        <LetterReveal
+          texts={[
+            { text: title },
+            ...(highlight ? [{ text: highlight, color: 'text-nsYellow' }] : []),
+          ]}
+        />
       </h2>
       <motion.span
         className={`section-heading-underline ${centered ? 'mx-auto' : ''}`}

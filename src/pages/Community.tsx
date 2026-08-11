@@ -9,6 +9,7 @@ import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { SITE } from '../lib/site'
 
 const COMMUNITY_PERKS = [
@@ -32,7 +33,12 @@ export default function Community() {
               <span className="text-nsYellow">&#9654;</span> Community
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
-              Join the Nano Spark <span className="text-nsYellow">Community</span>
+              <LetterReveal
+                texts={[
+                  { text: 'Join the Nano Spark' },
+                  { text: 'Community', color: 'text-nsYellow' },
+                ]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
               A growing family of young innovators, parents, teachers, schools and ambassadors —

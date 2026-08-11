@@ -69,7 +69,12 @@ export default function Achievements() {
               <span className="text-nsYellow">&#9654;</span> Achievements
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
-              Milestones worth <span className="text-nsYellow">celebrating</span>
+              <LetterReveal
+                texts={[
+                  { text: 'Milestones worth' },
+                  { text: 'celebrating', color: 'text-nsYellow' },
+                ]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
               Every student, every workshop, every prototype is a step forward. Here are the

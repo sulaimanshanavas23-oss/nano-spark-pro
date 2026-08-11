@@ -21,6 +21,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { SITE, WHATSAPP_LINK, FOUNDER } from '../lib/site'
 import { sanitizeText, validateEmail, validateRequired } from '../lib/validate'
 
@@ -94,7 +95,13 @@ export default function Contact() {
               <span className="text-nsYellow">&#9654;</span> Contact
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
-              Let's build the <span className="text-nsYellow">future</span> together
+              <LetterReveal
+                texts={[
+                  { text: 'Let's build the' },
+                  { text: 'future', color: 'text-nsYellow' },
+                  { text: 'together' },
+                ]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsBlack/70">
               Questions, partnerships, STEM labs or workshops — your message goes straight to our

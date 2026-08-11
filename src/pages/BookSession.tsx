@@ -16,6 +16,7 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import { Reveal } from '../components/Reveal'
+import { LetterReveal } from '../components/LetterReveal'
 import { SITE, WHATSAPP_LINK } from '../lib/site'
 import { sanitizeText, validateEmail, validateRequired } from '../lib/validate'
 
@@ -137,7 +138,13 @@ export default function BookSession() {
               <span className="text-nsYellow">&#9654;</span> Book a Session
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
-              Let's bring the <span className="text-nsYellow">spark</span> to you
+              <LetterReveal
+                texts={[
+                  { text: 'Let's bring the' },
+                  { text: 'spark', color: 'text-nsYellow' },
+                  { text: 'to you' },
+                ]}
+              />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
               Tell us what you'd like — a demo, a workshop, a hackathon or a STEM lab — and we'll

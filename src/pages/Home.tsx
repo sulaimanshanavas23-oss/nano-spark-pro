@@ -17,6 +17,7 @@ import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
+import { LetterReveal } from '../components/LetterReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 const FOCUS_AREAS = [
@@ -30,15 +31,7 @@ const FOCUS_AREAS = [
 
 const ECOSYSTEM = ['STEM Kits', 'Workshops', 'Projects', 'Innovation', 'Prototypes']
 
-const HERO_TITLE = [
-  { w: 'Turning', c: 'text-nsBlack' },
-  { w: 'Curiosity', c: 'text-nsBlack' },
-  { w: 'Into', c: 'text-nsBlack' },
-  { w: 'Innovation', c: 'text-nsYellow' },
-]
-
 export default function Home() {
-  let letterCount = 0
   return (
     <Page>
       {/* ============ HERO ============ */}
@@ -59,28 +52,16 @@ export default function Home() {
 
             {/* Headline: site font (Baloo 2), revealing LETTER BY LETTER */}
             <h1 className="mt-5 font-heading font-extrabold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
-              {HERO_TITLE.map((word, wi) => (
-                <span key={word.w}>
-                  <span className={`mr-3 inline-block ${word.c}`}>
-                    {word.w.split('').map((ch, ci) => {
-                      const delay = 0.2 + letterCount * 0.035
-                      letterCount++
-                      return (
-                        <motion.span
-                          key={ci}
-                          className="inline-block"
-                          initial={{ opacity: 0, y: '0.85em', rotateX: -75 }}
-                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                          transition={{ duration: 0.42, delay, ease: 'easeOut' }}
-                        >
-                          {ch}
-                        </motion.span>
-                      )
-                    })}
-                  </span>
-                  {wi === 1 && <br className="hidden sm:block" />}
-                </span>
-              ))}
+              <LetterReveal
+                delay={0.2}
+                breakAfter={[1]}
+                texts={[
+                  { text: 'Turning' },
+                  { text: 'Curiosity' },
+                  { text: 'Into' },
+                  { text: 'Innovation', color: 'text-nsYellow' },
+                ]}
+              />
             </h1>
 
             <motion.p
