@@ -104,14 +104,17 @@ export default function BookSession() {
       emailed = false
     }
 
-    // 2) Fallback if the email service couldn't be reached: open the visitor's
-    // mail client with the same booking request, so nothing gets lost.
+    // 2) Fallback if the email service couldn't be reached: open Gmail's
+    // compose window (web) with the same booking request — never Outlook.
     if (!emailed) {
       const subject = encodeURIComponent(`Session booking request — ${payload.name} (${payload.format})`)
       const body = encodeURIComponent(
         `BOOK A SESSION REQUEST\n\nName: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nSchool / Organization: ${payload.school || 'Not provided'}\nFormat: ${payload.format}\nMode: ${payload.mode}\nPreferred date: ${payload.date || 'Flexible'}\n\nDetails:\n${payload.message}\n\n— Sent via the Nano Spark website booking page`,
       )
-      window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${SITE.email}&su=${subject}&body=${body}`,
+        '_blank',
+      )
     }
 
     // 3) Open WhatsApp with the same message for a quick reply.

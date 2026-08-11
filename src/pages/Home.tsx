@@ -30,7 +30,15 @@ const FOCUS_AREAS = [
 
 const ECOSYSTEM = ['STEM Kits', 'Workshops', 'Projects', 'Innovation', 'Prototypes']
 
+const HERO_TITLE = [
+  { w: 'Turning', c: 'text-nsBlack' },
+  { w: 'Curiosity', c: 'text-nsBlack' },
+  { w: 'Into', c: 'text-nsBlack' },
+  { w: 'Innovation', c: 'text-nsYellow' },
+]
+
 export default function Home() {
+  let letterCount = 0
   return (
     <Page>
       {/* ============ HERO ============ */}
@@ -49,24 +57,28 @@ export default function Home() {
               {SITE.tagline}
             </motion.span>
 
-            {/* Headline: site font (Baloo 2), revealing one word at a time */}
+            {/* Headline: site font (Baloo 2), revealing LETTER BY LETTER */}
             <h1 className="mt-5 font-heading font-extrabold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
-              {[
-                { w: 'Turning', c: 'text-nsBlack' },
-                { w: 'Curiosity', c: 'text-nsBlack' },
-                { w: 'Into', c: 'text-nsBlack' },
-                { w: 'Action', c: 'text-nsYellow' },
-              ].map((word, i) => (
+              {HERO_TITLE.map((word, wi) => (
                 <span key={word.w}>
-                  <motion.span
-                    className={`mr-3 inline-block ${word.c}`}
-                    initial={{ opacity: 0, y: 34, rotateX: 60 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                    transition={{ duration: 0.6, delay: 0.15 + i * 0.18, ease: 'easeOut' }}
-                  >
-                    {word.w}
-                  </motion.span>
-                  {i === 1 && <br className="hidden sm:block" />}
+                  <span className={`mr-3 inline-block ${word.c}`}>
+                    {word.w.split('').map((ch, ci) => {
+                      const delay = 0.2 + letterCount * 0.035
+                      letterCount++
+                      return (
+                        <motion.span
+                          key={ci}
+                          className="inline-block"
+                          initial={{ opacity: 0, y: '0.85em', rotateX: -75 }}
+                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                          transition={{ duration: 0.42, delay, ease: 'easeOut' }}
+                        >
+                          {ch}
+                        </motion.span>
+                      )
+                    })}
+                  </span>
+                  {wi === 1 && <br className="hidden sm:block" />}
                 </span>
               ))}
             </h1>
@@ -282,7 +294,7 @@ export default function Home() {
               <span className="underline decoration-nsBlack/30">they build it</span>.
             </p>
             <p className="mt-6 font-heading text-xl font-bold text-nsBlack/70">
-              Nano Spark — Turning curiosity into action.
+              Nano Spark — Turning curiosity into innovation.
             </p>
           </Reveal>
         </div>
