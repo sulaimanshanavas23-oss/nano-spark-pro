@@ -48,16 +48,22 @@ const STEPS: Step[] = [
     placeholder: 'e.g. Chennai',
   },
   {
-    key: 'interest',
-    label: 'Interest',
-    question: 'Which Nano Spark kit or program are you interested in?',
-    placeholder: 'e.g. Robotics, IoT, STEM Lab or Workshop',
+    key: 'email',
+    label: 'Email',
+    question: 'What is your email address?',
+    placeholder: 'e.g. aarav@gmail.com',
   },
   {
     key: 'phone',
     label: 'Phone Number',
-    question: 'What is the best phone number to reach you?',
+    question: 'What is your 10-digit mobile number?',
     placeholder: 'e.g. 9876543210',
+  },
+  {
+    key: 'interest',
+    label: 'Interest',
+    question: 'Which Nano Spark kit or program are you interested in?',
+    placeholder: 'e.g. Robotics, IoT, STEM Lab or Workshop',
   },
   {
     key: 'message',
@@ -116,8 +122,32 @@ export default function ChatBot() {
   const submit = (value?: string) => {
     const v = (value ?? input).trim()
     if (!v || !busy || done) return
+
+    let error: string | null = null
+    if (step.key === 'name' && !/^[A-Za-z\s.'-]{2,50}$/.test(v)) {
+      error = 'Please enter your name using letters only (for example: Aarav Kumar). Try again.'
+    } else if (step.key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      error = 'That email address does not look right. Please re-enter it (for example: aarav@gmail.com).'
+    } else if (step.key === 'phone') {
+      const digits = v.replace(/\D/g, '')
+      if (!/^[6-9]\d{9}$/.test(digits)) {
+        error = 'Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9 (for example: 9876543210).'
+      }
+    } else if (step.key === 'classYear' && v.length < 2) {
+      error = 'Please tell me your class or year (for example: 8th standard or 2nd year).'
+    } else if (step.key === 'city' && v.length < 2) {
+      error = 'Please enter the name of your city (for example: Chennai).'
+    }
+
+    if (error) {
+      setMessages((m) => [...m, { id: idRef.current++, from: 'bot', text: error }])
+      setInput('')
+      inputRef.current?.focus()
+      return
+    }
+
     setMessages((m) => [...m, { id: idRef.current++, from: 'user', text: v }])
-    setDetails((d) => ({ ...d, [step.key]: v }))
+    setDetails((d) => ({ ...d, [step.key]: step.key === 'phone' ? v.replace(/\D/g, '') : v }))
     setInput('')
     setBusy(false)
     setStepIndex((i) => i + 1)
@@ -199,10 +229,7 @@ export default function ChatBot() {
             <div ref={bodyRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
               {messages.map((m) =>
                 m.from === 'bot' ? (
-                  <div key={m.id} className="flex items-start gap-2">
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-nsYellow text-[10px] text-nsBlack">
-                      <FiCpu size={12} />
-                    </span>
+                  <div key={m.id} className="flex">
                     <p className="max-w-[85%] rounded-2xl rounded-tl-sm bg-white/10 px-3.5 py-2.5 text-[13px] leading-relaxed text-nsWhite">
                       {m.text}
                     </p>
