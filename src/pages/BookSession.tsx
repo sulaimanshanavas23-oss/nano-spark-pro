@@ -88,7 +88,7 @@ export default function BookSession() {
         body: JSON.stringify({
           _subject: `SESSION BOOKING — ${payload.name} (${payload.format})`,
           _template: 'table',
-          _captcha: 'false',
+          _honey: '',
           Name: payload.name,
           Email: payload.email,
           Phone: payload.phone,
@@ -228,6 +228,7 @@ export default function BookSession() {
                       id="book-name"
                       type="text"
                       required
+                      maxLength={100}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       placeholder="e.g. Ravi Kumar"
@@ -242,6 +243,7 @@ export default function BookSession() {
                       id="book-phone"
                       type="tel"
                       required
+                      maxLength={20}
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="e.g. 98765 43210"
@@ -259,6 +261,7 @@ export default function BookSession() {
                       id="book-email"
                       type="email"
                       required
+                      maxLength={200}
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="you@example.com"
@@ -272,6 +275,7 @@ export default function BookSession() {
                     <input
                       id="book-school"
                       type="text"
+                      maxLength={150}
                       value={form.school}
                       onChange={(e) => setForm({ ...form, school: e.target.value })}
                       placeholder="e.g. Green Valley School"
@@ -344,6 +348,7 @@ export default function BookSession() {
                   <textarea
                     id="book-message"
                     required
+                    maxLength={2000}
                     rows={4}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}

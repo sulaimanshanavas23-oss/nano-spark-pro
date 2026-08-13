@@ -78,10 +78,10 @@ export default function Contact() {
     setTimeout(() => setStatus('sent'), 700)
   }
 
-  const fields: { key: 'name' | 'email' | 'org'; label: string; type: string; required?: boolean }[] = [
-    { key: 'name', label: 'Name', type: 'text', required: true },
-    { key: 'email', label: 'Email', type: 'email', required: true },
-    { key: 'org', label: 'School / Organization', type: 'text' },
+  const fields: { key: 'name' | 'email' | 'org'; label: string; type: string; required?: boolean; maxLength: number }[] = [
+    { key: 'name', label: 'Name', type: 'text', required: true, maxLength: 100 },
+    { key: 'email', label: 'Email', type: 'email', required: true, maxLength: 200 },
+    { key: 'org', label: 'School / Organization', type: 'text', maxLength: 150 },
   ]
 
   return (
@@ -315,6 +315,7 @@ export default function Contact() {
                         id={field.key}
                         type={field.type}
                         required={field.required}
+                        maxLength={field.maxLength}
                         value={form[field.key]}
                         onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                         placeholder={field.label}
@@ -329,6 +330,7 @@ export default function Contact() {
                     <textarea
                       id="message"
                       required
+                      maxLength={2000}
                       rows={5}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}

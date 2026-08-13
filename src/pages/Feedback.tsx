@@ -56,6 +56,10 @@ function Confetti({ count = 42 }: { count?: number }) {
   )
 }
 
+// Sends feedback straight to nanospark46@gmail.com via FormSubmit (same as
+// the other forms). Falls back to a Gmail compose window if the service fails.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/nanospark46@gmail.com'
+
 function StarsInput({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hover, setHover] = useState(0)
   return (
@@ -90,9 +94,9 @@ export default function Feedback() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
   const [error, setError] = useState('')
   const [rating, setRating] = useState(0)
-  const [form, setForm] = useState({ name: '', org: '', workshop: '', comments: '' })
+  const [form, setForm] = useState({ name: '', email: '', org: '', workshop: '', comments: '' })
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const name = validateRequired(form.name, 'Name', 100)
     const comments = validateRequired(form.comments, 'Comments', 1000)
@@ -104,6 +108,7 @@ export default function Feedback() {
 
     const payload = {
       name: sanitizeText(form.name, 100),
+      email: sanitizeText(form.email, 200),
       org: sanitizeText(form.org, 150),
       workshop: sanitizeText(form.workshop, 150),
       comments: sanitizeText(form.comments, 1000),
@@ -112,16 +117,47 @@ export default function Feedback() {
 
     setStatus('sending')
 
-    // TODO: connect form endpoint — post to Formspree, Google Apps Script,
-    // or your own backend here. Log for now.
-    console.log('TODO: send feedback to endpoint', payload)
-    setTimeout(() => setStatus('sent'), 700)
+    let emailed = false
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `FEEDBACK — ${payload.name} (${rating}/5)`,
+          _template: 'table',
+          _honey: '',
+          Name: payload.name,
+          Email: payload.email || 'Not provided',
+          'School / Organization': payload.org || 'Not provided',
+          'Workshop attended': payload.workshop || 'Not provided',
+          Rating: `${payload.rating} / 5`,
+          Comments: payload.comments,
+        }),
+      })
+      const data = await res.json()
+      emailed = data?.success === 'true'
+    } catch {
+      emailed = false
+    }
+
+    if (!emailed) {
+      const subject = encodeURIComponent(`Feedback — ${payload.name} (${rating}/5 stars)`)
+      const body = encodeURIComponent(
+        `FEEDBACK\n\nName: ${payload.name}\nSchool / Organization: ${payload.org || 'Not provided'}\nWorkshop attended: ${payload.workshop || 'Not provided'}\nRating: ${payload.rating}/5\n\nComments:\n${payload.comments}\n\n— Sent via the Nano Spark website feedback form`,
+      )
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${SITE.email}&su=${subject}&body=${body}`,
+        '_blank',
+      )
+    }
+
+    setStatus('sent')
   }
 
   const reset = () => {
     setStatus('idle')
     setRating(0)
-    setForm({ name: '', org: '', workshop: '', comments: '' })
+    setForm({ name: '', email: '', org: '', workshop: '', comments: '' })
   }
 
   return (
@@ -221,22 +257,28 @@ export default function Feedback() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="f-name" className="mb-1.5 block text-sm font-bold text-nsBlack">Name</label>
-                    <input id="f-name" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className={inputClass} />
+                    <input id="f-name" required maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" className={inputClass} />
                   </div>
                   <div>
-                    <label htmlFor="f-org" className="mb-1.5 block text-sm font-bold text-nsBlack">School / Organization</label>
-                    <input id="f-org" value={form.org} onChange={(e) => setForm({ ...form, org: e.target.value })} placeholder="Your school or org" className={inputClass} />
+                    <label htmlFor="f-email" className="mb-1.5 block text-sm font-bold text-nsBlack">Email <span className="font-normal text-nsBlack/45">(optional)</span></label>
+                    <input id="f-email" type="email" maxLength={200} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" className={inputClass} />
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="f-workshop" className="mb-1.5 block text-sm font-bold text-nsBlack">Workshop Attended</label>
-                  <input id="f-workshop" value={form.workshop} onChange={(e) => setForm({ ...form, workshop: e.target.value })} placeholder="e.g. Robotics Workshop, STEM Lab Program" className={inputClass} />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="f-org" className="mb-1.5 block text-sm font-bold text-nsBlack">School / Organization</label>
+                    <input id="f-org" maxLength={150} value={form.org} onChange={(e) => setForm({ ...form, org: e.target.value })} placeholder="Your school or org" className={inputClass} />
+                  </div>
+                  <div>
+                    <label htmlFor="f-workshop" className="mb-1.5 block text-sm font-bold text-nsBlack">Workshop Attended</label>
+                    <input id="f-workshop" maxLength={150} value={form.workshop} onChange={(e) => setForm({ ...form, workshop: e.target.value })} placeholder="e.g. Robotics Workshop, STEM Lab Program" className={inputClass} />
+                  </div>
                 </div>
 
                 <div>
                   <label htmlFor="f-comments" className="mb-1.5 block text-sm font-bold text-nsBlack">Comments</label>
-                  <textarea id="f-comments" required rows={4} value={form.comments} onChange={(e) => setForm({ ...form, comments: e.target.value })} placeholder="What did you enjoy? What could we improve?" className={inputClass} />
+                  <textarea id="f-comments" required maxLength={1000} rows={4} value={form.comments} onChange={(e) => setForm({ ...form, comments: e.target.value })} placeholder="What did you enjoy? What could we improve?" className={inputClass} />
                 </div>
 
                 {error && (

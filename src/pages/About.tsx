@@ -112,8 +112,10 @@ export default function About() {
                   </div>
                 </motion.div>
                 <motion.span
-                  className="absolute -right-3 -top-3 -rotate-3 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft"
-                  animate={{ rotate: [-3, -7, -3] }}
+                  className="absolute left-1/2 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft"
+                  style={{ x: '-50%' }}
+                  initial={{ rotate: -4 }}
+                  animate={{ rotate: [-4, -8, -4] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
                   {SITE.tagline}
@@ -123,7 +125,7 @@ export default function About() {
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   className="btn-yellow w-full justify-center"
                 >
                   Talk to the Founder <FiArrowRight />

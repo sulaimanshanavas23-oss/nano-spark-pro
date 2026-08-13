@@ -80,7 +80,7 @@ export default function Ambassador() {
         body: JSON.stringify({
           _subject: `AMBASSADOR APPLICATION — ${payload.name}`,
           _template: 'table',
-          _captcha: 'false',
+          _honey: '',
           Name: payload.name,
           'Age / Class': payload.ageClass || 'Not provided',
           'School / College': payload.school || 'Not provided',
@@ -343,6 +343,7 @@ export default function Ambassador() {
                       id="amb-name"
                       type="text"
                       required
+                      maxLength={100}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       placeholder="e.g. Aisha Begum"
@@ -356,6 +357,7 @@ export default function Ambassador() {
                     <input
                       id="amb-age"
                       type="text"
+                      maxLength={50}
                       value={form.ageClass}
                       onChange={(e) => setForm({ ...form, ageClass: e.target.value })}
                       placeholder="e.g. Class 9 / B.E. ECE"
@@ -371,6 +373,7 @@ export default function Ambassador() {
                   <input
                     id="amb-school"
                     type="text"
+                    maxLength={150}
                     value={form.school}
                     onChange={(e) => setForm({ ...form, school: e.target.value })}
                     placeholder="e.g. Green Valley Matriculation School"
@@ -387,6 +390,7 @@ export default function Ambassador() {
                       id="amb-email"
                       type="email"
                       required
+                      maxLength={200}
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="you@example.com"
@@ -401,6 +405,7 @@ export default function Ambassador() {
                       id="amb-phone"
                       type="tel"
                       required
+                      maxLength={20}
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="e.g. 98765 43210"
@@ -416,6 +421,7 @@ export default function Ambassador() {
                   <input
                     id="amb-city"
                     type="text"
+                    maxLength={60}
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                     placeholder="e.g. Chennai"
@@ -430,6 +436,7 @@ export default function Ambassador() {
                   <textarea
                     id="amb-why"
                     required
+                    maxLength={2000}
                     rows={4}
                     value={form.why}
                     onChange={(e) => setForm({ ...form, why: e.target.value })}
@@ -444,6 +451,7 @@ export default function Ambassador() {
                   </label>
                   <textarea
                     id="amb-exp"
+                    maxLength={1500}
                     rows={2}
                     value={form.experience}
                     onChange={(e) => setForm({ ...form, experience: e.target.value })}
