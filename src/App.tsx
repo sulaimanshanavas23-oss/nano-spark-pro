@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
+import ChatBot from './components/ChatBot'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import ScrollToTopOnRoute from './components/ScrollToTopOnRoute'
 import Preloader, { LOADER_DURATION_MS } from './components/Preloader'
@@ -86,6 +87,7 @@ export default function App() {
       <AnimatedRoutes />
       <Footer />
       <WhatsAppButton />
+      <ChatBot />
       <ScrollToTopButton />
       <LoaderOverlay />
     </BrowserRouter>

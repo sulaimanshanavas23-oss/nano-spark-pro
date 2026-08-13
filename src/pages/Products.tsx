@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useMemo, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   FiArrowRight,
@@ -7,9 +8,12 @@ import {
   FiLayers,
   FiSun,
   FiMonitor,
+  FiSearch,
   FiSettings,
+  FiSliders,
   FiTool,
   FiWifi,
+  FiX,
   FiZap,
 } from 'react-icons/fi'
 import Page from '../components/Page'
@@ -19,6 +23,39 @@ import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
+
+type KitLevel = 'Beginner' | 'Intermediate' | 'Advanced'
+
+interface KitDef {
+  title: string
+  desc: string
+  level: KitLevel
+  age: 'school' | 'college'
+  grades?: string[]
+  collegeYears?: string[]
+  icon: JSX.Element
+}
+
+const KIT_CATALOG: KitDef[] = [
+  { title: 'Beginner Electronics Kit', desc: 'LEDs, switches, buzzers and basic circuits — safe first steps into electronics.', level: 'Beginner', age: 'school', grades: ['6', '7', '8'], icon: <FiZap size={16} /> },
+  { title: 'Circuit Explorer Kit', desc: 'Breadboards, resistors and batteries — build your first working circuits.', level: 'Beginner', age: 'school', grades: ['6', '7', '8', '9'], icon: <FiZap size={16} /> },
+  { title: 'Magnetism & Motors Kit', desc: 'Motors, gears and mechanics for early robotics interest.', level: 'Beginner', age: 'school', grades: ['6', '7', '8'], icon: <FiTool size={16} /> },
+  { title: 'Coding Starter Kit', desc: 'Block-based coding with LEDs and sensors — code meets hardware.', level: 'Beginner', age: 'school', grades: ['7', '8', '9'], icon: <FiMonitor size={16} /> },
+  { title: 'Arduino Starter Kit', desc: 'Microcontroller basics — blink LEDs, read sensors, write your first sketches.', level: 'Intermediate', age: 'school', grades: ['8', '9', '10'], icon: <FiCpu size={16} /> },
+  { title: 'Sensors Lab Kit', desc: 'Ultrasonic, IR, temperature and light sensors with Arduino.', level: 'Intermediate', age: 'school', grades: ['9', '10'], icon: <FiSettings size={16} /> },
+  { title: 'Robotics Kit — Line Follower', desc: 'Build a robot that follows a black line using sensors and motors.', level: 'Intermediate', age: 'school', grades: ['9', '10', '11', '12'], icon: <FiTool size={16} /> },
+  { title: 'Robotics Kit — Obstacle Avoider', desc: 'Obstacle detection and avoidance using ultrasonic sensors.', level: 'Intermediate', age: 'school', grades: ['9', '10', '11', '12'], icon: <FiTool size={16} /> },
+  { title: 'IoT Kit — ESP32', desc: 'ESP32, sensors and cloud dashboards — build real connected devices.', level: 'Advanced', age: 'school', grades: ['10', '11', '12'], icon: <FiWifi size={16} /> },
+  { title: 'Smart Home Kit', desc: 'Automate lights, fans and security with relays and sensors.', level: 'Advanced', age: 'school', grades: ['10', '11', '12'], icon: <FiSun size={16} /> },
+  { title: 'Advanced Innovation Kit', desc: 'Multi-sensor, multi-part builds for projects and competitions.', level: 'Advanced', age: 'school', grades: ['11', '12'], icon: <FiLayers size={16} /> },
+  { title: 'College Robotics & Automation Kit', desc: 'Robotic arms, automation and motor control for engineering projects.', level: 'Advanced', age: 'college', collegeYears: ['1', '2', '3', '4'], icon: <FiTool size={16} /> },
+  { title: 'College IoT & Embedded Kit', desc: 'Firmware, microcontrollers and cloud integration for final-year projects.', level: 'Advanced', age: 'college', collegeYears: ['2', '3', '4'], icon: <FiWifi size={16} /> },
+  { title: 'College Prototype Development Kit', desc: 'Full project development — design, build, test and present prototypes.', level: 'Advanced', age: 'college', collegeYears: ['3', '4'], icon: <FiCpu size={16} /> },
+]
+
+const LEVELS: KitLevel[] = ['Beginner', 'Intermediate', 'Advanced']
+const GRADES = ['6', '7', '8', '9', '10', '11', '12']
+const COLLEGE_YEARS = ['1', '2', '3', '4']
 
 const KIT_CATEGORIES = [
   { icon: <FiZap size={24} />, title: 'Beginner Electronics Kits', desc: 'First steps into circuits, LEDs, switches and sensors — safe and exciting for new learners.' },
@@ -46,6 +83,40 @@ const TECH_SOLUTIONS = [
 ]
 
 export default function Products() {
+  const [filterOpen, setFilterOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [age, setAge] = useState<'school' | 'college' | null>(null)
+  const [grade, setGrade] = useState<string | null>(null)
+  const [collegeYear, setCollegeYear] = useState<string | null>(null)
+  const [level, setLevel] = useState<KitLevel | null>(null)
+
+  const results = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    return KIT_CATALOG.filter((k) => {
+      if (q && !(k.title.toLowerCase().includes(q) || k.desc.toLowerCase().includes(q))) return false
+      if (age && k.age !== age) return false
+      if (grade && !(k.age === 'school' && k.grades?.includes(grade))) return false
+      if (collegeYear && !(k.age === 'college' && k.collegeYears?.includes(collegeYear))) return false
+      if (level && k.level !== level) return false
+      return true
+    })
+  }, [search, age, grade, collegeYear, level])
+
+  const clearFilters = () => {
+    setSearch('')
+    setAge(null)
+    setGrade(null)
+    setCollegeYear(null)
+    setLevel(null)
+  }
+
+  const chip = (active: boolean) =>
+    `rounded-full px-3 py-1.5 text-[11px] font-bold transition-colors ${
+      active ? 'bg-nsYellow text-nsBlack' : 'bg-white/10 text-nsWhite/80 hover:bg-white/20'
+    }`
+
+  const hasFilters = Boolean(search || age || grade || collegeYear || level)
+
   return (
     <Page>
       {/* ============ HERO ============ */}
@@ -96,6 +167,215 @@ export default function Products() {
             ))}
           </div>
         </div>
+
+        {/* Search / filter button — top right of the page */}
+        <button
+          type="button"
+          onClick={() => setFilterOpen((v) => !v)}
+          title="Search & filter kits"
+          aria-label="Search and filter kits"
+          aria-expanded={filterOpen}
+          className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift transition-transform hover:scale-110 sm:right-8 sm:top-8"
+        >
+          <FiSearch size={22} />
+        </button>
+
+        {/* Filter panel */}
+        <AnimatePresence>
+          {filterOpen && (
+            <>
+              <motion.div
+                className="fixed inset-0 z-50 bg-nsBlack/50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setFilterOpen(false)}
+              />
+              <motion.div
+                role="dialog"
+                aria-label="Find your kit"
+                className="fixed right-3 top-20 z-[60] flex max-h-[80vh] w-[min(94vw,420px)] flex-col overflow-hidden rounded-3xl border border-nsYellow/40 bg-nsBlack shadow-lift sm:right-6"
+                initial={{ opacity: 0, y: -14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className="flex items-center justify-between border-b border-nsWhite/10 px-5 py-4">
+                  <p className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsWhite">
+                    <FiSliders className="text-nsYellow" /> Find Your Kit
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setFilterOpen(false)}
+                    aria-label="Close filters"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-nsWhite hover:bg-white/20"
+                  >
+                    <FiX />
+                  </button>
+                </div>
+
+                <div className="space-y-5 overflow-y-auto px-5 py-4">
+                  {/* Kit name search */}
+                  <div>
+                    <label className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-nsYellow">
+                      SEARCH KIT NAME
+                    </label>
+                    <div className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2.5">
+                      <FiSearch className="shrink-0 text-nsYellow" />
+                      <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="e.g. Robotics, Arduino, IoT…"
+                        maxLength={60}
+                        className="w-full bg-transparent text-sm text-nsWhite placeholder:text-nsWhite/40 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Age category */}
+                  <div>
+                    <label className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-nsYellow">
+                      AGE CATEGORY
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAge(age === 'school' ? null : 'school')
+                          setGrade(null)
+                        }}
+                        className={chip(age === 'school')}
+                      >
+                        School (Grade 6–12)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAge(age === 'college' ? null : 'college')
+                          setCollegeYear(null)
+                        }}
+                        className={chip(age === 'college')}
+                      >
+                        College (1st–4th Year)
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Grades */}
+                  <div>
+                    <label className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-nsYellow">
+                      GRADE / CLASS
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {GRADES.map((g) => (
+                        <button
+                          key={g}
+                          type="button"
+                          onClick={() => {
+                            setGrade(grade === g ? null : g)
+                            setAge('school')
+                            setCollegeYear(null)
+                          }}
+                          className={chip(grade === g)}
+                        >
+                          Grade {g}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* College years */}
+                  <div>
+                    <label className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-nsYellow">
+                      COLLEGE YEAR
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {COLLEGE_YEARS.map((y) => (
+                        <button
+                          key={y}
+                          type="button"
+                          onClick={() => {
+                            setCollegeYear(collegeYear === y ? null : y)
+                            setAge('college')
+                            setGrade(null)
+                          }}
+                          className={chip(collegeYear === y)}
+                        >
+                          {['1st', '2nd', '3rd', '4th'][Number(y) - 1]} Year
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Level */}
+                  <div>
+                    <label className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-nsYellow">
+                      SKILL LEVEL
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {LEVELS.map((l) => (
+                        <button
+                          key={l}
+                          type="button"
+                          onClick={() => setLevel(level === l ? null : l)}
+                          className={chip(level === l)}
+                        >
+                          {l}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <p className="text-[11px] font-bold text-nsWhite/60">
+                      {results.length} kit{results.length === 1 ? '' : 's'} found
+                    </p>
+                    {hasFilters && (
+                      <button
+                        type="button"
+                        onClick={clearFilters}
+                        className="text-[11px] font-extrabold text-nsYellow hover:underline"
+                      >
+                        Clear all
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Results */}
+                  <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
+                    {results.length === 0 ? (
+                      <p className="rounded-xl bg-white/5 px-4 py-6 text-center text-xs text-nsWhite/60">
+                        No kits match your filters — try clearing a few options.
+                      </p>
+                    ) : (
+                      results.map((k) => (
+                        <div
+                          key={k.title}
+                          className="flex items-start gap-3 rounded-xl border border-nsWhite/10 bg-white/5 p-3"
+                        >
+                          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-nsYellow text-nsBlack">
+                            {k.icon}
+                          </span>
+                          <div>
+                            <p className="font-heading text-sm font-bold text-nsWhite">{k.title}</p>
+                            <p className="mt-0.5 text-xs leading-relaxed text-nsWhite/60">{k.desc}</p>
+                            <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-nsYellow">
+                              {k.level}
+                              {k.age === 'school' && k.grades
+                                ? ` · Grade ${k.grades.join(', ')}`
+                                : ` · College ${k.collegeYears?.join('-')} Year`}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* ============ PRODUCT SHOWCASE ============ */}
