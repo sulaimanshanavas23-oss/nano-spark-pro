@@ -49,62 +49,6 @@ export function playClick(): void {
   src.stop(t + 0.06)
 }
 
-/** Deep thunder strike: bright crack + rolling low rumble + distant echo. */
-export function playThunder(): void {
-  const ac = getCtx()
-  if (!ac) return
-  const t = ac.currentTime
-
-  // 1) Crisp initial crack
-  const crack = ac.createBufferSource()
-  crack.buffer = noiseBuffer(ac, 0.16)
-  const crackFilter = ac.createBiquadFilter()
-  crackFilter.type = 'bandpass'
-  crackFilter.frequency.value = 1600
-  crackFilter.Q.value = 0.5
-  const crackGain = ac.createGain()
-  crackGain.gain.setValueAtTime(0.55, t)
-  crackGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.15)
-  crack.connect(crackFilter)
-  crackFilter.connect(crackGain)
-  crackGain.connect(ac.destination)
-  crack.start(t)
-  crack.stop(t + 0.16)
-
-  // 2) Rolling low rumble
-  const rumble = ac.createBufferSource()
-  rumble.buffer = noiseBuffer(ac, 2.4)
-  const lp = ac.createBiquadFilter()
-  lp.type = 'lowpass'
-  lp.frequency.setValueAtTime(340, t)
-  lp.frequency.exponentialRampToValueAtTime(90, t + 2.2)
-  const rumbleGain = ac.createGain()
-  rumbleGain.gain.setValueAtTime(0.0001, t)
-  rumbleGain.gain.exponentialRampToValueAtTime(0.85, t + 0.12)
-  rumbleGain.gain.exponentialRampToValueAtTime(0.0001, t + 2.3)
-  rumble.connect(lp)
-  lp.connect(rumbleGain)
-  rumbleGain.connect(ac.destination)
-  rumble.start(t)
-  rumble.stop(t + 2.4)
-
-  // 3) Distant echo of the rumble
-  const echo = ac.createBufferSource()
-  echo.buffer = noiseBuffer(ac, 1.6)
-  const echoLp = ac.createBiquadFilter()
-  echoLp.type = 'lowpass'
-  echoLp.frequency.value = 150
-  const echoGain = ac.createGain()
-  echoGain.gain.setValueAtTime(0.0001, t + 0.9)
-  echoGain.gain.exponentialRampToValueAtTime(0.28, t + 1.1)
-  echoGain.gain.exponentialRampToValueAtTime(0.0001, t + 2.0)
-  echo.connect(echoLp)
-  echoLp.connect(echoGain)
-  echoGain.connect(ac.destination)
-  echo.start(t + 0.9)
-  echo.stop(t + 2.0)
-}
-
 /** Unlock audio on the first user gesture (browser autoplay policies). */
 export function initSounds(): void {
   const unlock = () => getCtx()
