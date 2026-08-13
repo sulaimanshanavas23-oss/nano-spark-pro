@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCpu, FiSend, FiX, FiRotateCcw, FiMessageSquare } from 'react-icons/fi'
-import { playClick } from '../lib/sound'
 
 const WHATSAPP_NUMBER = '918148774546'
 
@@ -160,7 +159,6 @@ export default function ChatBot() {
   }
 
   const reset = () => {
-    playClick()
     setMessages([{ id: 1, from: 'bot', text: 'Hi! I am the Nano Spark AI assistant. I can help you pick the right STEM kit or program — your details go straight to our team on WhatsApp (+91 8148774546).' }])
     idRef.current = 2
     setStepIndex(0)
@@ -175,10 +173,7 @@ export default function ChatBot() {
       {/* FAB — sits just above the WhatsApp button */}
       <motion.button
         type="button"
-        onClick={() => {
-          playClick()
-          setOpen((v) => !v)
-        }}
+        onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close AI assistant' : 'Open AI assistant'}
         title="Nano Spark AI Assistant"
         className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
