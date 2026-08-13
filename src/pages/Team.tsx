@@ -23,7 +23,6 @@ interface TeamMember {
   name: string
   role: string
   roleShort: string
-  dept: string
   email: string
   phone: string
   phoneDisplay: string
@@ -36,7 +35,6 @@ const TEAM: TeamMember[] = [
     name: 'E. Dharshan',
     role: 'Chief Operating Officer (COO)',
     roleShort: 'COO',
-    dept: 'ECE · 3rd Year',
     email: 'dharshane21@gmail.com',
     phone: 'tel:+919840363412',
     phoneDisplay: '+91 98403 63412',
@@ -47,7 +45,6 @@ const TEAM: TeamMember[] = [
     name: 'A. Mohammed Thariq',
     role: 'Chief Marketing Officer (CMO)',
     roleShort: 'CMO',
-    dept: 'ECE · 3rd Year',
     email: 'mohammedthariq26@gmail.com',
     phone: 'tel:+918015808897',
     phoneDisplay: '+91 80158 08897',
@@ -58,7 +55,6 @@ const TEAM: TeamMember[] = [
     name: 'R. S. Tejasri',
     role: 'Chief Information Officer (CIO)',
     roleShort: 'CIO',
-    dept: 'ECE · 3rd Year',
     email: 'tejasrirs2006@gmail.com',
     phone: 'tel:+917305395117',
     phoneDisplay: '+91 73053 95117',
@@ -145,7 +141,6 @@ function TeamFlashcard() {
               </span>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/45 to-transparent px-5 pb-4 pt-14">
                 <p className="font-heading text-2xl font-extrabold text-nsWhite">{member.name}</p>
-                <p className="text-xs font-bold tracking-[0.16em] text-nsYellow">{member.dept}</p>
               </div>
             </div>
 
