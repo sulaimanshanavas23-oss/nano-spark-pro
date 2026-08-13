@@ -28,25 +28,26 @@ function noiseBuffer(ac: AudioContext, seconds: number): AudioBuffer {
   return buf
 }
 
-/** Soft professional tap/click for buttons, links and toggles. */
+/** Soft professional click for buttons, links and toggles. */
 export function playClick(): void {
   const ac = getCtx()
   if (!ac) return
   const t = ac.currentTime
 
   const src = ac.createBufferSource()
-  src.buffer = noiseBuffer(ac, 0.06)
+  src.buffer = noiseBuffer(ac, 0.1)
   const filter = ac.createBiquadFilter()
-  filter.type = 'highpass'
-  filter.frequency.value = 1100
+  filter.type = 'bandpass'
+  filter.frequency.value = 820
+  filter.Q.value = 1.1
   const gain = ac.createGain()
-  gain.gain.setValueAtTime(0.14, t)
-  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.055)
+  gain.gain.setValueAtTime(0.09, t)
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09)
   src.connect(filter)
   filter.connect(gain)
   gain.connect(ac.destination)
   src.start(t)
-  src.stop(t + 0.06)
+  src.stop(t + 0.1)
 }
 
 /** Unlock audio on the first user gesture (browser autoplay policies). */
