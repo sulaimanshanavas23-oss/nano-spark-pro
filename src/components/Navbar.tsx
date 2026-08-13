@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap px-1.5 py-1 font-heading text-[13px] font-extrabold tracking-tight transition-colors xl:text-[14px] 2xl:text-[15px] ${
+  `relative inline-flex items-center whitespace-nowrap px-2.5 py-1.5 font-heading text-[14px] font-extrabold tracking-tight transition-colors sm:text-[15px] xl:text-[16px] 2xl:text-[17px] ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -63,7 +63,7 @@ export default function Navbar() {
           centered when there is room, scrolls from the left when narrow */}
           <div className="hidden min-w-0 flex-1 xl:block">
             <div
-              className="mx-auto flex w-max max-w-full items-center gap-0 overflow-x-auto px-1"
+              className="mx-auto flex w-max max-w-full items-center gap-1 overflow-x-auto px-1"
               style={{ scrollbarWidth: 'none' }}
             >
               {NAV_LINKS.map((link) => (
@@ -74,7 +74,7 @@ export default function Navbar() {
                       {isActive && (
                         <motion.span
                           layoutId="nav-underline"
-                          className="absolute -bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-nsYellow"
+                          className="absolute -bottom-0.5 left-2.5 right-2.5 h-1 rounded-full bg-nsYellow"
                         />
                       )}
                     </>
