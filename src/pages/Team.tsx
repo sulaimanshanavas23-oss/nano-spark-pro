@@ -87,21 +87,6 @@ function TeamFlashcard() {
     return () => window.clearInterval(t)
   }, [paused, index])
 
-  // Keyboard: right arrow / right shift flips forward, left arrow / left shift goes back.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.code === 'ArrowRight' || e.code === 'ShiftRight') {
-        e.preventDefault()
-        paginate(1)
-      } else if (e.code === 'ArrowLeft' || e.code === 'ShiftLeft') {
-        e.preventDefault()
-        paginate(-1)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [paginate])
-
   // Touch swipe support for mobiles/tablets.
   const onTouchStart = (e: React.TouchEvent) => {
     touchX.current = e.touches[0].clientX
@@ -131,7 +116,7 @@ function TeamFlashcard() {
 
   return (
     <div
-      className="mx-auto max-w-2xl"
+      className="mx-auto max-w-xl"
       style={{ perspective: 1400 }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -153,12 +138,12 @@ function TeamFlashcard() {
             className="relative overflow-hidden rounded-3xl border-4 border-nsYellow bg-nsWhite shadow-lift"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* Photo */}
+            {/* Photo — full portrait image, no zooming/cropping */}
             <div className="relative overflow-hidden">
               <img
                 src={member.photo}
                 alt={`${member.name} — ${member.role}`}
-                className="aspect-[4/3] w-full object-cover object-top sm:aspect-[16/10]"
+                className="aspect-[4/5] w-full object-cover object-top"
                 draggable={false}
               />
               <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-3.5 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft">
@@ -255,10 +240,7 @@ function TeamFlashcard() {
         </button>
       </div>
       <p className="mt-3 text-center text-xs font-semibold text-nsBlack/50">
-        Use <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">←</kbd>{' '}
-        <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">→</kbd> or{' '}
-        <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">Shift Left / Right</kbd>{' '}
-        to flip cards · auto-flips every 10 seconds
+        Auto-flips every 10 seconds · Swipe or use the buttons to flip
       </p>
     </div>
   )
