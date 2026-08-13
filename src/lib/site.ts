@@ -146,4 +146,44 @@ export const TESTIMONIALS = [
     who: 'Diksha',
     role: 'Student · AI Session',
   },
+  {
+    text: 'The STEM lab setup was professional and the teacher training made it easy for our staff to continue the sessions every week.',
+    who: 'Ms. Lakshmi',
+    role: 'Teacher · School STEM Lab',
+  },
+  {
+    text: 'Our students could not stop talking about the robots they built. The hands-on approach is exactly what classrooms need.',
+    who: 'Mr. Ramesh',
+    role: 'Teacher · Robotics Workshop',
+  },
+  {
+    text: 'Nano Spark explained everything clearly and every child finished the session holding a real working project.',
+    who: 'Ms. Fathima',
+    role: 'Teacher · Electronics Workshop',
+  },
+  {
+    text: 'I wrote my first working code and saw it light up an LED — I felt like a real programmer today!',
+    who: 'Abdul',
+    role: 'Student · Coding Workshop',
+  },
+  {
+    text: 'Soldering was my favourite part. We made a circuit that actually worked by the end of the workshop.',
+    who: 'Kavya',
+    role: 'Student · Electronics Workshop',
+  },
+  {
+    text: 'Nano Spark workshops are different — you build things, not just listen. I made an obstacle-avoider robot!',
+    who: 'Tharun',
+    role: 'Student · Arduino Workshop',
+  },
+  {
+    text: 'My daughter came home explaining how machines learn. She has never been this excited about technology.',
+    who: 'Divya',
+    role: 'Parent · AI Session',
+  },
+  {
+    text: 'The kit arrived with a video guide and my son built his first project over the weekend, completely on his own.',
+    who: 'Mohan',
+    role: 'Parent · Arduino Kit',
+  },
 ]
