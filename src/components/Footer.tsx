@@ -21,6 +21,7 @@ const ICONS: Record<string, IconType> = {
 
 const PROGRAM_LINKS = [
   { label: 'About Us', to: '/about' },
+  { label: 'Team', to: '/team' },
   { label: 'STEM Kits', to: '/products' },
   { label: 'School STEM Labs', to: '/services' },
   { label: 'Robotics Workshops', to: '/workshops' },

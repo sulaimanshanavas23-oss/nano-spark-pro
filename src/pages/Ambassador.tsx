@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   FiAward,
+  FiArrowRight,
   FiCheck,
   FiMic,
   FiSend,
@@ -15,7 +16,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
-import { SITE } from '../lib/site'
+import { FOUNDER, SITE, WHATSAPP_LINK } from '../lib/site'
 import { sanitizeText, validateEmail, validateRequired } from '../lib/validate'
 
 // Sends ambassador applications straight to nanospark46@gmail.com via FormSubmit.
@@ -138,6 +139,118 @@ export default function Ambassador() {
               beginners and grow with the Nano Spark community.
             </p>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ============ MEET THE FOUNDER ============ */}
+      <section className="relative overflow-hidden bg-nsGray-light py-20">
+        <CircuitBackground variant="light" className="opacity-50" />
+        <div className="relative mx-auto max-w-6xl px-6 sm:px-8">
+          <Reveal>
+            <span className="section-heading-bullet justify-center">
+              <span className="text-nsYellow">&#9654;</span> MEET THE FOUNDER
+            </span>
+            <h2 className="mt-3 text-center font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
+              <LetterReveal
+                texts={[{ text: 'Meet the' }, { text: 'Founder', color: 'text-nsYellow' }]}
+              />
+            </h2>
+          </Reveal>
+
+          <div className="mt-14 grid items-start gap-12 lg:grid-cols-5">
+            {/* Founder image — LEFT side */}
+            <Reveal delay={0.1} className="lg:col-span-2">
+              <div className="relative">
+                <div className="circuit-bg-light absolute -inset-4 rounded-3xl bg-nsYellow/10" />
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="relative overflow-hidden rounded-3xl border-4 border-nsYellow bg-nsGray-light shadow-lift"
+                >
+                  <img
+                    src={SITE.founderPhoto}
+                    alt={FOUNDER.name}
+                    className="aspect-[4/5] w-full object-cover object-top"
+                    draggable={false}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/50 to-transparent px-5 pb-5 pt-16 text-center">
+                    <p className="font-heading text-2xl font-extrabold text-nsYellow">{FOUNDER.name}</p>
+                    <p className="text-xs font-bold tracking-[0.18em] text-nsWhite/80">{FOUNDER.role}</p>
+                  </div>
+                </motion.div>
+              </div>
+              <div className="mt-6 grid gap-3">
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-yellow w-full justify-center"
+                >
+                  Talk to the Founder <FiArrowRight />
+                </a>
+                <Link to="/book" className="btn-outline w-full justify-center">
+                  Book a Session
+                </Link>
+              </div>
+            </Reveal>
+
+            {/* Founder details — RIGHT side */}
+            <div className="lg:col-span-3">
+              <Reveal delay={0.15}>
+                <h3 className="font-heading text-3xl font-extrabold text-nsBlack sm:text-4xl">
+                  {FOUNDER.name}
+                </h3>
+                <p className="mt-1 font-heading text-sm font-bold tracking-[0.14em] text-nsYellow">
+                  {FOUNDER.role}
+                </p>
+              </Reveal>
+              <div className="mt-5 space-y-4">
+                {FOUNDER.intro.slice(0, 2).map((para, i) => (
+                  <Reveal key={i} delay={0.2 + i * 0.08}>
+                    <p className="leading-relaxed text-nsBlack/75">{para}</p>
+                  </Reveal>
+                ))}
+              </div>
+
+              <Reveal delay={0.3}>
+                <div className="mt-8 rounded-2xl border border-nsBlack/10 bg-nsWhite p-6">
+                  <p className="font-heading font-extrabold text-nsBlack">His Focus</p>
+                  <div className="mt-4 flex flex-wrap items-center gap-2 font-heading font-extrabold text-nsBlack">
+                    {FOUNDER.approach.map((step, i) => (
+                      <span key={step} className="flex items-center gap-2">
+                        <motion.span
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          viewport={{ once: true, margin: '-40px' }}
+                          transition={{ type: 'spring', stiffness: 280, damping: 17, delay: i * 0.1 }}
+                          className="rounded-lg bg-nsYellow px-3 py-1.5 text-sm"
+                        >
+                          {step}
+                        </motion.span>
+                        {i < FOUNDER.approach.length - 1 && (
+                          <motion.span
+                            animate={{ x: [0, 4, 0] }}
+                            transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                            className="text-nsYellow"
+                          >
+                            <FiArrowRight size={16} />
+                          </motion.span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.35}>
+                <p className="mt-6 text-sm leading-relaxed text-nsBlack/65">
+                  As the founder of Nano Spark, Shanavas personally mentors ambassadors, trains them
+                  with the kits and programs, and supports them as they run sessions in their
+                  schools — guiding every ambassador on their journey from curious student to
+                  young leader.
+                </p>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 

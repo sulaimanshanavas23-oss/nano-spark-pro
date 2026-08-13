@@ -10,6 +10,7 @@ import Preloader, { LOADER_DURATION_MS } from './components/Preloader'
 import DemoModal from './components/DemoModal'
 import Home from './pages/Home'
 import About from './pages/About'
+import Team from './pages/Team'
 import Products from './pages/Products'
 import Services from './pages/Services'
 import Workshops from './pages/Workshops'
@@ -29,6 +30,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/team" element={<Team />} />
         <Route path="/products" element={<Products />} />
         <Route path="/services" element={<Services />} />
         <Route path="/workshops" element={<Workshops />} />

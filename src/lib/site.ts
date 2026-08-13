@@ -1,6 +1,7 @@
 export const NAV_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
+  { label: 'Team', to: '/team' },
   { label: 'Services', to: '/services' },
   { label: 'Products', to: '/products' },
   { label: 'Workshops', to: '/workshops' },

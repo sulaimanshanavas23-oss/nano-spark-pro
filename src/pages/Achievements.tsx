@@ -47,12 +47,12 @@ function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: numbe
       <motion.div
         ref={ref}
         whileHover={{ y: -6 }}
-        className="rounded-2xl bg-nsWhite p-6 text-center shadow-soft"
+        className="min-w-0 rounded-2xl bg-nsWhite p-4 text-center shadow-soft sm:p-6"
       >
-        <p className="font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
+        <p className="whitespace-nowrap font-heading text-3xl font-extrabold text-nsBlack min-[420px]:text-4xl sm:text-5xl">
           {stat.value != null ? display + stat.suffix : '—'}
         </p>
-        <p className="mt-2 text-sm font-bold text-nsBlack/60">{stat.label}</p>
+        <p className="mt-2 text-xs font-bold leading-snug text-nsBlack/60 sm:text-sm">{stat.label}</p>
       </motion.div>
     </Reveal>
   )
@@ -94,7 +94,7 @@ export default function Achievements() {
             highlight="real time"
             subtitle="We only publish real, verified data. Remaining counters will tick up as numbers are confirmed."
           />
-          <div className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {STATS.map((stat, i) => (
               <StatBlock key={stat.label} stat={stat} index={i} />
             ))}
@@ -112,52 +112,56 @@ export default function Achievements() {
           />
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             <Reveal>
-              <div className="flex h-full flex-col gap-4 rounded-3xl border border-nsBlack/10 bg-nsGray-light p-8">
+              <div className="flex h-full flex-col rounded-3xl border border-nsBlack/10 bg-nsGray-light p-6 sm:p-8">
                 <div className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
-                    <FiShield size={26} />
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack sm:h-14 sm:w-14">
+                    <FiShield size={24} />
                   </span>
-                  <div>
-                    <h3 className="font-heading text-xl font-extrabold text-nsBlack">MSME Registered</h3>
-                    <p className="text-sm font-semibold text-nsYellow">Udyam registered enterprise</p>
+                  <div className="min-w-0">
+                    <h3 className="break-words font-heading text-lg font-extrabold text-nsBlack sm:text-xl">MSME Registered</h3>
+                    <p className="text-xs font-semibold text-nsYellow sm:text-sm">Udyam registered enterprise</p>
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed text-nsBlack/70">
+                <p className="mt-4 text-sm leading-relaxed text-nsBlack/70">
                   Nano Spark is registered as a Micro, Small &amp; Medium Enterprise with the
                   Government of India's Udyam portal.
                 </p>
-                <p className="text-sm font-bold text-nsBlack/60">{SITE.msme.number}</p>
+                <p className="mt-3 text-xs font-bold text-nsBlack/60 sm:text-sm">{SITE.msme.number}</p>
                 {/* TODO: drop MSME certificate as public/images/msme-certificate.jpg */}
-                <SmartImage
-                  src="/images/msme-certificate.jpg"
-                  alt="MSME (Udyam) Registration Certificate"
-                  className="aspect-[4/3] w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
-                />
+                <div className="mt-5 flex justify-center">
+                  <SmartImage
+                    src="/images/msme-certificate.jpg"
+                    alt="MSME (Udyam) Registration Certificate"
+                    className="aspect-[4/3] w-full max-w-xs rounded-xl border-2 border-nsBlack/10 bg-nsWhite object-contain shadow-soft sm:max-w-sm"
+                  />
+                </div>
               </div>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <div className="flex h-full flex-col gap-4 rounded-3xl border border-nsBlack/10 bg-nsGray-light p-8">
+              <div className="flex h-full flex-col rounded-3xl border border-nsBlack/10 bg-nsGray-light p-6 sm:p-8">
                 <div className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-nsBlack text-nsYellow">
-                    <FiAward size={26} />
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsBlack text-nsYellow sm:h-14 sm:w-14">
+                    <FiAward size={24} />
                   </span>
-                  <div>
-                    <h3 className="font-heading text-xl font-extrabold text-nsBlack">StartupTN Recognized</h3>
-                    <p className="text-sm font-semibold text-nsYellow">Recognized technology startup</p>
+                  <div className="min-w-0">
+                    <h3 className="break-words font-heading text-lg font-extrabold text-nsBlack sm:text-xl">StartupTN Recognized</h3>
+                    <p className="text-xs font-semibold text-nsYellow sm:text-sm">Recognized technology startup</p>
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed text-nsBlack/70">
+                <p className="mt-4 text-sm leading-relaxed text-nsBlack/70">
                   Nano Spark is recognized by StartupTN — the Government of Tamil Nadu's startup
                   initiative for education technology and STEM solutions.
                 </p>
-                <p className="text-sm font-bold text-nsBlack/60">StartupTN Registration — (to be updated)</p>
+                <p className="mt-3 text-xs font-bold text-nsBlack/60 sm:text-sm">StartupTN Registration — (to be updated)</p>
                 {/* TODO: drop StartupTN letter as public/images/startup-tn.jpg */}
-                <SmartImage
-                  src="/images/startup-tn.jpg"
-                  alt="StartupTN Recognition"
-                  className="aspect-[4/3] w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
-                />
+                <div className="mt-5 flex justify-center">
+                  <SmartImage
+                    src="/images/startup-tn.jpg"
+                    alt="StartupTN Recognition"
+                    className="aspect-[4/3] w-full max-w-xs rounded-xl border-2 border-nsBlack/10 bg-nsWhite object-contain shadow-soft sm:max-w-sm"
+                  />
+                </div>
               </div>
             </Reveal>
           </div>
@@ -203,7 +207,7 @@ export default function Achievements() {
             highlight="wins"
             subtitle="Drop achievement photos into public/images/achievements-1.jpg … achievements-3.jpg"
           />
-          <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
             {[
               { src: '/images/achievements-1.jpg', label: 'Workshop Milestones' },
               { src: '/images/achievements-2.jpg', label: 'Ceremonies & Awards' },
