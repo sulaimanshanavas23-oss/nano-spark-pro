@@ -112,13 +112,13 @@ export default function About() {
                   </div>
                 </motion.div>
                 <motion.span
-                  className="absolute left-1/2 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft"
+                  className="absolute left-1/2 top-3 whitespace-nowrap font-heading text-[11px] font-extrabold tracking-widest text-nsBlack sm:text-sm"
                   style={{ x: '-50%' }}
                   initial={{ rotate: -4 }}
                   animate={{ rotate: [-4, -8, -4] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  {SITE.tagline}
+                  TECHNOLOGY - INNOVATIONS - SOLUTIONS
                 </motion.span>
               </div>
               <div className="mt-6 grid gap-3">

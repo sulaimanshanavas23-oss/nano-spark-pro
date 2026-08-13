@@ -8,6 +8,7 @@ import ScrollToTopButton from './components/ScrollToTopButton'
 import ScrollToTopOnRoute from './components/ScrollToTopOnRoute'
 import Preloader, { LOADER_DURATION_MS } from './components/Preloader'
 import DemoModal from './components/DemoModal'
+import { bindClickSounds, initSounds } from './lib/sound'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
@@ -73,6 +74,11 @@ function LoaderOverlay() {
 }
 
 export default function App() {
+  useEffect(() => {
+    initSounds()
+    bindClickSounds()
+  }, [])
+
   return (
     <BrowserRouter>
       <ScrollToTopOnRoute />

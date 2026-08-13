@@ -118,10 +118,10 @@ export default function Contact() {
           <div className="space-y-6 order-2 lg:order-none">
             <Reveal>
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:text-left">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="shrink-0 overflow-hidden rounded-2xl border-4 border-nsYellow bg-white shadow-lift"
+                    className="mx-auto shrink-0 overflow-hidden rounded-2xl border-4 border-nsYellow bg-white shadow-lift sm:mx-0"
                   >
                     <img
                       src={SITE.founderPhoto}
@@ -129,7 +129,7 @@ export default function Contact() {
                       className="h-36 w-36 object-cover object-top sm:h-44 sm:w-44"
                     />
                   </motion.div>
-                  <div>
+                  <div className="text-center sm:text-left">
                     <p className="text-xs font-extrabold tracking-[0.25em] text-nsYellow">
                       {FOUNDER.heading}
                     </p>
@@ -137,10 +137,10 @@ export default function Contact() {
                       {FOUNDER.name}
                     </h2>
                     <p className="mt-0.5 text-sm font-bold text-nsBlack/60">{FOUNDER.role}</p>
-                    <p className="mt-1.5 flex items-center gap-1.5 text-sm text-nsBlack/60">
+                    <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-nsBlack/60 sm:justify-start">
                       <FiMapPin /> {FOUNDER.location}, India
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-nsGray-light px-3 py-1 text-[11px] font-bold text-nsBlack/70">
+                    <span className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-nsGray-light px-3 py-1 text-[11px] font-bold text-nsBlack/70">
                       <FiShield className="text-nsYellow" /> MSME Registered · StartupTN Recognized
                     </span>
                   </div>
