@@ -17,7 +17,7 @@ import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
 
 // Each flashcard stays on screen for this long before the next one appears.
-const FLASH_DURATION_MS = 10_000
+const FLASH_DURATION_MS = 5_000
 
 interface TeamMember {
   name: string
@@ -116,7 +116,7 @@ function TeamFlashcard() {
 
   return (
     <div
-      className="mx-auto max-w-xl"
+      className="mx-auto w-full max-w-[24rem]"
       style={{ perspective: 1400 }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -189,7 +189,7 @@ function TeamFlashcard() {
               </div>
             </div>
 
-            {/* 10-second countdown bar */}
+            {/* 5-second countdown bar */}
             <div className="absolute inset-x-0 bottom-0 h-1.5 bg-nsBlack/10">
               <div
                 key={`progress-${index}`}
@@ -240,7 +240,7 @@ function TeamFlashcard() {
         </button>
       </div>
       <p className="mt-3 text-center text-xs font-semibold text-nsBlack/50">
-        Auto-flips every 10 seconds · Swipe or use the buttons to flip
+        Swipe or use the buttons to flip
       </p>
     </div>
   )
