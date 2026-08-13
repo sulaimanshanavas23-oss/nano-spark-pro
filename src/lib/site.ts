@@ -50,6 +50,13 @@ export const SITE = {
 export const WHATSAPP_LINK = SITE.whatsapp
 
 /* ------------------------------------------------------------------ */
+/*  Clients (logo + names floating on the Home page)                   */
+/* ------------------------------------------------------------------ */
+
+export const CLIENT_LOGO = '/images/client-logo.jpg'
+export const CLIENT_NAMES = ['The New College']
+
+/* ------------------------------------------------------------------ */
 /*  Founder / About content                                            */
 /* ------------------------------------------------------------------ */
 

@@ -21,7 +21,11 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
+import BrochureFlipbook from '../components/BrochureFlipbook'
+import { downloadBrochurePdf } from '../lib/brochure'
 import { Reveal } from '../components/Reveal'
+import { useState } from 'react'
+import { FiDownload } from 'react-icons/fi'
 
 const LAB_SERVICES = [
   'Lab equipment & kits',
@@ -60,6 +64,8 @@ const FLOW = [
 ]
 
 export default function Services() {
+  const [pdfState, setPdfState] = useState<'idle' | 'loading' | 'done'>('idle')
+
   return (
     <Page>
       {/* ============ HERO ============ */}
@@ -166,6 +172,36 @@ export default function Services() {
                 Coding · Robotics · 3D · IoT
               </motion.span>
             </motion.div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ NANO SPARK BROCHURE ============ */}
+      <section className="bg-nsGray-light py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Nano Spark Brochure"
+            title="Flip through our"
+            highlight="brochure"
+            subtitle="Turn the pages to explore Nano Spark — then grab the full brochure as a printable PDF."
+          />
+          <div className="mt-12">
+            <Reveal>
+              <BrochureFlipbook />
+            </Reveal>
+          </div>
+          <Reveal delay={0.2}>
+            <div className="mt-8 flex justify-center">
+              <button
+                type="button"
+                onClick={() => downloadBrochurePdf(setPdfState)}
+                disabled={pdfState === 'loading'}
+                className="btn-yellow"
+              >
+                <FiDownload size={18} />
+                {pdfState === 'loading' ? 'Preparing PDF…' : 'Download Brochure as PDF'}
+              </button>
+            </div>
           </Reveal>
         </div>
       </section>

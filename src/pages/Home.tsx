@@ -15,6 +15,7 @@ import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
+import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
@@ -157,6 +158,20 @@ export default function Home() {
           />
           <div className="mt-8">
             <TestimonialMarquee />
+          </div>
+        </div>
+      </section>
+
+      {/* ============ OUR CLIENTS ============ */}
+      <section className="bg-nsWhite py-10">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Our Clients"
+            title="Trusted by"
+            highlight="schools & colleges"
+          />
+          <div className="mt-8">
+            <ClientMarquee />
           </div>
         </div>
       </section>

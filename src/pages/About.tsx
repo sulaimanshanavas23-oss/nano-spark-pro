@@ -20,6 +20,7 @@ import { Reveal } from '../components/Reveal'
 import { WordReveal } from '../components/WordReveal'
 import { LetterReveal } from '../components/LetterReveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
+import TechStackMarquee from '../components/TechStackMarquee'
 import { WHATSAPP_LINK, FOUNDER, SITE } from '../lib/site'
 
 const WHAT_WE_DO = [
@@ -315,6 +316,21 @@ export default function About() {
               </Link>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ============ TECH STACKS WE USE ============ */}
+      <section className="bg-nsGray-light py-16">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Technology Stacks"
+            title="The tech we"
+            highlight="work with"
+            subtitle="Every stack Nano Spark uses to build kits, labs and student projects — floating through like the feedback wall."
+          />
+          <div className="mt-8">
+            <TechStackMarquee />
+          </div>
         </div>
       </section>
 

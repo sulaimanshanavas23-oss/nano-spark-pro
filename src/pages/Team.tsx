@@ -69,7 +69,6 @@ const TEAM: TeamMember[] = [
 
 function TeamFlashcard() {
   const [[index, direction], setPage] = useState<[number, number]>([0, 0])
-  const [paused, setPaused] = useState(false)
   const touchX = useRef<number | null>(null)
   const member = TEAM[index]
 
@@ -77,15 +76,14 @@ function TeamFlashcard() {
     setPage(([i]) => [(i + dir + TEAM.length) % TEAM.length, dir])
   }, [])
 
-  // Auto-advance: every 10 seconds a new flashcard appears. Restarts whenever
-  // the user manually flips (index changes) and pauses on hover/focus.
+  // Auto-advance: every 5 seconds a new flashcard appears on EVERY device.
+  // Restarts whenever the user manually flips (index changes).
   useEffect(() => {
-    if (paused) return
     const t = window.setInterval(() => {
       setPage(([i]) => [(i + 1) % TEAM.length, 1])
     }, FLASH_DURATION_MS)
     return () => window.clearInterval(t)
-  }, [paused, index])
+  }, [index])
 
   // Touch swipe support for mobiles/tablets.
   const onTouchStart = (e: React.TouchEvent) => {
@@ -118,10 +116,6 @@ function TeamFlashcard() {
     <div
       className="mx-auto w-full max-w-[24rem]"
       style={{ perspective: 1400 }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -194,10 +188,7 @@ function TeamFlashcard() {
               <div
                 key={`progress-${index}`}
                 className="h-full rounded-full bg-nsYellow"
-                style={{
-                  animation: `flash-progress ${FLASH_DURATION_MS}ms linear forwards`,
-                  animationPlayState: paused ? 'paused' : 'running',
-                }}
+                style={{ animation: `flash-progress ${FLASH_DURATION_MS}ms linear forwards` }}
               />
             </div>
           </motion.article>
