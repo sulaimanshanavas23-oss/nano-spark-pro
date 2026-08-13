@@ -151,7 +151,7 @@ export default function ChatBot() {
         }}
         aria-label={open ? 'Close AI assistant' : 'Open AI assistant'}
         title="Nano Spark AI Assistant"
-        className="fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
+        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         whileHover={{ scale: 1.1 }}
@@ -159,14 +159,14 @@ export default function ChatBot() {
         transition={{ delay: 0.7 }}
       >
         <span className="absolute inset-0 rounded-full border-2 border-nsYellow/60" />
-        {open ? <FiX size={26} className="relative" /> : <FiCpu size={26} className="relative" />}
+        {open ? <FiX size={24} className="relative" /> : <FiCpu size={24} className="relative" />}
       </motion.button>
 
       {/* Chat window */}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed bottom-40 right-3 z-50 flex h-[520px] max-h-[70vh] w-[min(94vw,340px)] flex-col overflow-hidden rounded-3xl border border-nsYellow/40 bg-nsBlack shadow-lift sm:right-5"
+            className="fixed bottom-48 right-3 z-50 flex h-[520px] max-h-[calc(100vh-13rem)] w-[min(94vw,340px)] flex-col overflow-hidden rounded-3xl border border-nsYellow/40 bg-nsBlack shadow-lift sm:right-5"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}

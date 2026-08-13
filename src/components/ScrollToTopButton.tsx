@@ -22,7 +22,7 @@ export default function ScrollToTopButton() {
           onClick={scrollTop}
           aria-label="Scroll back to top"
           title="Back to top"
-          className="fixed bottom-44 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsYellow text-nsBlack shadow-lift"
+          className="fixed bottom-[8.5rem] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsYellow text-nsBlack shadow-lift"
           initial={{ opacity: 0, y: 30, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 30, scale: 0.8 }}
