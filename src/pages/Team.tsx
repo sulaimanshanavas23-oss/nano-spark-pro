@@ -1,11 +1,23 @@
-import { motion } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiLinkedin, FiMail, FiPhone, FiUsers } from 'react-icons/fi'
+import {
+  FiArrowRight,
+  FiChevronLeft,
+  FiChevronRight,
+  FiLinkedin,
+  FiMail,
+  FiPhone,
+  FiUsers,
+} from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
+
+// Each flashcard stays on screen for this long before the next one appears.
+const FLASH_DURATION_MS = 10_000
 
 interface TeamMember {
   name: string
@@ -55,6 +67,203 @@ const TEAM: TeamMember[] = [
   },
 ]
 
+function TeamFlashcard() {
+  const [[index, direction], setPage] = useState<[number, number]>([0, 0])
+  const [paused, setPaused] = useState(false)
+  const touchX = useRef<number | null>(null)
+  const member = TEAM[index]
+
+  const paginate = useCallback((dir: number) => {
+    setPage(([i]) => [(i + dir + TEAM.length) % TEAM.length, dir])
+  }, [])
+
+  // Auto-advance: every 10 seconds a new flashcard appears. Restarts whenever
+  // the user manually flips (index changes) and pauses on hover/focus.
+  useEffect(() => {
+    if (paused) return
+    const t = window.setInterval(() => {
+      setPage(([i]) => [(i + 1) % TEAM.length, 1])
+    }, FLASH_DURATION_MS)
+    return () => window.clearInterval(t)
+  }, [paused, index])
+
+  // Keyboard: right arrow / right shift flips forward, left arrow / left shift goes back.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === 'ArrowRight' || e.code === 'ShiftRight') {
+        e.preventDefault()
+        paginate(1)
+      } else if (e.code === 'ArrowLeft' || e.code === 'ShiftLeft') {
+        e.preventDefault()
+        paginate(-1)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [paginate])
+
+  // Touch swipe support for mobiles/tablets.
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return
+    const dx = e.changedTouches[0].clientX - touchX.current
+    if (Math.abs(dx) > 48) paginate(dx > 0 ? -1 : 1)
+    touchX.current = null
+  }
+
+  const cardVariants = {
+    enter: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? 90 : -90,
+      rotateY: dir > 0 ? 16 : -16,
+      scale: 0.94,
+    }),
+    center: { opacity: 1, x: 0, rotateY: 0, scale: 1 },
+    exit: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? -90 : 90,
+      rotateY: dir > 0 ? -16 : 16,
+      scale: 0.94,
+    }),
+  }
+
+  return (
+    <div
+      className="mx-auto max-w-2xl"
+      style={{ perspective: 1400 }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      <div className="relative">
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
+          <motion.article
+            key={index}
+            custom={direction}
+            variants={cardVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+            className="relative overflow-hidden rounded-3xl border-4 border-nsYellow bg-nsWhite shadow-lift"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Photo */}
+            <div className="relative overflow-hidden">
+              <img
+                src={member.photo}
+                alt={`${member.name} — ${member.role}`}
+                className="aspect-[4/3] w-full object-cover object-top sm:aspect-[16/10]"
+                draggable={false}
+              />
+              <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-3.5 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft">
+                {member.roleShort}
+              </span>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/45 to-transparent px-5 pb-4 pt-14">
+                <p className="font-heading text-2xl font-extrabold text-nsWhite">{member.name}</p>
+                <p className="text-xs font-bold tracking-[0.16em] text-nsYellow">{member.dept}</p>
+              </div>
+            </div>
+
+            {/* Details */}
+            <div className="flex flex-col gap-4 p-5 sm:p-6">
+              <h3 className="font-heading text-xl font-extrabold text-nsBlack">{member.role}</h3>
+              <div className="grid gap-2.5 text-sm sm:grid-cols-2">
+                <a
+                  href={`mailto:${member.email}`}
+                  className="flex items-center gap-2.5 rounded-xl border border-nsBlack/10 bg-nsGray-light px-3 py-2.5 text-nsBlack/75 transition-colors hover:border-nsBlack"
+                >
+                  <FiMail className="shrink-0 text-nsYellow" size={16} />
+                  <span className="truncate">{member.email}</span>
+                </a>
+                <a
+                  href={member.phone}
+                  className="flex items-center gap-2.5 rounded-xl border border-nsBlack/10 bg-nsGray-light px-3 py-2.5 text-nsBlack/75 transition-colors hover:border-nsBlack"
+                >
+                  <FiPhone className="shrink-0 text-nsYellow" size={16} />
+                  <span>{member.phoneDisplay}</span>
+                </a>
+              </div>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="btn-yellow justify-center !px-2 !py-2.5 text-sm"
+                >
+                  <FiLinkedin size={16} /> LinkedIn
+                </a>
+                <a href={`mailto:${member.email}`} className="btn-outline justify-center !px-2 !py-2.5 text-sm">
+                  <FiMail size={16} /> Email
+                </a>
+              </div>
+            </div>
+
+            {/* 10-second countdown bar */}
+            <div className="absolute inset-x-0 bottom-0 h-1.5 bg-nsBlack/10">
+              <div
+                key={`progress-${index}`}
+                className="h-full rounded-full bg-nsYellow"
+                style={{
+                  animation: `flash-progress ${FLASH_DURATION_MS}ms linear forwards`,
+                  animationPlayState: paused ? 'paused' : 'running',
+                }}
+              />
+            </div>
+          </motion.article>
+        </AnimatePresence>
+      </div>
+
+      {/* Controls */}
+      <div className="mt-6 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={() => paginate(-1)}
+          aria-label="Previous team member"
+          className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsBlack bg-nsWhite text-nsBlack shadow-soft transition-all hover:bg-nsBlack hover:text-nsYellow active:scale-95"
+        >
+          <FiChevronLeft size={22} />
+        </button>
+        <div className="flex items-center gap-2">
+          {TEAM.map((m, i) => (
+            <button
+              key={m.name}
+              type="button"
+              aria-label={`Show ${m.name}`}
+              onClick={() => setPage([i, i > index ? 1 : -1])}
+              className={`h-2.5 rounded-full transition-all ${
+                i === index ? 'w-7 bg-nsYellow' : 'w-2.5 bg-nsBlack/25 hover:bg-nsBlack/50'
+              }`}
+            />
+          ))}
+        </div>
+        <span className="font-heading text-sm font-extrabold tracking-widest text-nsBlack/60">
+          {String(index + 1).padStart(2, '0')} / {String(TEAM.length).padStart(2, '0')}
+        </span>
+        <button
+          type="button"
+          onClick={() => paginate(1)}
+          aria-label="Next team member"
+          className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsBlack bg-nsWhite text-nsBlack shadow-soft transition-all hover:bg-nsBlack hover:text-nsYellow active:scale-95"
+        >
+          <FiChevronRight size={22} />
+        </button>
+      </div>
+      <p className="mt-3 text-center text-xs font-semibold text-nsBlack/50">
+        Use <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">←</kbd>{' '}
+        <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">→</kbd> or{' '}
+        <kbd className="rounded border border-nsBlack/20 bg-nsGray-light px-1.5 py-0.5">Shift Left / Right</kbd>{' '}
+        to flip cards · auto-flips every 10 seconds
+      </p>
+    </div>
+  )
+}
+
 export default function Team() {
   return (
     <Page>
@@ -79,76 +288,20 @@ export default function Team() {
         </div>
       </section>
 
-      {/* ============ CORE TEAM ============ */}
+      {/* ============ CORE TEAM — FLASHCARD CAROUSEL ============ */}
       <section className="relative overflow-hidden bg-nsWhite py-20">
         <CircuitBackground variant="light" className="opacity-50" />
         <div className="relative mx-auto max-w-6xl px-6 sm:px-8">
           <SectionHeading
             eyebrow="Core Team"
             title="Meet the team"
-            highlight="behind the spark"
+            highlight="one flashcard at a time"
             subtitle="A young leadership team that runs Nano Spark — from daily operations to community growth."
           />
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {TEAM.map((member, i) => (
-              <Reveal key={member.name} delay={i * 0.12}>
-                <motion.article
-                  whileHover={{ y: -8 }}
-                  className="flex h-full flex-col overflow-hidden rounded-3xl border border-nsBlack/10 bg-nsWhite shadow-soft"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={member.photo}
-                      alt={`${member.name} — ${member.role}`}
-                      className="aspect-[4/5] w-full object-cover object-top"
-                      draggable={false}
-                    />
-                    <span className="absolute right-3 top-3 rounded-full bg-nsYellow px-3 py-1 font-heading text-xs font-extrabold text-nsBlack shadow-soft">
-                      {member.roleShort}
-                    </span>
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-5 pb-4 pt-14">
-                      <p className="font-heading text-xl font-extrabold text-nsWhite">{member.name}</p>
-                      <p className="text-[11px] font-bold tracking-[0.16em] text-nsYellow">{member.dept}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col gap-4 p-5">
-                    <h3 className="font-heading text-lg font-extrabold text-nsBlack">{member.role}</h3>
-                    <div className="grid gap-2 text-sm">
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="flex items-center gap-2.5 truncate text-nsBlack/70 transition-colors hover:text-nsBlack"
-                      >
-                        <FiMail className="shrink-0 text-nsYellow" size={16} />
-                        <span className="truncate">{member.email}</span>
-                      </a>
-                      <a
-                        href={member.phone}
-                        className="flex items-center gap-2.5 text-nsBlack/70 transition-colors hover:text-nsBlack"
-                      >
-                        <FiPhone className="shrink-0 text-nsYellow" size={16} />
-                        <span>{member.phoneDisplay}</span>
-                      </a>
-                    </div>
-                    <div className="mt-auto flex gap-2.5">
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="btn-yellow flex-1 justify-center !px-2 !py-2.5 text-sm"
-                      >
-                        <FiLinkedin size={16} /> LinkedIn
-                      </a>
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="btn-outline flex-1 justify-center !px-2 !py-2.5 text-sm"
-                      >
-                        <FiMail size={16} /> Email
-                      </a>
-                    </div>
-                  </div>
-                </motion.article>
-              </Reveal>
-            ))}
+          <div className="mt-14">
+            <Reveal>
+              <TeamFlashcard />
+            </Reveal>
           </div>
         </div>
       </section>
