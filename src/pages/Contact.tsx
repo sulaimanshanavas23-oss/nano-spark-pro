@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { IconType } from 'react-icons'
 import {
@@ -39,6 +39,16 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
   const [error, setError] = useState('')
   const [form, setForm] = useState({ name: '', email: '', org: '', message: '' })
+  const formRef = useRef<HTMLDivElement>(null)
+
+  // On mobile, jump straight to the message box — details come after. PC stays as is.
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return
+    const t = setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 450)
+    return () => clearTimeout(t)
+  }, [])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -295,7 +305,10 @@ export default function Contact() {
           {/* ===== RIGHT: Message form ===== */}
           <Reveal delay={0.1}>
             <div className="lg:sticky lg:top-24">
-              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
+              <div
+                ref={formRef}
+                className="scroll-mt-24 rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft"
+              >
                 <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Send a message</h2>
                 <p className="mt-1 text-sm text-nsBlack/60">
                   Your filled message goes straight to our{' '}
