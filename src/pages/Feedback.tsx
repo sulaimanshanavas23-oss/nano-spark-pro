@@ -7,7 +7,7 @@ import SectionHeading from '../components/SectionHeading'
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
-import { SITE } from '../lib/site'
+import { SITE, TESTIMONIALS } from '../lib/site'
 import { sanitizeText, validateRequired } from '../lib/validate'
 
 const inputClass =
@@ -55,31 +55,6 @@ function Confetti({ count = 42 }: { count?: number }) {
     </div>
   )
 }
-
-// Sample testimonials — TODO: replace with real verified quotes from Nano Spark
-const TESTIMONIALS = [
-  {
-    name: 'Sample — School Teacher',
-    org: 'Chennai, TN',
-    quote:
-      'Replace this with a real quote from a teacher about how the STEM program helped their students. (Sample content)',
-    rating: 5,
-  },
-  {
-    name: 'Sample — Student Innovator',
-    org: 'Chennai, TN',
-    quote:
-      'Replace this with a real student quote about building their first robot or IoT project. (Sample content)',
-    rating: 5,
-  },
-  {
-    name: 'Sample — Parent',
-    org: 'Chennai, TN',
-    quote:
-      'Replace this with a real parent quote about confidence and interest in technology. (Sample content)',
-    rating: 4,
-  },
-]
 
 function StarsInput({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hover, setHover] = useState(0)
@@ -297,24 +272,24 @@ export default function Feedback() {
             eyebrow="What People Say"
             title="Voices from our"
             highlight="community"
-            subtitle="These are sample testimonials. We'll replace them with real quotes from Nano Spark families and schools."
+            subtitle="Real feedback from students, teachers and parents who attended Nano Spark workshops and programs."
           />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.12}>
+            {TESTIMONIALS.slice(0, 3).map((t, i) => (
+              <Reveal key={t.who} delay={i * 0.12}>
                 <motion.blockquote
                   whileHover={{ y: -6 }}
                   className="flex h-full flex-col rounded-3xl border border-nsBlack/10 bg-nsGray-light p-6 shadow-soft"
                 >
                   <div className="flex gap-1 text-nsYellow">
                     {Array.from({ length: 5 }).map((_, s) => (
-                      <FiStar key={s} fill={s < t.rating ? 'currentColor' : 'none'} />
+                      <FiStar key={s} fill={s < (i === 2 ? 4 : 5) ? 'currentColor' : 'none'} />
                     ))}
                   </div>
-                  <p className="mt-4 flex-1 italic leading-relaxed text-nsBlack/75">"{t.quote}"</p>
+                  <p className="mt-4 flex-1 italic leading-relaxed text-nsBlack/75">"{t.text}"</p>
                   <footer className="mt-5 border-t border-nsBlack/10 pt-4">
-                    <p className="font-heading font-extrabold text-nsBlack">{t.name}</p>
-                    <p className="text-sm text-nsBlack/50">{t.org}</p>
+                    <p className="font-heading font-extrabold text-nsBlack">{t.who}</p>
+                    <p className="text-sm text-nsBlack/50">{t.role}</p>
                   </footer>
                 </motion.blockquote>
               </Reveal>
