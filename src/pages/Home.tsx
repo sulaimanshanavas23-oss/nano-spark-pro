@@ -110,19 +110,6 @@ function VideoHero() {
     if (video && isVisible) {
       video.muted = true
       video.play().catch(() => {})
-      
-      const timer = setTimeout(() => {
-        if (isVisible && videoRef.current) {
-          videoRef.current!.muted = false
-          videoRef.current!.volume = 0.3
-          videoRef.current!.play().catch(() => {
-            videoRef.current!.muted = true
-            videoRef.current!.play().catch(() => {})
-          })
-        }
-      }, 1000)
-      
-      return () => clearTimeout(timer)
     }
   }, [isVisible])
 
