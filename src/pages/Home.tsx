@@ -267,6 +267,39 @@ export default function Home() {
                 </motion.div>
               </div>
 
+              {/* Tech Tags - 6 tags on mobile */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.55 }}
+                className="lg:hidden flex flex-wrap items-center gap-3 text-nsWhite/70 text-xs mt-4"
+              >
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiCpu className="text-nsYellow" size={12} />
+                  Embedded
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiWifi className="text-nsYellow" size={12} />
+                  IoT & AI
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiTool className="text-nsYellow" size={12} />
+                  Robotics
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiBookOpen className="text-nsYellow" size={12} />
+                  STEM
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiZap className="text-nsYellow" size={12} />
+                  AI
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiSun className="text-nsYellow" size={12} />
+                  Prototyping
+                </span>
+              </motion.div>
+
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
