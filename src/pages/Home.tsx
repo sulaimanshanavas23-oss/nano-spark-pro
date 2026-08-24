@@ -8,6 +8,7 @@ import {
   FiWifi,
   FiZap,
   FiSun,
+  FiPlay,
 } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
@@ -19,7 +20,6 @@ import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
-import PuzzleReveal from '../components/PuzzleReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 const FOCUS_AREAS = [
@@ -37,65 +37,161 @@ export default function Home() {
   return (
     <Page>
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden bg-nsWhite">
-        <CircuitBackground variant="light" className="opacity-70" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:py-24">
-          {/* Hero text */}
-          <div>
+      <section className="relative overflow-hidden bg-nsBlack min-h-screen flex items-center">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          poster="/images/hero.jpg"
+          aria-hidden="true"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-nsBlack/80 via-nsBlack/60 to-nsBlack/90" />
+
+        <CircuitBackground variant="dark" className="absolute inset-0 opacity-30" />
+
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:px-8 lg:py-28">
+          <div className="text-center lg:text-left max-w-3xl mx-auto lg:mx-0">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-nsBlack/15 bg-nsWhite px-4 py-1.5 text-xs font-bold tracking-[0.22em] text-nsBlack"
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 rounded-full border border-nsYellow/30 bg-nsYellow/10 px-4 py-1.5 text-xs font-bold tracking-[0.22em] text-nsYellow"
             >
-              <span className="h-2 w-2 rounded-full bg-nsYellow" />
+              <span className="h-2 w-2 rounded-full bg-nsYellow animate-pulse" />
               {SITE.tagline}
             </motion.span>
 
-            {/* Headline: site font (Baloo 2), revealing LETTER BY LETTER */}
-            <h1 className="mt-5 font-heading font-extrabold text-5xl leading-[1.08] text-nsBlack sm:text-6xl lg:text-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+            >
+              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">STEM</span>
+              <span className="text-nsYellow font-bold">•</span>
+              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">ROBOTICS</span>
+              <span className="text-nsYellow font-bold">•</span>
+              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">INNOVATION</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="mt-6 font-heading font-extrabold text-5xl leading-[1.05] text-nsWhite sm:text-6xl lg:text-7xl"
+            >
               <LetterReveal
-                delay={0.2}
+                delay={0.3}
                 breakAfter={[1]}
                 texts={[
-                  { text: 'Turning' },
-                  { text: 'Curiosity' },
-                  { text: 'Into' },
-                  { text: 'Innovation', color: 'text-nsYellow' },
+                  { text: 'Learn. ' },
+                  { text: 'Build. ' },
+                  { text: 'Test. ' },
+                  { text: 'Innovate.', color: 'text-nsYellow' },
                 ]}
               />
-            </h1>
+            </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.2 }}
-              className="mt-5 text-lg font-semibold tracking-[0.14em] text-nsBlack/70"
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="mt-6 text-lg font-medium text-nsWhite/80 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              STEM EDUCATION &middot; ROBOTICS &middot; IOT &middot; EMBEDDED SYSTEMS
+              Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.3 }}
-              className="mt-8 flex flex-wrap gap-3"
+              transition={{ duration: 0.7, delay: 0.45 }}
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 lg:justify-start"
             >
-              <Link to="/products" className="btn-yellow">
-                Explore Programs <FiArrowRight />
+              <Link
+                to="/products"
+                className="btn-yellow group w-full sm:w-auto"
+                style={{ backgroundColor: '#FFC107', color: '#111' }}
+              >
+                Explore Nano Spark
+                <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/contact" className="btn-outline">
-                Contact Us
+              <Link
+                to="/contact"
+                className="btn-outline w-full sm:w-auto border-nsWhite/30 text-nsWhite hover:bg-nsYellow hover:text-nsBlack hover:border-nsYellow"
+              >
+                Build With Us
+                <FiPlay className="group-hover:translate-x-1 transition-transform" />
               </Link>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
+              className="mt-12 flex flex-wrap items-center justify-center gap-6 lg:justify-start text-nsWhite/60 text-sm"
+            >
+              <span className="flex items-center gap-2">
+                <FiCpu className="text-nsYellow" size={16} />
+                Embedded Systems
+              </span>
+              <span className="flex items-center gap-2">
+                <FiWifi className="text-nsYellow" size={16} />
+                IoT & AI
+              </span>
+              <span className="flex items-center gap-2">
+                <FiTool className="text-nsYellow" size={16} />
+                Robotics
+              </span>
+              <span className="flex items-center gap-2">
+                <FiBookOpen className="text-nsYellow" size={16} />
+                STEM Education
+              </span>
             </motion.div>
           </div>
 
-          <PuzzleReveal
-              src="/images/hero.jpg"
-              alt="Nano Spark students building a project"
-              className="col-span-1 lg:col-span-1 shadow-lift"
-            />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-16 lg:mt-0 lg:ml-12 relative"
+          >
+            <div className="relative aspect-video max-w-md mx-auto lg:max-w-lg rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_60px_rgba(255,193,7,0.15)]">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                poster="/images/hero.jpg"
+              >
+                <source src="/hero-video.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-nsBlack/60 via-transparent to-transparent" />
+            </div>
+            <div className="mt-4 flex items-center justify-center gap-4 text-nsWhite/60 text-sm">
+              <span className="flex items-center gap-1.5">
+                <FiPlay className="text-nsYellow" size={14} />
+                Live student project
+              </span>
+              <span className="h-4 w-px bg-nsWhite/20" />
+              <span>Voice-controlled car</span>
+            </div>
+          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
+        >
+          <FiArrowRight className="text-nsYellow/70 text-2xl" />
+        </motion.div>
       </section>
 
       {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
