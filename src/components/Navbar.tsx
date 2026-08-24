@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative inline-flex items-center whitespace-nowrap px-2.5 py-1.5 font-heading text-[14px] font-extrabold tracking-tight transition-colors sm:text-[15px] xl:text-[16px] 2xl:text-[17px] ${
+  `relative inline-flex items-center whitespace-nowrap px-2 py-1.5 font-heading text-[13px] font-extrabold tracking-tight transition-colors sm:text-[14px] xl:text-[15px] ${
     isActive ? 'text-nsBlack' : 'text-nsBlack/65 hover:text-nsBlack'
   }`
 
@@ -32,38 +32,37 @@ export default function Navbar() {
           scrolled ? 'shadow-soft' : 'shadow-[0_1px_0_0_rgba(17,17,17,0.06)]'
         }`}
       >
-        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8 lg:py-5 xl:px-10">
-          {/* Logo — top left: Nano Spark logo image + wordmark (no box) */}
+        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 py-4 pl-3 pr-4 sm:pl-4 sm:pr-6 lg:py-5 xl:pr-10">
+          {/* Logo — top left corner: Nano Spark logo image + wordmark (no box) */}
           <Link
             to="/"
             aria-label={`${SITE.name} — home`}
-            className="flex shrink-0 items-center gap-3 pl-1 leading-tight"
+            className="flex shrink-0 items-center gap-3 leading-tight"
           >
             <motion.img
               src={SITE.logo}
               alt={SITE.name}
               draggable={false}
               whileHover={{ scale: 1.06, rotate: -2 }}
-              className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+              className="h-16 w-16 object-contain sm:h-20 sm:w-20"
             />
             <span className="flex flex-col">
               <motion.span
                 whileHover={{ scale: 1.03 }}
-                className="font-heading text-3xl font-extrabold text-nsBlack sm:text-[2rem]"
+                className="font-heading text-3xl font-extrabold text-nsBlack sm:text-[2.25rem]"
               >
                 Nano Spark<span className="text-nsYellow">.</span>
               </motion.span>
-              <span className="mt-0.5 hidden text-[10px] font-bold tracking-[0.22em] text-nsBlack/60 xl:block">
+              <span className="mt-0.5 hidden text-[11px] font-bold tracking-[0.22em] text-nsBlack/60 xl:block">
                 TECHNOLOGY · INNOVATIONS · SOLUTIONS
               </span>
             </span>
           </Link>
 
-          {/* Desktop centered links — never clips the first (Home) tab:
-          centered when there is room, scrolls from the left when narrow */}
-          <div className="hidden min-w-0 flex-1 xl:block">
+          {/* Desktop links — start right after the logo so Home & About are never clipped */}
+          <div className="hidden min-w-0 flex-1 items-center xl:flex">
             <div
-              className="mx-auto flex w-max max-w-full items-center gap-1 overflow-x-auto px-1"
+              className="flex w-full items-center justify-start gap-1 overflow-x-auto px-1"
               style={{ scrollbarWidth: 'none' }}
             >
               {NAV_LINKS.map((link) => (

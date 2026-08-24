@@ -13,12 +13,13 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
-import SmartImage from '../components/SmartImage'
+
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
+import PuzzleReveal from '../components/PuzzleReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 const FOCUS_AREAS = [
@@ -89,50 +90,11 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Hero visual — TODO: drop real photo as public/images/hero.jpg */}
-          <div className="relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative mx-auto max-w-md"
-            >
-              <div className="circuit-bg-light absolute -inset-6 rounded-3xl bg-nsYellow/10" />
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border-4 border-nsYellow bg-white shadow-lift"
-              >
-                <SmartImage
-                  src="/images/hero.jpg"
-                  alt="Nano Spark students building a project"
-                  className="h-full w-full object-cover"
-                  fallback={
-                    <img
-                      src={SITE.logo}
-                      alt={SITE.name}
-                      className="h-4/5 w-4/5 object-contain object-center"
-                      draggable={false}
-                    />
-                  }
-                />
-              </motion.div>
-
-              {/* Badge overlay */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, type: 'spring' }}
-                className="absolute -bottom-4 -left-4 rounded-2xl bg-nsBlack px-5 py-3 shadow-lift"
-              >
-                <p className="font-heading text-sm font-bold leading-tight text-nsYellow">
-                  Perfect for
-                  <br />
-                  Young Innovators!
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
+          <PuzzleReveal
+              src="/images/hero.jpg"
+              alt="Nano Spark students building a project"
+              className="col-span-1 lg:col-span-1 shadow-lift"
+            />
         </div>
       </section>
 
