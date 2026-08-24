@@ -254,12 +254,12 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Description - HIDDEN on mobile, VISIBLE on desktop */}
+              {/* Description - visible on all screen sizes */}
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.35 }}
-                className="hidden lg:block text-sm font-medium text-nsWhite/80 max-w-xl leading-relaxed"
+                className="text-sm font-medium text-nsWhite/80 max-w-xl leading-relaxed"
               >
                 Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
               </motion.p>
