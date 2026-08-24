@@ -30,7 +30,8 @@ function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
+  const [hasInteracted, setHasInteracted] = useState(false)
 
   const pauseVideo = useCallback(() => {
     if (videoRef.current && !videoRef.current.paused) {
@@ -42,18 +43,20 @@ function VideoHero() {
     const video = videoRef.current
     if (!video) return
     
-    if (!isMuted) {
-      video.muted = false
-      video.volume = 0.3
-      video.play().catch(() => {
+    if (isVisible) {
+      if (!isMuted && hasInteracted) {
+        video.muted = false
+        video.volume = 0.3
+        video.play().catch(() => {
+          video.muted = true
+          video.play().catch(() => {})
+        })
+      } else {
         video.muted = true
         video.play().catch(() => {})
-      })
-    } else {
-      video.muted = true
-      video.play().catch(() => {})
+      }
     }
-  }, [isMuted])
+  }, [isVisible, isMuted, hasInteracted])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -95,27 +98,39 @@ function VideoHero() {
     if (video && isVisible) {
       video.muted = true
       video.play().catch(() => {})
-      
-      const timer = setTimeout(() => {
-        if (isVisible && videoRef.current) {
-          videoRef.current.muted = false
-          videoRef.current.volume = 0.3
-          videoRef.current.play().catch(() => {
-            videoRef.current.muted = true
-            videoRef.current.play().catch(() => {})
-          })
-        }
-      }, 500)
-      
-      return () => clearTimeout(timer)
     }
   }, [isVisible])
+
+  useEffect(() => {
+    const enableAudio = () => {
+      if (!hasInteracted && videoRef.current && isVisible) {
+        setHasInteracted(true)
+        videoRef.current.muted = false
+        videoRef.current.volume = 0.3
+        videoRef.current.play().catch(() => {
+          videoRef.current.muted = true
+          videoRef.current.play().catch(() => {})
+        })
+      }
+    }
+
+    document.addEventListener('click', enableAudio, { once: true, passive: true })
+    document.addEventListener('touchstart', enableAudio, { once: true, passive: true })
+    document.addEventListener('keydown', enableAudio, { once: true })
+
+    return () => {
+      document.removeEventListener('click', enableAudio)
+      document.removeEventListener('touchstart', enableAudio)
+      document.removeEventListener('keydown', enableAudio)
+    }
+  }, [hasInteracted, isVisible])
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (videoRef.current) {
       const newMuted = !isMuted
       setIsMuted(newMuted)
+      setHasInteracted(true)
       videoRef.current.muted = newMuted
       if (!newMuted && isVisible) {
         videoRef.current.volume = 0.3
