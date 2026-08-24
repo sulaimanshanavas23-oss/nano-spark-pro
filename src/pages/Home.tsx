@@ -23,6 +23,7 @@ import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
+import PuzzleReveal from '../components/PuzzleReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 function VideoHero() {
@@ -95,7 +96,7 @@ function VideoHero() {
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[4/3] lg:aspect-[16/9] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_80px_rgba(255,193,7,0.2)] lg:shadow-[0_0_120px_rgba(255,193,7,0.25)]"
+      className="relative aspect-[3/4] lg:aspect-[9/16] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
     >
       <video
         ref={videoRef}
@@ -155,14 +156,15 @@ export default function Home() {
   return (
     <Page>
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden bg-nsBlack min-h-screen flex items-center">
+      <section className="relative overflow-hidden bg-nsBlack min-h-screen">
         <CircuitBackground variant="dark" className="absolute inset-0 opacity-20" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            {/* LEFT: Text Content */}
-            <div className="lg:order-1 z-10">
-              <motion.span
+        <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+            {/* LEFT: Content Stack */}
+            <div className="lg:order-1 z-10 space-y-8">
+              {/* Badge */}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -170,26 +172,28 @@ export default function Home() {
               >
                 <span className="h-2 w-2 rounded-full bg-nsYellow animate-pulse" />
                 {SITE.tagline}
-              </motion.span>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.15 }}
-                className="mt-6 flex flex-wrap items-center gap-3"
-              >
-                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">STEM</span>
-                <span className="text-nsYellow font-bold">•</span>
-                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">ROBOTICS</span>
-                <span className="text-nsYellow font-bold">•</span>
-                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">INNOVATION</span>
               </motion.div>
 
+              {/* PuzzleReveal Hero Image - LARGE */}
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative aspect-[4/3] lg:aspect-[16/9] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_80px_rgba(255,193,7,0.25)]"
+              >
+                <PuzzleReveal
+                  src="/images/hero.jpg"
+                  alt="Nano Spark students building a project"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Headline: Learn. Build. Test. Innovate. */}
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.25 }}
-                className="mt-6 font-heading font-extrabold text-5xl leading-[1.05] text-nsWhite sm:text-6xl lg:text-7xl"
+                className="font-heading font-extrabold text-4xl leading-[1.05] text-nsWhite sm:text-5xl lg:text-6xl"
               >
                 <LetterReveal
                   delay={0.3}
@@ -203,20 +207,22 @@ export default function Home() {
                 />
               </motion.h1>
 
+              {/* Description - HIDDEN on mobile, VISIBLE on desktop */}
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.35 }}
-                className="mt-6 text-lg font-medium text-nsWhite/80 max-w-xl leading-relaxed"
+                className="hidden lg:block text-lg font-medium text-nsWhite/80 max-w-xl leading-relaxed"
               >
                 Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
               </motion.p>
 
+              {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.45 }}
-                className="mt-10 flex flex-col sm:flex-row items-start gap-4"
+                className="flex flex-col sm:flex-row items-start gap-4"
               >
                 <Link
                   to="/products"
@@ -235,11 +241,12 @@ export default function Home() {
                 </Link>
               </motion.div>
 
+              {/* Tech Tags */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.55 }}
-                className="mt-12 flex flex-wrap items-center gap-6 text-nsWhite/60 text-sm"
+                className="flex flex-wrap items-center gap-4 text-nsWhite/60 text-sm"
               >
                 <span className="flex items-center gap-2">
                   <FiCpu className="text-nsYellow" size={16} />
@@ -260,8 +267,8 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* RIGHT: Video */}
-            <div className="lg:order-2 relative">
+            {/* RIGHT: Video - LARGER */}
+            <div className="lg:order-2 relative lg:sticky lg:top-16">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
