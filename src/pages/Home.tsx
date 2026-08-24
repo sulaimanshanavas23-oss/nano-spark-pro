@@ -30,8 +30,9 @@ function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(true)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true) // Start muted for mobile compatibility
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [showSoundPrompt, setShowSoundPrompt] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,12 +57,39 @@ function VideoHero() {
     return () => observer.disconnect()
   }, [hasInteracted, isMuted])
 
+  // Enable sound after first user interaction on page
+  useEffect(() => {
+    const enableAudio = () => {
+      if (!hasInteracted && videoRef.current) {
+        setHasInteracted(true)
+        videoRef.current.muted = false
+        videoRef.current.volume = 0.3
+        videoRef.current.play().catch(() => {
+          videoRef.current.muted = true
+          videoRef.current.play()
+          setShowSoundPrompt(true) // Show prompt if autoplay with sound fails
+        })
+      }
+    }
+
+    document.addEventListener('click', enableAudio, { once: true })
+    document.addEventListener('touchstart', enableAudio, { once: true })
+    document.addEventListener('keydown', enableAudio, { once: true })
+
+    return () => {
+      document.removeEventListener('click', enableAudio)
+      document.removeEventListener('touchstart', enableAudio)
+      document.removeEventListener('keydown', enableAudio)
+    }
+  }, [hasInteracted])
+
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (videoRef.current) {
       const newMuted = !isMuted
       setIsMuted(newMuted)
       setHasInteracted(true)
+      setShowSoundPrompt(false)
       videoRef.current.muted = newMuted
       if (!newMuted) {
         videoRef.current.volume = 0.3
@@ -73,9 +101,14 @@ function VideoHero() {
   const handleVideoClick = () => {
     if (videoRef.current && !hasInteracted) {
       setHasInteracted(true)
-      videoRef.current.muted = isMuted
+      setShowSoundPrompt(false)
+      videoRef.current.muted = false
       videoRef.current.volume = 0.3
-      videoRef.current.play().catch(() => {})
+      videoRef.current.play().catch(() => {
+        videoRef.current.muted = true
+        videoRef.current.play()
+        setShowSoundPrompt(true)
+      })
     }
   }
 
@@ -103,6 +136,7 @@ function VideoHero() {
         autoPlay
         loop
         playsInline
+        muted // Start muted for mobile autoplay
         className="w-full h-full object-cover cursor-pointer"
         poster="/images/hero.jpg"
         onClick={handleVideoClick}
@@ -110,19 +144,43 @@ function VideoHero() {
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute bottom-3 right-3 z-10">
+      {/* Sound prompt for mobile */}
+      {showSoundPrompt && !hasInteracted && (
+        <div className="absolute inset-0 flex items-center justify-center z-20 bg-nsBlack/50 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-nsBlack/90 backdrop-blur-md border border-nsYellow/30 text-center max-w-xs mx-4"
+          >
+            <FiVolume2 className="text-nsYellow text-4xl" size={48} />
+            <p className="text-nsWhite font-medium text-lg">Tap for sound</p>
+            <p className="text-nsWhite/60 text-sm">Click or tap the video to enable audio</p>
+          </motion.div>
+        </div>
+      )}
+
+      <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
         <button
           onClick={toggleMute}
-          className="flex items-center justify-center w-9 h-9 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50"
+          className="flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50"
           aria-label={isMuted ? 'Unmute' : 'Mute'}
-          title={isMuted ? 'Unmute' : 'Mute'}
+          title={isMuted ? 'Unmute (tap for sound)' : 'Mute'}
         >
           {isMuted ? (
-            <FiVolumeX size={16} />
+            <FiVolumeX size={16} lg:size={18} />
           ) : (
-            <FiVolume2 size={16} />
+            <FiVolume2 size={16} lg:size={18} />
           )}
         </button>
+        {!hasInteracted && !isMuted && (
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="hidden lg:block px-3 py-1.5 rounded-full bg-nsYellow/20 text-nsYellow text-xs font-medium border border-nsYellow/30"
+          >
+            Sound on
+          </motion.span>
+        )}
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nsBlack/80 via-nsBlack/20 to-transparent p-4 pointer-events-none lg:p-6">
@@ -161,8 +219,20 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:py-16">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-            {/* LEFT: Content Stack */}
-            <div className="lg:order-1 z-10 space-y-8">
+            {/* LEFT: Video - MAIN HERO */}
+            <div className="lg:order-1 relative lg:sticky lg:top-16">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative"
+              >
+                <VideoHero />
+              </motion.div>
+            </div>
+
+            {/* RIGHT: Content Stack */}
+            <div className="lg:order-2 z-10 space-y-8 pt-4 lg:pt-0">
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -172,20 +242,6 @@ export default function Home() {
               >
                 <span className="h-2 w-2 rounded-full bg-nsYellow animate-pulse" />
                 {SITE.tagline}
-              </motion.div>
-
-              {/* PuzzleReveal Hero Image - LARGE */}
-              <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="relative aspect-[4/3] lg:aspect-[16/9] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_80px_rgba(255,193,7,0.25)]"
-              >
-                <PuzzleReveal
-                  src="/images/hero.jpg"
-                  alt="Nano Spark students building a project"
-                  className="w-full h-full object-cover"
-                />
               </motion.div>
 
               {/* Headline: Learn. Build. Test. Innovate. */}
@@ -264,18 +320,6 @@ export default function Home() {
                   <FiBookOpen className="text-nsYellow" size={16} />
                   STEM Education
                 </span>
-              </motion.div>
-            </div>
-
-            {/* RIGHT: Video - LARGER */}
-            <div className="lg:order-2 relative lg:sticky lg:top-16">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="relative"
-              >
-                <VideoHero />
               </motion.div>
             </div>
           </div>
