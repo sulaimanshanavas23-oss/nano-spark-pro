@@ -12,7 +12,7 @@ import {
   FiVolume2,
   FiVolumeX,
 } from 'react-icons/fi'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
@@ -29,10 +29,33 @@ import { FOUNDER, SITE } from '../lib/site'
 function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(true)
-  const [isMuted, setIsMuted] = useState(true) // Start muted for mobile compatibility
+  const [isVisible, setIsVisible] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [showSoundPrompt, setShowSoundPrompt] = useState(false)
+
+  const pauseVideo = useCallback(() => {
+    if (videoRef.current && !videoRef.current.paused) {
+      videoRef.current.pause()
+    }
+  }, [])
+
+  const playVideo = useCallback(() => {
+    const video = videoRef.current
+    if (!video) return
+    
+    if (hasInteracted && !isMuted) {
+      video.muted = false
+      video.volume = 0.3
+      video.play().catch(() => {
+        video.muted = true
+        video.play().catch(() => {})
+      })
+    } else {
+      video.muted = true
+      video.play().catch(() => {})
+    }
+  }, [hasInteracted, isMuted])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,35 +63,48 @@ function VideoHero() {
         const visible = entry.isIntersecting
         setIsVisible(visible)
         if (videoRef.current) {
-          if (visible && hasInteracted) {
-            videoRef.current.muted = isMuted
-            videoRef.current.play().catch(() => {})
+          if (visible) {
+            playVideo()
           } else {
-            videoRef.current.pause()
+            pauseVideo()
           }
         }
       },
-      { threshold: 0.3, rootMargin: '0px 0px -100px 0px' }
+      { threshold: 0.1, rootMargin: '0px' }
     )
 
     if (containerRef.current) {
       observer.observe(containerRef.current)
     }
     return () => observer.disconnect()
-  }, [hasInteracted, isMuted])
+  }, [playVideo, pauseVideo])
 
-  // Enable sound after first user interaction on page
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        pauseVideo()
+      } else if (isVisible) {
+        playVideo()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [isVisible, playVideo, pauseVideo])
+
   useEffect(() => {
     const enableAudio = () => {
       if (!hasInteracted && videoRef.current) {
         setHasInteracted(true)
-        videoRef.current.muted = false
-        videoRef.current.volume = 0.3
-        videoRef.current.play().catch(() => {
-          videoRef.current.muted = true
-          videoRef.current.play()
-          setShowSoundPrompt(true) // Show prompt if autoplay with sound fails
-        })
+        if (isVisible) {
+          videoRef.current.muted = false
+          videoRef.current.volume = 0.3
+          videoRef.current.play().catch(() => {
+            videoRef.current.muted = true
+            videoRef.current.play().catch(() => {})
+            setShowSoundPrompt(true)
+          })
+        }
       }
     }
 
@@ -81,7 +117,7 @@ function VideoHero() {
       document.removeEventListener('touchstart', enableAudio)
       document.removeEventListener('keydown', enableAudio)
     }
-  }, [hasInteracted])
+  }, [hasInteracted, isVisible])
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -91,9 +127,11 @@ function VideoHero() {
       setHasInteracted(true)
       setShowSoundPrompt(false)
       videoRef.current.muted = newMuted
-      if (!newMuted) {
+      if (!newMuted && isVisible) {
         videoRef.current.volume = 0.3
         videoRef.current.play().catch(() => {})
+      } else if (newMuted) {
+        videoRef.current.pause()
       }
     }
   }
@@ -102,43 +140,30 @@ function VideoHero() {
     if (videoRef.current && !hasInteracted) {
       setHasInteracted(true)
       setShowSoundPrompt(false)
-      videoRef.current.muted = false
-      videoRef.current.volume = 0.3
-      videoRef.current.play().catch(() => {
-        videoRef.current.muted = true
-        videoRef.current.play()
-        setShowSoundPrompt(true)
-      })
+      if (isVisible) {
+        videoRef.current.muted = false
+        videoRef.current.volume = 0.3
+        videoRef.current.play().catch(() => {
+          videoRef.current.muted = true
+          videoRef.current.play().catch(() => {})
+          setShowSoundPrompt(true)
+        })
+      }
     }
   }
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (video && isVisible && hasInteracted) {
-      video.muted = isMuted
-      video.volume = 0.3
-      video.play().catch(() => {
-        video.muted = true
-        video.play()
-      })
-    } else if (video && !isVisible) {
-      video.pause()
-    }
-  }, [isVisible, hasInteracted, isMuted])
 
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[3/4] lg:aspect-[9/16] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
+      className="relative aspect-[4/3] lg:aspect-[16/9] xl:aspect-[21/9] w-full rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
     >
       <video
         ref={videoRef}
         autoPlay
         loop
         playsInline
-        muted // Start muted for mobile autoplay
+        muted
         className="w-full h-full object-cover cursor-pointer"
-        poster="/images/hero.jpg"
         onClick={handleVideoClick}
       >
         <source src="/hero-video.mp4" type="video/mp4" />
@@ -167,9 +192,9 @@ function VideoHero() {
           title={isMuted ? 'Unmute (tap for sound)' : 'Mute'}
         >
           {isMuted ? (
-            <FiVolumeX size={16} lg:size={18} />
+            <FiVolumeX size={18} lg:size={20} />
           ) : (
-            <FiVolume2 size={16} lg:size={18} />
+            <FiVolume2 size={18} lg:size={20} />
           )}
         </button>
         {!hasInteracted && !isMuted && (
@@ -218,21 +243,9 @@ export default function Home() {
         <CircuitBackground variant="dark" className="absolute inset-0 opacity-20" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-            {/* LEFT: Video - MAIN HERO */}
-            <div className="lg:order-1 relative lg:sticky lg:top-16">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="relative"
-              >
-                <VideoHero />
-              </motion.div>
-            </div>
-
-            {/* RIGHT: Content Stack */}
-            <div className="lg:order-2 z-10 space-y-8 pt-4 lg:pt-0">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            {/* LEFT: Content Stack */}
+            <div className="lg:order-1 lg:col-span-5 z-10 space-y-8 pt-4 lg:pt-0">
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -320,6 +333,18 @@ export default function Home() {
                   <FiBookOpen className="text-nsYellow" size={16} />
                   STEM Education
                 </span>
+              </motion.div>
+            </div>
+
+            {/* RIGHT: Video - MAIN HERO */}
+            <div className="lg:order-2 lg:col-span-7 relative lg:sticky lg:top-16">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative"
+              >
+                <VideoHero />
               </motion.div>
             </div>
           </div>
