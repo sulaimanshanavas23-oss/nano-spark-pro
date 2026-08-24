@@ -23,7 +23,6 @@ import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
-import PuzzleReveal from '../components/PuzzleReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 function VideoHero() {
@@ -105,11 +104,11 @@ function VideoHero() {
     const enableAudio = () => {
       if (!hasInteracted && videoRef.current && isVisible) {
         setHasInteracted(true)
-        videoRef.current.muted = false
-        videoRef.current.volume = 0.3
-        videoRef.current.play().catch(() => {
-          videoRef.current.muted = true
-          videoRef.current.play().catch(() => {})
+        videoRef.current!.muted = false
+        videoRef.current!.volume = 0.3
+        videoRef.current!.play().catch(() => {
+          videoRef.current!.muted = true
+          videoRef.current!.play().catch(() => {})
         })
       }
     }
@@ -160,14 +159,14 @@ function VideoHero() {
       <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
         <button
           onClick={toggleMute}
-          className="flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50"
+          className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50 shadow-lg"
           aria-label={isMuted ? 'Unmute' : 'Mute'}
           title={isMuted ? 'Unmute' : 'Mute'}
         >
           {isMuted ? (
-            <FiVolumeX size={18} lg:size={20} />
+            <FiVolumeX size={20} />
           ) : (
-            <FiVolume2 size={18} lg:size={20} />
+            <FiVolume2 size={20} />
           )}
         </button>
       </div>
@@ -175,7 +174,7 @@ function VideoHero() {
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nsBlack/80 via-nsBlack/20 to-transparent p-4 pointer-events-none lg:p-6">
         <div className="flex items-center justify-between text-nsWhite/70 text-sm lg:text-base">
           <span className="flex items-center gap-2">
-            <FiPlay className="text-nsYellow" size={14} lg:size={16} />
+            <FiPlay className="text-nsYellow" size={16} />
             Live student project
           </span>
           <span className="hidden lg:inline-flex items-center gap-2 text-nsWhite/50">
