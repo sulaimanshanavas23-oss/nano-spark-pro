@@ -27,7 +27,7 @@ export const SITE = {
     name: 'S. Shanavas',
     role: 'Founder & CEO',
     title: 'S. Shanavas',
-    tagline: 'Founder & CEO — Nano Spark',
+    tagline: 'Founder & CEO — Nano Spark | Pre-Final Year ECE Student | SIH Finalist 2025 (Software Edition)',
     location: 'Chennai, Tamil Nadu',
   },
   studentsTrained: 550,
@@ -62,7 +62,7 @@ export const CLIENT_NAMES = ['The New College']
 
 export const FOUNDER = {
   name: 'S. Shanavas',
-  role: 'Founder & CEO — Nano Spark',
+  role: 'Founder & CEO — Nano Spark | Pre-Final Year ECE Student | SIH Finalist 2025 (Software Edition)',
   location: 'Chennai, Tamil Nadu',
   heading: 'ABOUT THE FOUNDER',
   intro: [
