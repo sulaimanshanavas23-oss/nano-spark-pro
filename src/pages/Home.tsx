@@ -38,157 +38,155 @@ export default function Home() {
     <Page>
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden bg-nsBlack min-h-screen flex items-center">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-          poster="/images/hero.jpg"
-          aria-hidden="true"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
+        <CircuitBackground variant="dark" className="absolute inset-0 opacity-20" />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-nsBlack/80 via-nsBlack/60 to-nsBlack/90" />
-
-        <CircuitBackground variant="dark" className="absolute inset-0 opacity-30" />
-
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:px-8 lg:py-28">
-          <div className="text-center lg:text-left max-w-3xl mx-auto lg:mx-0">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 rounded-full border border-nsYellow/30 bg-nsYellow/10 px-4 py-1.5 text-xs font-bold tracking-[0.22em] text-nsYellow"
-            >
-              <span className="h-2 w-2 rounded-full bg-nsYellow animate-pulse" />
-              {SITE.tagline}
-            </motion.span>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
-            >
-              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">STEM</span>
-              <span className="text-nsYellow font-bold">•</span>
-              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">ROBOTICS</span>
-              <span className="text-nsYellow font-bold">•</span>
-              <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">INNOVATION</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-6 font-heading font-extrabold text-5xl leading-[1.05] text-nsWhite sm:text-6xl lg:text-7xl"
-            >
-              <LetterReveal
-                delay={0.3}
-                breakAfter={[1]}
-                texts={[
-                  { text: 'Learn. ' },
-                  { text: 'Build. ' },
-                  { text: 'Test. ' },
-                  { text: 'Innovate.', color: 'text-nsYellow' },
-                ]}
-              />
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-6 text-lg font-medium text-nsWhite/80 max-w-xl mx-auto lg:mx-0 leading-relaxed"
-            >
-              Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45 }}
-              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 lg:justify-start"
-            >
-              <Link
-                to="/products"
-                className="btn-yellow group w-full sm:w-auto"
-                style={{ backgroundColor: '#FFC107', color: '#111' }}
+        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:py-20">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* LEFT: Text Content */}
+            <div className="lg:order-1 z-10">
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center gap-2 rounded-full border border-nsYellow/30 bg-nsYellow/10 px-4 py-1.5 text-xs font-bold tracking-[0.22em] text-nsYellow"
               >
-                Explore Nano Spark
-                <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/contact"
-                className="btn-outline w-full sm:w-auto border-nsWhite/30 text-nsWhite hover:bg-nsYellow hover:text-nsBlack hover:border-nsYellow"
-              >
-                Build With Us
-                <FiPlay className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
+                <span className="h-2 w-2 rounded-full bg-nsYellow animate-pulse" />
+                {SITE.tagline}
+              </motion.span>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-6 lg:justify-start text-nsWhite/60 text-sm"
-            >
-              <span className="flex items-center gap-2">
-                <FiCpu className="text-nsYellow" size={16} />
-                Embedded Systems
-              </span>
-              <span className="flex items-center gap-2">
-                <FiWifi className="text-nsYellow" size={16} />
-                IoT & AI
-              </span>
-              <span className="flex items-center gap-2">
-                <FiTool className="text-nsYellow" size={16} />
-                Robotics
-              </span>
-              <span className="flex items-center gap-2">
-                <FiBookOpen className="text-nsYellow" size={16} />
-                STEM Education
-              </span>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="mt-6 flex flex-wrap items-center gap-3"
+              >
+                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">STEM</span>
+                <span className="text-nsYellow font-bold">•</span>
+                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">ROBOTICS</span>
+                <span className="text-nsYellow font-bold">•</span>
+                <span className="font-heading text-lg font-extrabold text-nsWhite tracking-[0.15em]">INNOVATION</span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="mt-6 font-heading font-extrabold text-5xl leading-[1.05] text-nsWhite sm:text-6xl lg:text-7xl"
+              >
+                <LetterReveal
+                  delay={0.3}
+                  breakAfter={[1]}
+                  texts={[
+                    { text: 'Learn. ' },
+                    { text: 'Build. ' },
+                    { text: 'Test. ' },
+                    { text: 'Innovate.', color: 'text-nsYellow' },
+                  ]}
+                />
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.35 }}
+                className="mt-6 text-lg font-medium text-nsWhite/80 max-w-xl leading-relaxed"
+              >
+                Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.45 }}
+                className="mt-10 flex flex-col sm:flex-row items-start gap-4"
+              >
+                <Link
+                  to="/products"
+                  className="btn-yellow group w-full sm:w-auto"
+                  style={{ backgroundColor: '#FFC107', color: '#111' }}
+                >
+                  Explore Nano Spark
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="btn-outline w-full sm:w-auto border-nsWhite/30 text-nsWhite hover:bg-nsYellow hover:text-nsBlack hover:border-nsYellow"
+                >
+                  Build With Us
+                  <FiPlay className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.55 }}
+                className="mt-12 flex flex-wrap items-center gap-6 text-nsWhite/60 text-sm"
+              >
+                <span className="flex items-center gap-2">
+                  <FiCpu className="text-nsYellow" size={16} />
+                  Embedded Systems
+                </span>
+                <span className="flex items-center gap-2">
+                  <FiWifi className="text-nsYellow" size={16} />
+                  IoT & AI
+                </span>
+                <span className="flex items-center gap-2">
+                  <FiTool className="text-nsYellow" size={16} />
+                  Robotics
+                </span>
+                <span className="flex items-center gap-2">
+                  <FiBookOpen className="text-nsYellow" size={16} />
+                  STEM Education
+                </span>
+              </motion.div>
+            </div>
+
+            {/* RIGHT: Video */}
+            <div className="lg:order-2 relative">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="relative aspect-video rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_60px_rgba(255,193,7,0.15)]"
+              >
+                <video
+                  ref={(el) => {
+                    if (el) {
+                      el.muted = false;
+                      el.volume = 0.3;
+                      el.play().catch(() => {
+                        el.muted = true;
+                        el.play();
+                      });
+                    }
+                  }}
+                  autoPlay
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                  poster="/images/hero.jpg"
+                >
+                  <source src="/hero-video.mp4" type="video/mp4" />
+                </video>
+              </motion.div>
+              <div className="mt-4 flex items-center justify-start gap-4 text-nsWhite/60 text-sm">
+                <span className="flex items-center gap-1.5">
+                  <FiPlay className="text-nsYellow" size={14} />
+                  Live student project
+                </span>
+                <span className="h-4 w-px bg-nsWhite/20 hidden sm:block" />
+                <span className="hidden sm:inline">Voice-controlled car</span>
+              </div>
+            </div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-16 lg:mt-0 lg:ml-12 relative"
-          >
-            <div className="relative aspect-video max-w-md mx-auto lg:max-w-lg rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_60px_rgba(255,193,7,0.15)]">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-                poster="/images/hero.jpg"
-              >
-                <source src="/hero-video.mp4" type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-nsBlack/60 via-transparent to-transparent" />
-            </div>
-            <div className="mt-4 flex items-center justify-center gap-4 text-nsWhite/60 text-sm">
-              <span className="flex items-center gap-1.5">
-                <FiPlay className="text-nsYellow" size={14} />
-                Live student project
-              </span>
-              <span className="h-4 w-px bg-nsWhite/20" />
-              <span>Voice-controlled car</span>
-            </div>
-          </motion.div>
         </div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce lg:hidden"
         >
           <FiArrowRight className="text-nsYellow/70 text-2xl" />
         </motion.div>
