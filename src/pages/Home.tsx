@@ -9,8 +9,6 @@ import {
   FiZap,
   FiSun,
   FiPlay,
-  FiVolume2,
-  FiVolumeX,
 } from 'react-icons/fi'
 import { useRef, useEffect, useState, useCallback } from 'react'
 import Page from '../components/Page'
@@ -29,8 +27,8 @@ function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   // Check localStorage for persisted interaction state
   useEffect(() => {
@@ -54,9 +52,9 @@ function VideoHero() {
   const playVideo = useCallback(() => {
     const video = videoRef.current
     if (!video) return
-    
+
     if (isVisible) {
-      if (!isMuted && hasInteracted) {
+      if (hasInteracted) {
         video.muted = false
         video.volume = 0.3
         video.play().catch(() => {
@@ -68,7 +66,7 @@ function VideoHero() {
         video.play().catch(() => {})
       }
     }
-  }, [isVisible, isMuted, hasInteracted])
+  }, [isVisible, hasInteracted])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -137,21 +135,32 @@ function VideoHero() {
     }
   }, [hasInteracted, isVisible])
 
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    if (videoRef.current) {
-      const newMuted = !isMuted
-      setIsMuted(newMuted)
-      setHasInteracted(true)
-      videoRef.current.muted = newMuted
-      if (!newMuted && isVisible) {
-        videoRef.current.volume = 0.3
-        videoRef.current.play().catch(() => {})
-      } else if (newMuted) {
-        videoRef.current.pause()
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!videoRef.current) return
+      const currentScrollY = window.scrollY || window.pageYOffset
+      const isScrollingUp = currentScrollY < lastScrollY
+
+      if (isVisible) {
+        if (isScrollingUp) {
+          if (hasInteracted) {
+            videoRef.current.muted = false
+            videoRef.current.volume = 0.3
+            videoRef.current.play().catch(() => {})
+          } else {
+            videoRef.current.muted = true
+            videoRef.current.play().catch(() => {})
+          }
+        } else {
+          pauseVideo()
+        }
       }
+      setLastScrollY(currentScrollY)
     }
-  }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isVisible, hasInteracted, lastScrollY, pauseVideo])
 
   return (
     <div
@@ -168,21 +177,6 @@ function VideoHero() {
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
-
-      <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
-        <button
-          onClick={toggleMute}
-          className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50 shadow-lg"
-          aria-label={isMuted ? 'Unmute' : 'Mute'}
-          title={isMuted ? 'Unmute' : 'Mute'}
-        >
-          {isMuted ? (
-            <FiVolumeX size={20} />
-          ) : (
-            <FiVolume2 size={20} />
-          )}
-        </button>
-      </div>
 
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nsBlack/80 via-nsBlack/20 to-transparent p-4 pointer-events-none lg:p-6">
         <div className="flex items-center justify-between text-nsWhite/70 text-sm lg:text-base">
