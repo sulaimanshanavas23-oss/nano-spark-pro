@@ -9,7 +9,10 @@ import {
   FiZap,
   FiSun,
   FiPlay,
+  FiVolume2,
+  FiVolumeX,
 } from 'react-icons/fi'
+import { useRef, useEffect, useState } from 'react'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
@@ -21,6 +24,121 @@ import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
 import { FOUNDER, SITE } from '../lib/site'
+
+function VideoHero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(true)
+  const [isMuted, setIsMuted] = useState(false)
+  const [hasInteracted, setHasInteracted] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting
+        setIsVisible(visible)
+        if (videoRef.current) {
+          if (visible && hasInteracted) {
+            videoRef.current.muted = isMuted
+            videoRef.current.play().catch(() => {})
+          } else {
+            videoRef.current.pause()
+          }
+        }
+      },
+      { threshold: 0.3, rootMargin: '0px 0px -100px 0px' }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+    return () => observer.disconnect()
+  }, [hasInteracted, isMuted])
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (videoRef.current) {
+      const newMuted = !isMuted
+      setIsMuted(newMuted)
+      setHasInteracted(true)
+      videoRef.current.muted = newMuted
+      if (!newMuted) {
+        videoRef.current.volume = 0.3
+        videoRef.current.play().catch(() => {})
+      }
+    }
+  }
+
+  const handleVideoClick = () => {
+    if (videoRef.current && !hasInteracted) {
+      setHasInteracted(true)
+      videoRef.current.muted = isMuted
+      videoRef.current.volume = 0.3
+      videoRef.current.play().catch(() => {})
+    }
+  }
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (video && isVisible && hasInteracted) {
+      video.muted = isMuted
+      video.volume = 0.3
+      video.play().catch(() => {
+        video.muted = true
+        video.play()
+      })
+    } else if (video && !isVisible) {
+      video.pause()
+    }
+  }, [isVisible, hasInteracted, isMuted])
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative aspect-[4/3] lg:aspect-[16/9] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_80px_rgba(255,193,7,0.2)] lg:shadow-[0_0_120px_rgba(255,193,7,0.25)]"
+    >
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        playsInline
+        className="w-full h-full object-cover cursor-pointer"
+        poster="/images/hero.jpg"
+        onClick={handleVideoClick}
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
+
+      <div className="absolute bottom-3 right-3 z-10">
+        <button
+          onClick={toggleMute}
+          className="flex items-center justify-center w-9 h-9 rounded-full bg-nsBlack/80 backdrop-blur-sm text-nsWhite hover:bg-nsYellow hover:text-nsBlack transition-all duration-200 border border-nsWhite/20 hover:border-nsYellow/30 focus:outline-none focus:ring-2 focus:ring-nsYellow/50"
+          aria-label={isMuted ? 'Unmute' : 'Mute'}
+          title={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? (
+            <FiVolumeX size={16} />
+          ) : (
+            <FiVolume2 size={16} />
+          )}
+        </button>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nsBlack/80 via-nsBlack/20 to-transparent p-4 pointer-events-none lg:p-6">
+        <div className="flex items-center justify-between text-nsWhite/70 text-sm lg:text-base">
+          <span className="flex items-center gap-2">
+            <FiPlay className="text-nsYellow" size={14} lg:size={16} />
+            Live student project
+          </span>
+          <span className="hidden lg:inline-flex items-center gap-2 text-nsWhite/50">
+            <span className="h-4 w-px bg-nsWhite/20" />
+            Voice-controlled car
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const FOCUS_AREAS = [
   { icon: <FiBookOpen size={26} />, title: 'STEM & Electronics Education', desc: 'Hands-on learning programs that make electronics and science fun, practical and accessible.' },
@@ -148,36 +266,10 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="relative aspect-video rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_60px_rgba(255,193,7,0.15)]"
+                className="relative"
               >
-                <video
-                  ref={(el) => {
-                    if (el) {
-                      el.muted = false;
-                      el.volume = 0.3;
-                      el.play().catch(() => {
-                        el.muted = true;
-                        el.play();
-                      });
-                    }
-                  }}
-                  autoPlay
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  poster="/images/hero.jpg"
-                >
-                  <source src="/hero-video.mp4" type="video/mp4" />
-                </video>
+                <VideoHero />
               </motion.div>
-              <div className="mt-4 flex items-center justify-start gap-4 text-nsWhite/60 text-sm">
-                <span className="flex items-center gap-1.5">
-                  <FiPlay className="text-nsYellow" size={14} />
-                  Live student project
-                </span>
-                <span className="h-4 w-px bg-nsWhite/20 hidden sm:block" />
-                <span className="hidden sm:inline">Voice-controlled car</span>
-              </div>
             </div>
           </div>
         </div>
