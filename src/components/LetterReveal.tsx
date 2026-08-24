@@ -43,7 +43,7 @@ export function LetterReveal({
                   className="inline-block"
                   initial={{ opacity: 0, y: '0.9em', rotateX: -75 }}
                   whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
+                  viewport={{ once: true, margin: '0px' }}
                   transition={{ duration: 0.4, delay: d, ease: 'easeOut' }}
                 >
                   {ch}
