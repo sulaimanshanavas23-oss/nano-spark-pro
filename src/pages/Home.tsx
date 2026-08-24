@@ -29,6 +29,7 @@ function VideoHero() {
   const [isVisible, setIsVisible] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [isTabVisible, setIsTabVisible] = useState(!document.hidden)
 
   // Check localStorage for persisted interaction state
   useEffect(() => {
@@ -49,22 +50,20 @@ function VideoHero() {
     }
   }, [])
 
-  const playVideo = useCallback(() => {
+  const playVideo = useCallback((forceUnmuted = false) => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !isVisible) return
 
-    if (isVisible) {
-      if (hasInteracted) {
-        video.muted = false
-        video.volume = 0.3
-        video.play().catch(() => {
-          video.muted = true
-          video.play().catch(() => {})
-        })
-      } else {
+    if (hasInteracted || forceUnmuted) {
+      video.muted = false
+      video.volume = 0.3
+      video.play().catch(() => {
         video.muted = true
         video.play().catch(() => {})
-      }
+      })
+    } else {
+      video.muted = true
+      video.play().catch(() => {})
     }
   }, [isVisible, hasInteracted])
 
@@ -75,7 +74,7 @@ function VideoHero() {
         setIsVisible(visible)
         if (videoRef.current) {
           if (visible) {
-            playVideo()
+            playVideo(true)
           } else {
             pauseVideo()
           }
@@ -92,10 +91,12 @@ function VideoHero() {
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.hidden) {
+      const nowVisible = !document.hidden
+      setIsTabVisible(nowVisible)
+      if (nowVisible && isVisible) {
+        playVideo(true)
+      } else if (!nowVisible) {
         pauseVideo()
-      } else if (isVisible) {
-        playVideo()
       }
     }
 
@@ -137,20 +138,13 @@ function VideoHero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!videoRef.current) return
+      if (!videoRef.current || !isTabVisible) return
       const currentScrollY = window.scrollY || window.pageYOffset
       const isScrollingUp = currentScrollY < lastScrollY
 
       if (isVisible) {
         if (isScrollingUp) {
-          if (hasInteracted) {
-            videoRef.current.muted = false
-            videoRef.current.volume = 0.3
-            videoRef.current.play().catch(() => {})
-          } else {
-            videoRef.current.muted = true
-            videoRef.current.play().catch(() => {})
-          }
+          playVideo(true)
         } else {
           pauseVideo()
         }
@@ -160,7 +154,20 @@ function VideoHero() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isVisible, hasInteracted, lastScrollY, pauseVideo])
+  }, [isVisible, hasInteracted, lastScrollY, isTabVisible, pauseVideo, playVideo])
+
+  // Auto-play with sound on initial load for mobile
+  useEffect(() => {
+    const video = videoRef.current
+    if (video && isVisible) {
+      video.muted = false
+      video.volume = 0.3
+      video.play().catch(() => {
+        video.muted = true
+        video.play().catch(() => {})
+      })
+    }
+  }, [isVisible])
 
   return (
     <div
@@ -235,6 +242,18 @@ export default function Home() {
                 />
               </motion.h1>
 
+              {/* Mobile Video - shows BETWEEN headline and buttons on mobile, hidden on desktop */}
+              <div className="lg:hidden">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="relative"
+                >
+                  <VideoHero />
+                </motion.div>
+              </div>
+
               {/* Description - HIDDEN on mobile, VISIBLE on desktop */}
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
@@ -295,8 +314,8 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* RIGHT: Video - MAIN HERO */}
-            <div className="lg:order-2 lg:col-span-8 relative lg:sticky lg:top-16">
+            {/* RIGHT: Video - MAIN HERO (Desktop only) */}
+            <div className="hidden lg:block lg:order-2 lg:col-span-8 relative lg:sticky lg:top-16">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
