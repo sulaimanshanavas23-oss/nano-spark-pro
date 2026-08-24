@@ -169,7 +169,7 @@ function VideoHero() {
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[4/3] lg:aspect-[16/9] xl:aspect-[21/9] 2xl:aspect-[2/1] w-full min-h-[400px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
+      className="relative aspect-[4/3] lg:aspect-[16/9] xl:aspect-[21/9] 2xl:aspect-[2/1] w-full min-h-[350px] lg:min-h-[450px] xl:min-h-[500px] 2xl:min-h-[550px] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
     >
       <video
         ref={videoRef}
@@ -240,7 +240,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
-                className="font-heading font-extrabold text-4xl leading-[1.05] text-nsWhite sm:text-5xl lg:text-6xl xl:text-7xl"
+                className="font-heading font-extrabold text-3xl leading-[1.05] text-nsWhite sm:text-4xl lg:text-5xl xl:text-6xl"
               >
                 <LetterReveal
                   delay={0.3}
@@ -259,7 +259,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.35 }}
-                className="hidden lg:block text-lg font-medium text-nsWhite/80 max-w-xl leading-relaxed"
+                className="hidden lg:block text-sm font-medium text-nsWhite/80 max-w-xl leading-relaxed"
               >
                 Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
               </motion.p>
