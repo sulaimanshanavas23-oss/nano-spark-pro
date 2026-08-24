@@ -223,7 +223,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-6 lg:gap-14 items-start">
             {/* LEFT: Content Stack */}
             <div className="lg:order-1 lg:col-span-4 z-10 space-y-8 pt-4 lg:pt-0">
-              {/* Headline: Learn. Build. Test. Innovate. */}
+              {/* Headline: LEARN - BUILD - TEST - INNOVATE */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -232,18 +232,31 @@ export default function Home() {
               >
                 <LetterReveal
                   delay={0.3}
-                  breakAfter={[1]}
+                  breakAfter={[1, 3, 5]}
                   texts={[
-                    { text: 'Learn. ' },
-                    { text: 'Build. ' },
-                    { text: 'Test. ' },
-                    { text: 'Innovate.', color: 'text-nsYellow' },
+                    { text: 'LEARN' },
+                    { text: ' - ', color: 'text-nsYellow/50' },
+                    { text: 'BUILD' },
+                    { text: ' - ', color: 'text-nsYellow/50' },
+                    { text: 'TEST' },
+                    { text: ' - ', color: 'text-nsYellow/50' },
+                    { text: 'INNOVATE', color: 'text-nsYellow' },
                   ]}
                 />
               </motion.h1>
 
-              {/* Mobile Video - shows BETWEEN headline and buttons on mobile, hidden on desktop */}
-              <div className="lg:hidden">
+              {/* Description - visible on all screen sizes */}
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.35 }}
+                className="text-sm font-medium text-nsWhite/80 max-w-xl leading-relaxed mt-4"
+              >
+                Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
+              </motion.p>
+
+              {/* Mobile Video - shows after description on mobile, hidden on desktop */}
+              <div className="lg:hidden mt-6">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -254,22 +267,12 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Description - visible on all screen sizes */}
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.35 }}
-                className="text-sm font-medium text-nsWhite/80 max-w-xl leading-relaxed"
-              >
-                Empowering students to build real-world technology through hands-on robotics, electronics, AI, embedded systems, and STEM learning.
-              </motion.p>
-
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.45 }}
-                className="flex flex-col sm:flex-row items-start gap-4"
+                className="flex flex-col sm:flex-row items-start gap-4 mt-6"
               >
                 <Link
                   to="/products"
@@ -287,31 +290,6 @@ export default function Home() {
                   <FiPlay className="group-hover:translate-x-1 transition-transform" size={18} />
                 </Link>
               </motion.div>
-
-              {/* Tech Tags */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.55 }}
-                className="flex flex-wrap items-center gap-4 text-nsWhite/60 text-sm"
-              >
-                <span className="flex items-center gap-2">
-                  <FiCpu className="text-nsYellow" size={16} />
-                  Embedded Systems
-                </span>
-                <span className="flex items-center gap-2">
-                  <FiWifi className="text-nsYellow" size={16} />
-                  IoT & AI
-                </span>
-                <span className="flex items-center gap-2">
-                  <FiTool className="text-nsYellow" size={16} />
-                  Robotics
-                </span>
-                <span className="flex items-center gap-2">
-                  <FiBookOpen className="text-nsYellow" size={16} />
-                  STEM Education
-                </span>
-              </motion.div>
             </div>
 
             {/* RIGHT: Video - MAIN HERO (Desktop only) */}
@@ -327,52 +305,43 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce lg:hidden"
-        >
-          <FiArrowRight className="text-nsYellow/70 text-2xl" />
-        </motion.div>
       </section>
 
-      {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
-      <section className="bg-nsBlack py-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-3 px-6 text-center sm:flex-row sm:gap-8 sm:px-8">
+{/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
+      <section className="bg-nsBlack py-4">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 text-center sm:flex-row sm:gap-6 sm:px-8">
           <p className="font-heading text-3xl font-extrabold text-nsYellow sm:text-4xl">
             {SITE.studentsTrained}+
           </p>
           <p className="font-heading text-lg font-bold text-white">
-            Students trained through Nano Spark workshops &amp; programs
+            Students trained through Nano Spark workshops & programs
           </p>
         </div>
       </section>
 
       {/* ============ VOICE OF STUDENTS & PARENTS ============ */}
-      <section className="bg-nsYellow/15 py-10">
+      <section className="bg-nsYellow/15 py-6">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
           <SectionHeading
             eyebrow="What Students & Parents Say"
             title="Feedback from our"
             highlight="workshops"
           />
-          <div className="mt-8">
+          <div className="mt-4">
             <TestimonialMarquee />
           </div>
         </div>
       </section>
 
       {/* ============ OUR CLIENTS ============ */}
-      <section className="bg-nsWhite py-10">
+      <section className="bg-nsWhite py-6">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
           <SectionHeading
             eyebrow="Our Clients"
             title="Trusted by"
             highlight="schools & colleges"
           />
-          <div className="mt-8">
+          <div className="mt-4">
             <ClientMarquee />
           </div>
         </div>
