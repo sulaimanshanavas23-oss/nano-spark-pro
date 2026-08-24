@@ -32,6 +32,19 @@ function VideoHero() {
   const [isMuted, setIsMuted] = useState(true)
   const [hasInteracted, setHasInteracted] = useState(false)
 
+  // Check localStorage for persisted interaction state
+  useEffect(() => {
+    const stored = localStorage.getItem('nanoHasInteracted')
+    if (stored === 'true') {
+      setHasInteracted(true)
+    }
+  }, [])
+
+  // Persist interaction state to localStorage
+  useEffect(() => {
+    localStorage.setItem('nanoHasInteracted', hasInteracted ? 'true' : 'false')
+  }, [hasInteracted])
+
   const pauseVideo = useCallback(() => {
     if (videoRef.current && !videoRef.current.paused) {
       videoRef.current.pause()
@@ -113,9 +126,9 @@ function VideoHero() {
       }
     }
 
-    document.addEventListener('click', enableAudio, { once: true, passive: true })
-    document.addEventListener('touchstart', enableAudio, { once: true, passive: true })
-    document.addEventListener('keydown', enableAudio, { once: true })
+    document.addEventListener('click', enableAudio, { passive: true })
+    document.addEventListener('touchstart', enableAudio, { passive: true })
+    document.addEventListener('keydown', enableAudio)
 
     return () => {
       document.removeEventListener('click', enableAudio)
@@ -206,7 +219,7 @@ export default function Home() {
         <CircuitBackground variant="dark" className="absolute inset-0 opacity-20" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:py-16">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-14 items-start">
             {/* LEFT: Content Stack */}
             <div className="lg:order-1 lg:col-span-4 z-10 space-y-8 pt-4 lg:pt-0">
               {/* Headline: Learn. Build. Test. Innovate. */}
