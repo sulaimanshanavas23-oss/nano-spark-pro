@@ -169,10 +169,10 @@ function VideoHero() {
     }
   }, [isVisible])
 
-  return (
+return (
     <div
       ref={containerRef}
-      className="relative aspect-[4/3] lg:aspect-[16/9] xl:aspect-[21/9] 2xl:aspect-[2/1] w-full min-h-[350px] lg:min-h-[450px] xl:min-h-[500px] 2xl:min-h-[550px] rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)]"
+      className="relative w-full rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)] lg:aspect-[16/9] xl:aspect-[21/9] 2xl:aspect-[2/1] lg:min-h-[450px] xl:min-h-[500px] 2xl:min-h-[550px]"
     >
       <video
         ref={videoRef}
@@ -180,7 +180,7 @@ function VideoHero() {
         loop
         playsInline
         muted
-        className="w-full h-full object-cover"
+        className="w-full h-auto object-contain"
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
