@@ -24,30 +24,15 @@ import { LetterReveal } from '../components/LetterReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
 function VideoHero() {
+  // Keep inline video for desktop as fallback/placeholder
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
-  const [isTabVisible, setIsTabVisible] = useState(!document.hidden)
-
-  // Check localStorage for persisted interaction state
-  useEffect(() => {
-    const stored = localStorage.getItem('nanoHasInteracted')
-    if (stored === 'true') {
-      setHasInteracted(true)
-    }
-  }, [])
-
-  // Persist interaction state to localStorage
-  useEffect(() => {
-    localStorage.setItem('nanoHasInteracted', hasInteracted ? 'true' : 'false')
-  }, [hasInteracted])
 
   const pauseVideo = useCallback(() => {
-    if (videoRef.current && !videoRef.current.paused) {
-      videoRef.current.pause()
-    }
+    videoRef.current?.pause()
   }, [])
 
   const playVideo = useCallback((forceUnmuted = false) => {
@@ -92,7 +77,6 @@ function VideoHero() {
   useEffect(() => {
     const handleVisibilityChange = () => {
       const nowVisible = !document.hidden
-      setIsTabVisible(nowVisible)
       if (nowVisible && isVisible) {
         playVideo(true)
       } else if (!nowVisible) {
@@ -138,7 +122,7 @@ function VideoHero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!videoRef.current || !isTabVisible) return
+      if (!videoRef.current) return
       const currentScrollY = window.scrollY || window.pageYOffset
       const isScrollingUp = currentScrollY < lastScrollY
 
@@ -154,7 +138,7 @@ function VideoHero() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isVisible, hasInteracted, lastScrollY, isTabVisible, pauseVideo, playVideo])
+  }, [isVisible, hasInteracted, lastScrollY, pauseVideo, playVideo])
 
   // Auto-play with sound on initial load for mobile
   useEffect(() => {
@@ -341,7 +325,7 @@ export default function Home() {
       </section>
 
 {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
-      <section className="bg-nsBlack py-4">
+      <section className="bg-nsBlack py-2">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 text-center sm:flex-row sm:gap-6 sm:px-8">
           <p className="font-heading text-3xl font-extrabold text-nsYellow sm:text-4xl">
             {SITE.studentsTrained}+
