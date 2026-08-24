@@ -267,39 +267,6 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Tech Tags - 6 tags on mobile */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.55 }}
-                className="lg:hidden flex flex-wrap items-center gap-3 text-nsWhite/70 text-xs mt-4"
-              >
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiCpu className="text-nsYellow" size={12} />
-                  Embedded
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiWifi className="text-nsYellow" size={12} />
-                  IoT & AI
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiTool className="text-nsYellow" size={12} />
-                  Robotics
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiBookOpen className="text-nsYellow" size={12} />
-                  STEM
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiZap className="text-nsYellow" size={12} />
-                  AI
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-nsWhite/10 border border-nsWhite/20">
-                  <FiSun className="text-nsYellow" size={12} />
-                  Prototyping
-                </span>
-              </motion.div>
-
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
@@ -322,6 +289,39 @@ export default function Home() {
                   Build With Us
                   <FiPlay className="group-hover:translate-x-1 transition-transform" size={18} />
                 </Link>
+              </motion.div>
+
+              {/* Tech Tags - 6 tags on mobile, below buttons, fill space */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.55 }}
+                className="lg:hidden flex flex-wrap justify-center gap-3 text-nsWhite/70 text-xs mt-6 w-full"
+              >
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiCpu className="text-nsYellow" size={12} />
+                  Embedded
+                </span>
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiWifi className="text-nsYellow" size={12} />
+                  IoT & AI
+                </span>
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiTool className="text-nsYellow" size={12} />
+                  Robotics
+                </span>
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiBookOpen className="text-nsYellow" size={12} />
+                  STEM
+                </span>
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiZap className="text-nsYellow" size={12} />
+                  AI
+                </span>
+                <span className="flex-1 min-w-[120px] max-w-[160px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-nsWhite/10 border border-nsWhite/20">
+                  <FiSun className="text-nsYellow" size={12} />
+                  Prototyping
+                </span>
               </motion.div>
             </div>
 
