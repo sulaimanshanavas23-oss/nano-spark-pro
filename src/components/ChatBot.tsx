@@ -170,10 +170,10 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Mascot + Speech Bubble */}
+      {/* Mascot + Speech Bubble — below WhatsApp button */}
       {!open && (
         <motion.div
-          className="fixed bottom-20 right-3 z-50 flex items-end gap-1 sm:right-5"
+          className="fixed bottom-5 right-5 z-50 flex items-end gap-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5 }}
@@ -186,7 +186,7 @@ export default function ChatBot() {
             transition={{ delay: 1.8, type: 'spring', stiffness: 300 }}
           >
             <p className="whitespace-nowrap text-sm font-bold text-nsBlack">
-              May I help you? 👋
+              May I help you?
             </p>
             <span className="absolute -bottom-1.5 right-2 h-3 w-3 rotate-45 bg-white" />
           </motion.div>
@@ -205,18 +205,16 @@ export default function ChatBot() {
             transition={{ delay: 0.7, type: 'spring', stiffness: 260 }}
           >
             <img
-              src="/images/chat-mascot.svg"
+              src="/images/mini cartton boy.jpg"
               alt="Nano Spark Assistant"
               className="h-full w-full object-cover"
               draggable={false}
             />
-            {/* Waving hand overlay */}
             <motion.span
               className="absolute -right-1 -top-1 text-xl"
               animate={{ rotate: [0, 20, -10, 20, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
             >
-              👋
             </motion.span>
           </motion.button>
         </motion.div>
