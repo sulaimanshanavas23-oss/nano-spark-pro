@@ -234,7 +234,7 @@ function CoreTechnologies() {
 
 function CodingSimulationTools() {
   return (
-    <section className="bg-nsGray-light py-20">
+    <section className="bg-nsGray-light py-20 overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
         <SectionHeading
           eyebrow="Coding & Simulation Tools"
@@ -243,8 +243,22 @@ function CodingSimulationTools() {
           subtitle="From Scratch for absolute beginners to Python and VS Code for advanced AI projects — every tool has a place in the journey."
         />
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((tool, _i) => (
-            <motion.div key={tool.name} className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft" whileHover={{ y: -5 }}>
+          {TOOLS.map((tool, i) => (
+            <motion.div
+              key={tool.name}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.5,
+                delay: i * 0.1,
+                type: 'spring',
+                stiffness: 150,
+                damping: 18,
+              }}
+              whileHover={{ y: -5, scale: 1.03 }}
+              className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft"
+            >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
                 {tool.icon}
               </span>
