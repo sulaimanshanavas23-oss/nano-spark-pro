@@ -9,6 +9,11 @@ import {
   FiZap,
   FiSun,
   FiPlay,
+  FiGrid,
+  FiBox,
+  FiTerminal,
+  FiCode,
+  FiLayers,
 } from 'react-icons/fi'
 import { useRef, useEffect, useState, useCallback } from 'react'
 import Page from '../components/Page'
@@ -135,7 +140,7 @@ function TechStackJourney() {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {LEVELS.map((level, i) => (
+          {LEVELS.map((level, _i) => (
             <div className="flex h-full flex-col rounded-2xl border border-nsWhite/10 bg-nsWhite/5 p-6">
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-nsYellow px-3 py-1 text-[10px] font-extrapolated tracking-[0.18em] text-nsBlack">
@@ -206,8 +211,8 @@ function CodingSimulationTools() {
           subtitle="From Scratch for absolute beginners to Python and VS Code for advanced AI projects — every tool has a place in the journey."
         />
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((tool, i) => (
-            <div key={tool.name} className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft" whileHover={{ y: -5 }}>
+          {TOOLS.map((tool, _i) => (
+            <motion.div key={tool.name} className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft" whileHover={{ y: -5 }}>
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
                 {tool.icon}
               </span>
