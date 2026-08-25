@@ -174,16 +174,33 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
           </div>
 
           {/* Expandable Section */}
-          <button
-            type="button"
-            onClick={() => setExpanded(!expanded)}
-            className="mt-6 flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-5 py-2.5 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
-          >
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setExpanded(!expanded)}
+              className="flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-5 py-2.5 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
+            >
               {expanded ? 'Hide Profile' : 'View Full Profile'}
               <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
                 <FiChevronDown size={16} />
               </motion.span>
             </button>
+            <a
+              href={member.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-2 rounded-xl border-2 border-[#0A66C2] bg-[#0A66C2] px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#004182]"
+            >
+              <FiLinkedin size={16} /> LinkedIn
+            </a>
+            <a
+              href={`mailto:${member.email}`}
+              className="flex items-center gap-2 rounded-xl border-2 border-nsBlack bg-white px-4 py-2.5 text-sm font-bold text-nsBlack transition-all hover:bg-nsBlack hover:text-nsYellow"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Gmail
+            </a>
+          </div>
 
             <AnimatePresence>
               {expanded && (
