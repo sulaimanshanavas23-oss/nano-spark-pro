@@ -173,7 +173,7 @@ export default function ChatBot() {
       {/* Mascot + Speech Bubble — below WhatsApp button */}
       {!open && (
         <motion.div
-          className="fixed bottom-20 right-5 z-50 flex items-end gap-1"
+          className="fixed bottom-5 right-5 z-50 flex items-end gap-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5 }}
@@ -222,7 +222,7 @@ export default function ChatBot() {
             onClick={() => setOpen(false)}
             aria-label="Close AI assistant"
             title="Close AI assistant"
-            className="fixed bottom-20 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
+            className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
