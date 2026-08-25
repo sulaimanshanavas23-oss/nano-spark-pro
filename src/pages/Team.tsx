@@ -166,9 +166,15 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
           </motion.p>
 
           {/* Summary */}
-          <div className="mt-5 text-base leading-relaxed text-nsBlack/75">
-            <WordReveal text={member.summary} delay={0.5} stagger={0.04} />
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-5 text-base leading-relaxed text-nsBlack/75"
+          >
+            {member.summary}
+          </motion.p>
 
           {/* Focus Areas */}
           <div className="mt-6">
