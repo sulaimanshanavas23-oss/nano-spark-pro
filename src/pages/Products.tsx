@@ -85,16 +85,18 @@ export default function Products() {
               <Reveal key={p.src} delay={i * 0.06}>
                 <motion.div
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="relative aspect-square overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+                  className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
                 >
-                  <SmartImage
-                    src={p.src}
-                    alt={p.label}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/85 to-transparent px-3 pb-2.5 pt-8 text-xs font-bold text-nsWhite">
+                  <div className="relative aspect-square overflow-hidden">
+                    <SmartImage
+                      src={p.src}
+                      alt={p.label}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <p className="px-3 py-2.5 text-center text-xs font-bold text-nsBlack">
                     {p.label}
-                  </span>
+                  </p>
                 </motion.div>
               </Reveal>
             ))}
