@@ -569,6 +569,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ FOUNDER APPROACH / HOW WE WORK ============ */}
+      <section className="bg-nsWhite py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="How We Work"
+            title="Learn - Build - Experiment - Debug - Innovate - Solve"
+            subtitle="The Nano Spark learning journey, inspired by our founder's approach — every young innovator follows the same path: understand it, make it, improve it, and use it to solve real problems. The line connects one step at a time as you scroll."
+          />
+          <div className="mt-14">
+            <ConnectedSteps steps={FOUNDER.approach} />
+          </div>
+        </div>
+      </section>
+
       {/* ============ TECHNOLOGY JOURNEY ============ */}
       <TechStackJourney />
 
@@ -604,20 +618,6 @@ export default function Home() {
               </Reveal>
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ============ FOUNDER APPROACH / HOW WE WORK ============ */}
-      <section className="bg-nsWhite py-20">
-        <div className="mx-auto max-w-6xl px-6 sm:px-8">
-          <SectionHeading
-            eyebrow="How We Work"
-            title="Learn - Build - Experiment - Debug - Innovate - Solve"
-            subtitle="The Nano Spark learning journey, inspired by our founder's approach — every young innovator follows the same path: understand it, make it, improve it, and use it to solve real problems. The line connects one step at a time as you scroll."
-          />
-          <div className="mt-14">
-            <ConnectedSteps steps={FOUNDER.approach} />
-          </div>
         </div>
       </section>
 

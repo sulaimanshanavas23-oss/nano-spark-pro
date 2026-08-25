@@ -73,7 +73,7 @@ export default function Products() {
 
           {/* Product image strip right at the top of the page — drop photos into
               public/images/product-1.jpg … product-6.jpg */}
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-12 grid grid-cols-3 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {[
               { src: '/images/product-1.jpg', label: 'STEM Kit' },
               { src: '/images/product-2.jpg', label: 'Robotics Kit' },
@@ -83,19 +83,19 @@ export default function Products() {
               { src: '/images/product-6.jpg', label: 'Innovation Kit' },
             ].map((p, i) => (
               <Reveal key={p.src} delay={i * 0.06}>
-                <motion.figure
+                <motion.div
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+                  className="relative aspect-square overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
                 >
                   <SmartImage
                     src={p.src}
                     alt={p.label}
-                    className="aspect-square w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
-                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/85 to-transparent px-3 pb-2.5 pt-8 text-xs font-bold text-nsWhite">
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/85 to-transparent px-3 pb-2.5 pt-8 text-xs font-bold text-nsWhite">
                     {p.label}
-                  </figcaption>
-                </motion.figure>
+                  </span>
+                </motion.div>
               </Reveal>
             ))}
           </div>
