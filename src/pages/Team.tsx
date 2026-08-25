@@ -109,69 +109,77 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <Reveal delay={index * 0.15}>
-      <motion.div
-        layout
-        className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
-      >
-        {/* Desktop: side-by-side layout */}
-        <div className="flex flex-col lg:flex-row">
-          {/* LEFT: Photo + Basic Info */}
-          <div className="relative lg:w-[280px] shrink-0">
-            <div className="relative overflow-hidden">
-              <img
-                src={member.photo}
-                alt={`${member.name} — ${member.role}`}
-                className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
-                draggable={false}
-              />
-              <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-3 py-1 font-heading text-sm font-extrabold text-nsBlack shadow-soft">
-                {member.roleShort}
-              </span>
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-5 pb-4 pt-12">
-                <p className="font-heading text-xl font-extrabold text-nsWhite sm:text-2xl">
-                  {member.name}
-                </p>
-                <p className="mt-1 text-sm font-semibold text-nsYellow">{member.role}</p>
-              </div>
+    <motion.div
+      initial={{ opacity: 0, y: 60, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.15,
+        type: 'spring',
+        stiffness: 120,
+        damping: 20,
+      }}
+      layout
+      className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+    >
+      <div className="flex flex-col lg:flex-row">
+        {/* LEFT: Photo + Basic Info */}
+        <div className="relative lg:w-[340px] shrink-0">
+          <div className="relative overflow-hidden">
+            <img
+              src={member.photo}
+              alt={`${member.name} — ${member.role}`}
+              className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
+              draggable={false}
+            />
+            <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-base font-extrabold text-nsBlack shadow-soft">
+              {member.roleShort}
+            </span>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-6 pb-5 pt-14">
+              <p className="font-heading text-2xl font-extrabold text-nsWhite sm:text-3xl">
+                {member.name}
+              </p>
+              <p className="mt-1 text-base font-semibold text-nsYellow">{member.role}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: Details */}
+        <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
+          {/* Headline */}
+          <p className="text-sm font-semibold uppercase tracking-wider text-nsYellow">
+            {member.headline}
+          </p>
+
+          {/* Summary */}
+          <p className="mt-5 text-base leading-relaxed text-nsBlack/75">
+            {member.summary}
+          </p>
+
+          {/* Focus Areas */}
+          <div className="mt-6">
+            <h4 className="flex items-center gap-2 font-heading text-base font-extrabold text-nsBlack">
+              <FiTarget size={16} className="text-nsYellow" /> Focus Areas
+            </h4>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {member.focus.map((f) => (
+                <span
+                  key={f}
+                  className="rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-1.5 text-sm font-bold text-nsBlack"
+                >
+                  {f}
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* RIGHT: Details */}
-          <div className="flex flex-1 flex-col p-5 sm:p-6 lg:p-8">
-            {/* Headline */}
-            <p className="text-sm font-semibold uppercase tracking-wider text-nsYellow">
-              {member.headline}
-            </p>
-
-            {/* Summary */}
-            <p className="mt-4 text-sm leading-relaxed text-nsBlack/75">
-              {member.summary}
-            </p>
-
-            {/* Focus Areas */}
-            <div className="mt-5">
-              <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
-                <FiTarget size={14} className="text-nsYellow" /> Focus Areas
-              </h4>
-              <div className="mt-2.5 flex flex-wrap gap-2">
-                {member.focus.map((f) => (
-                  <span
-                    key={f}
-                    className="rounded-full border border-nsBlack/10 bg-nsGray-light px-3 py-1 text-xs font-bold text-nsBlack"
-                  >
-                    {f}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Expandable Section */}
-            <button
-              type="button"
-              onClick={() => setExpanded(!expanded)}
-              className="mt-5 flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-4 py-2 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
-            >
+          {/* Expandable Section */}
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="mt-6 flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-5 py-2.5 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
+          >
               {expanded ? 'Hide Profile' : 'View Full Profile'}
               <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
                 <FiChevronDown size={16} />
