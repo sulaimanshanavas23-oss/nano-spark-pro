@@ -14,6 +14,7 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
+import { WordReveal } from '../components/WordReveal'
 
 interface TeamMember {
   name: string
@@ -132,9 +133,16 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
               className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
               draggable={false}
             />
-            <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-base font-extrabold text-nsBlack shadow-soft">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.6 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3, type: 'spring', stiffness: 300 }}
+              animate={{ boxShadow: ['0 0 0 0 rgba(255,193,7,0.4)', '0 0 0 8px rgba(255,193,7,0)', '0 0 0 0 rgba(255,193,7,0)'] }}
+              className="absolute left-4 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-base font-extrabold text-nsBlack shadow-soft"
+            >
               {member.roleShort}
-            </span>
+            </motion.span>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-6 pb-5 pt-14">
               <p className="font-heading text-2xl font-extrabold text-nsWhite sm:text-3xl">
                 {member.name}
@@ -147,14 +155,20 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
         {/* RIGHT: Details */}
         <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
           {/* Headline */}
-          <p className="text-sm font-semibold uppercase tracking-wider text-nsYellow">
-            {member.headline}
-          </p>
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-sm font-semibold uppercase tracking-wider text-nsYellow"
+          >
+            <WordReveal text={member.headline} delay={0.3} stagger={0.07} />
+          </motion.p>
 
           {/* Summary */}
-          <p className="mt-5 text-base leading-relaxed text-nsBlack/75">
-            {member.summary}
-          </p>
+          <div className="mt-5 text-base leading-relaxed text-nsBlack/75">
+            <WordReveal text={member.summary} delay={0.5} stagger={0.04} />
+          </div>
 
           {/* Focus Areas */}
           <div className="mt-6">
@@ -162,13 +176,18 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
               <FiTarget size={16} className="text-nsYellow" /> Focus Areas
             </h4>
             <div className="mt-3 flex flex-wrap gap-2">
-              {member.focus.map((f) => (
-                <span
+              {member.focus.map((f, fi) => (
+                <motion.span
                   key={f}
-                  className="rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-1.5 text-sm font-bold text-nsBlack"
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: 0.6 + fi * 0.08, type: 'spring', stiffness: 200 }}
+                  whileHover={{ scale: 1.08, backgroundColor: '#1A1A2E', color: '#FFC107' }}
+                  className="cursor-default rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-1.5 text-sm font-bold text-nsBlack transition-colors"
                 >
                   {f}
-                </span>
+                </motion.span>
               ))}
             </div>
           </div>
@@ -218,13 +237,19 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
                         <FiBriefcase size={14} className="text-nsYellow" /> Responsibilities at Nano Spark
                       </h4>
                       <ul className="mt-2.5 space-y-2">
-                        {member.responsibilities.map((r) => (
-                          <li key={r} className="flex items-start gap-2.5 text-sm text-nsBlack/75">
+                        {member.responsibilities.map((r, ri) => (
+                          <motion.li
+                            key={r}
+                            initial={{ opacity: 0, x: -15 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.35, delay: ri * 0.07 }}
+                            className="flex items-start gap-2.5 text-sm text-nsBlack/75"
+                          >
                             <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded bg-nsYellow text-[9px] font-extrabold text-nsBlack">
                               &#10003;
                             </span>
                             {r}
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
                     </div>
@@ -235,13 +260,17 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
                         <FiStar size={14} className="text-nsYellow" /> Key Skills
                       </h4>
                       <div className="mt-2.5 flex flex-wrap gap-2">
-                        {member.skills.map((s) => (
-                          <span
+                        {member.skills.map((s, si) => (
+                          <motion.span
                             key={s}
-                            className="rounded-full border border-nsBlack bg-nsBlack px-3 py-1 text-xs font-bold text-nsYellow"
+                            initial={{ opacity: 0, scale: 0.7 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: 0.2 + si * 0.06, type: 'spring', stiffness: 260 }}
+                            whileHover={{ scale: 1.1, backgroundColor: '#FFC107', color: '#1A1A2E' }}
+                            className="cursor-default rounded-full border border-nsBlack bg-nsBlack px-3 py-1 text-xs font-bold text-nsYellow transition-colors"
                           >
                             {s}
-                          </span>
+                          </motion.span>
                         ))}
                       </div>
                     </div>
@@ -342,7 +371,10 @@ export default function Team() {
             <FiUsers size={26} />
           </span>
           <h2 className="mt-4 font-heading text-3xl font-extrabold text-nsBlack">
-            Lead, teach &amp; grow with Nano Spark
+            <LetterReveal
+              texts={[{ text: 'Lead, teach & grow with Nano Spark' }]}
+              stagger={0.03}
+            />
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-nsBlack/75">
             Join the Ambassador Program and work alongside the founding team to spread hands-on

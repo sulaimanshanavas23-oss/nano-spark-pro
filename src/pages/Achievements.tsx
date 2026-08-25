@@ -14,9 +14,9 @@ import { SITE } from '../lib/site'
 // Only "Students Trained" (550) is verified so far.
 const STATS: { label: string; value: number | null; suffix: string }[] = [
   { label: 'Students Trained', value: 550, suffix: '+' },
-  { label: 'Workshops Conducted', value: null, suffix: '+' },
-  { label: 'School Partnerships', value: null, suffix: '+' },
-  { label: 'Projects Built', value: null, suffix: '+' },
+  { label: 'Workshops Conducted', value: 10, suffix: '+' },
+  { label: 'School Partnerships', value: 5, suffix: '+' },
+  { label: 'Projects Built', value: 100, suffix: '+' },
 ]
 
 const MILESTONES: { year: string; title: string; note: string }[] = [
