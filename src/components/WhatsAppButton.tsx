@@ -10,7 +10,7 @@ export default function WhatsAppButton() {
       rel="noreferrer noopener"
       aria-label="Chat with Nano Spark on WhatsApp"
       title="Chat with us on WhatsApp"
-      className="fixed bottom-[7.5rem] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lift"
+      className="fixed bottom-20 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lift"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       whileHover={{ scale: 1.1 }}

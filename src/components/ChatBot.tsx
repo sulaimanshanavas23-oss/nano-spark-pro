@@ -197,7 +197,7 @@ export default function ChatBot() {
             onClick={() => setOpen(true)}
             aria-label="Open AI assistant"
             title="Nano Spark AI Assistant"
-            className="relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-full border-3 border-nsYellow bg-white shadow-lift"
+            className="relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-full border-2 border-nsYellow bg-white shadow-lift"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             whileHover={{ scale: 1.1 }}
@@ -210,12 +210,6 @@ export default function ChatBot() {
               className="h-full w-full object-cover"
               draggable={false}
             />
-            <motion.span
-              className="absolute -right-1 -top-1 text-xl"
-              animate={{ rotate: [0, 20, -10, 20, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
-            >
-            </motion.span>
           </motion.button>
         </motion.div>
       )}
