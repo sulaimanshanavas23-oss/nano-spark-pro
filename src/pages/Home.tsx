@@ -143,7 +143,7 @@ function TechStackJourney() {
           {LEVELS.map((level, _i) => (
             <div className="flex h-full flex-col rounded-2xl border border-nsWhite/10 bg-nsWhite/5 p-6">
               <div className="flex items-center justify-between">
-                <span className="rounded-full bg-nsYellow px-3 py-1 text-[10px] font-extrapolated tracking-[0.18em] text-nsBlack">
+                <span className="rounded-full bg-nsYellow px-3 py-1 text-[10px] font-extrabold tracking-[0.18em] text-nsBlack">
                   {level.classes}
                 </span>
                 <FiCpu size={20} className="text-nsYellow" />
@@ -158,7 +158,7 @@ function TechStackJourney() {
                     {j < level.path.length - 1 ? (
                       <span className="text-[10px] text-nsYellow">&#9654;</span>
                     ) : (
-                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-nsYellow text-[8px] font-extrapolated text-nsBlack">
+                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-nsYellow text-[8px] font-extrabold text-nsBlack">
                         &#10003;
                       </span>
                     )}
@@ -217,10 +217,10 @@ function CodingSimulationTools() {
                 {tool.icon}
               </span>
               <div>
-                <p className="font-heading text-lg font-extrapolated text-nsBlack">{tool.name}</p>
+                <p className="font-heading text-lg font-bold text-nsBlack">{tool.name}</p>
                 <p className="text-xs text-nsBlack/60">{tool.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
