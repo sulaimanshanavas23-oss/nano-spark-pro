@@ -278,12 +278,16 @@ function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [hasInteracted, setHasInteracted] = useState(false)
 
   const playVideo = useCallback(() => {
     const video = videoRef.current
     if (!video || !isVisible) return
-    video.play().catch(() => {})
+    video.muted = false
+    video.volume = 0.3
+    video.play().catch(() => {
+      video.muted = true
+      video.play().catch(() => {})
+    })
   }, [isVisible])
 
   const pauseVideo = useCallback(() => {
@@ -307,28 +311,6 @@ function VideoHero() {
     else pauseVideo()
   }, [isVisible, playVideo, pauseVideo])
 
-  // Unmute on first user interaction (click/touch)
-  useEffect(() => {
-    if (hasInteracted) return
-    const enableAudio = () => {
-      const video = videoRef.current
-      if (!video || hasInteracted) return
-      setHasInteracted(true)
-      video.muted = false
-      video.volume = 0.3
-      video.play().catch(() => {
-        video.muted = true
-        video.play().catch(() => {})
-      })
-    }
-    document.addEventListener('click', enableAudio, { once: true, passive: true })
-    document.addEventListener('touchstart', enableAudio, { once: true, passive: true })
-    return () => {
-      document.removeEventListener('click', enableAudio)
-      document.removeEventListener('touchstart', enableAudio)
-    }
-  }, [hasInteracted])
-
   // Handle tab visibility: resume when user returns
   useEffect(() => {
     const onVisible = () => { if (!document.hidden) playVideo() }
@@ -346,7 +328,7 @@ function VideoHero() {
         autoPlay
         loop
         playsInline
-        muted
+        muted={false}
         preload="auto"
         className="w-full h-auto object-contain"
       >
