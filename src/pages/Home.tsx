@@ -23,6 +23,206 @@ import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
 import { FOUNDER, SITE } from '../lib/site'
 
+const JOURNEY = ['LEARN', 'SIMULATE', 'BUILD', 'DEBUG', 'INNOVATE']
+
+const LEVELS = [
+  {
+    classes: 'CLASSES 6–8',
+    name: 'SPARK DISCOVER',
+    desc: 'A playful first step into circuits, sensors and robot basics.',
+    path: [
+      'Block Coding',
+      'Basic Electronics',
+      'Circuit Building',
+      'Tinkercad Circuits',
+      'Sensors',
+      'Beginner Robotics',
+      'Simple Automation',
+    ],
+    focus: 'Understand → Simulate → Build → Experiment',
+  },
+  {
+    classes: 'CLASSES 8–10',
+    name: 'SPARK CREATE',
+    desc: 'Real microcontrollers, real code and robot builds from scratch.',
+    path: [
+      'Arduino',
+      'C/C++ Basics',
+      'Wokwi Simulation',
+      'Sensors & Actuators',
+      'Robotics',
+      'Automation',
+      'Tinkercad 3D Design',
+      'Introduction to IoT',
+    ],
+    focus: 'Code → Simulate → Build → Debug → Solve',
+  },
+  {
+    classes: 'CLASSES 10–12',
+    name: 'SPARK INNOVATE',
+    desc: 'IoT, AI and embedded systems — real products from real problems.',
+    path: [
+      'ESP32 / ESP8266',
+      'Embedded Systems',
+      'IoT',
+      'Python',
+      'AI & Computer Vision',
+      'Advanced Robotics',
+      'Tinkercad / CAD Concepts',
+      'Wokwi Prototyping',
+      'Advanced Project Development',
+    ],
+    focus: 'Identify Problem → Design → Simulate → Prototype → Test → Present',
+  },
+]
+
+const CORE_TECHNOLOGIES = [
+  'Electronics & Circuit Fundamentals',
+  'Sensors & Actuators',
+  'Arduino & Microcontrollers',
+  'ESP32 / ESP8266',
+  'Robotics & Automation',
+  'Embedded Systems',
+  'IoT & Smart Devices',
+  'Wireless Communication',
+  'AI & Computer Vision',
+  'C/C++ Programming',
+  'Python Programming',
+  'Block-Based Programming',
+  'Electronics Prototyping',
+  'PCB Fundamentals',
+  'Engineering Design',
+  'Rapid Prototyping',
+  'Debugging & System Design',
+]
+
+const TOOLS = [
+  { icon: <FiGrid size={22} />, name: 'Scratch', desc: 'Beginner block-based programming' },
+  { icon: <FiZap size={22} />, name: 'Tinkercad Circuits', desc: 'Beginner electronics & circuit simulation' },
+  { icon: <FiCpu size={22} />, name: 'Wokwi', desc: 'Arduino, ESP32 & embedded-system simulation' },
+  { icon: <FiBox size={22} />, name: 'Tinkercad 3D Design', desc: 'Basic CAD and prototyping' },
+  { icon: <FiTerminal size={22} />, name: 'Arduino IDE', desc: 'Microcontroller programming' },
+  { icon: <FiCode size={22} />, name: 'VS Code', desc: 'Advanced programming and development' },
+  { icon: <FiLayers size={22} />, name: 'Python', desc: 'Advanced programming and AI projects' },
+]
+
+function TechStackJourney() {
+  return (
+    <section className="relative overflow-hidden bg-nsBlack py-20 text-nsWhite">
+      <CircuitBackground variant="dark" className="opacity-60" />
+      <div className="relative mx-auto max-w-6xl px-6 sm:px-8">
+        <SectionHeading
+          dark
+          eyebrow="Technology Stack"
+          title="A progressive Learning"
+          highlight="Technology Journey"
+          subtitle="Not a list of tools — a journey. Students move from beginner block coding and circuit simulation up to Arduino, robotics, IoT, AI, embedded systems and independent prototype development."
+        />
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          {JOURNEY.map((step, i) => (
+            <span key={step} className="flex items-center gap-2 sm:gap-3">
+              <span className="rounded-full border-2 border-nsYellow bg-nsBlack px-4 py-1.5 font-heading text-sm font-extrabold text-nsYellow sm:text-base">
+                {step}
+              </span>
+              {i < JOURNEY.length - 1 && (
+                <span className="text-nsYellow">
+                  <FiArrowRight size={18} />
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          {LEVELS.map((level, i) => (
+            <div className="flex h-full flex-col rounded-2xl border border-nsWhite/10 bg-nsWhite/5 p-6">
+              <div className="flex items-center justify-between">
+                <span className="rounded-full bg-nsYellow px-3 py-1 text-[10px] font-extrapolated tracking-[0.18em] text-nsBlack">
+                  {level.classes}
+                </span>
+                <FiCpu size={20} className="text-nsYellow" />
+              </div>
+              <h3 className="mt-3 font-heading text-2xl font-extrabold text-nsYellow">
+                {level.name}
+              </h3>
+              <p className="mt-1 text-sm text-nsWhite/60">{level.desc}</p>
+              <ul className="mt-5 flex-1 space-y-0">
+                {level.path.map((item, j) => (
+                  <li key={item} className="flex items-center gap-2 py-1.5">
+                    {j < level.path.length - 1 ? (
+                      <span className="text-[10px] text-nsYellow">&#9654;</span>
+                    ) : (
+                      <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-nsYellow text-[8px] font-extrapolated text-nsBlack">
+                        &#10003;
+                      </span>
+                    )}
+                    <span className="text-sm font-bold text-nsWhite/85">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 rounded-xl bg-nsYellow/15 px-4 py-3 text-center text-xs font-bold tracking-wide text-nsYellow">
+                Focus: {level.focus}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CoreTechnologies() {
+  return (
+    <section className="bg-nsWhite py-20">
+      <div className="mx-auto max-w-6xl px-6 sm:px-8">
+        <SectionHeading
+          eyebrow="Core Technologies"
+          title="The skills inside"
+          highlight="every program"
+          subtitle="Seventeen core technologies woven through the Nano Spark STEM ecosystem — each introduced at the right stage of the journey."
+        />
+        <div className="mt-12 flex flex-wrap justify-center gap-2.5">
+          {CORE_TECHNOLOGIES.map((tech, i) => (
+            <span key={tech} className="inline-flex items-center gap-2 rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-2 text-sm font-bold text-nsBlack shadow-soft">
+              <FiZap size={13} className="text-nsYellow" />
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CodingSimulationTools() {
+  return (
+    <section className="bg-nsGray-light py-20">
+      <div className="mx-auto max-w-6xl px-6 sm:px-8">
+        <SectionHeading
+          eyebrow="Coding & Simulation Tools"
+          title="The toolbox students"
+          highlight="learn with"
+          subtitle="From Scratch for absolute beginners to Python and VS Code for advanced AI projects — every tool has a place in the journey."
+        />
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {TOOLS.map((tool, i) => (
+            <div key={tool.name} className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft" whileHover={{ y: -5 }}>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
+                {tool.icon}
+              </span>
+              <div>
+                <p className="font-heading text-lg font-extrapolated text-nsBlack">{tool.name}</p>
+                <p className="text-xs text-nsBlack/60">{tool.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function VideoHero() {
   // Keep inline video for desktop as fallback/placeholder
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -323,6 +523,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+  {/* ============ TECHNOLOGY JOURNEY ============ */}
+  <TechStackJourney />
+
+  {/* ============ CORE TECHNOLOGIES ============ */}
+  <CoreTechnologies />
+
+  {/* ============ CODING & SIMULATION TOOLS ============ */}
+  <CodingSimulationTools />
 
 {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
       <section className="bg-nsBlack py-2">
