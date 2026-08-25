@@ -128,11 +128,11 @@ export default function Achievements() {
                 </p>
                 <p className="mt-3 text-xs font-bold text-nsBlack/60 sm:text-sm">{SITE.msme.number}</p>
                 {/* TODO: drop MSME certificate as public/images/msme-certificate.jpg */}
-                <div className="mt-5 flex justify-center">
+                <div className="mt-5">
                   <SmartImage
                     src="/images/msme-certificate.jpg"
                     alt="MSME (Udyam) Registration Certificate"
-                    className="aspect-[4/3] w-full max-w-xs rounded-xl border-2 border-nsBlack/10 bg-nsWhite object-contain shadow-soft sm:max-w-sm"
+                    className="w-full rounded-xl border-2 border-nsBlack/10 object-cover shadow-soft"
                   />
                 </div>
               </div>
@@ -155,11 +155,11 @@ export default function Achievements() {
                 </p>
                 <p className="mt-3 text-xs font-bold text-nsBlack/60 sm:text-sm">StartupTN Registration — (to be updated)</p>
                 {/* TODO: drop StartupTN letter as public/images/startup-tn.jpg */}
-                <div className="mt-5 flex justify-center">
+                <div className="mt-5">
                   <SmartImage
                     src="/images/startup-tn.jpg"
                     alt="StartupTN Recognition"
-                    className="aspect-[4/3] w-full max-w-xs rounded-xl border-2 border-nsBlack/10 bg-nsWhite object-contain shadow-soft sm:max-w-sm"
+                    className="w-full rounded-xl border-2 border-nsBlack/10 object-cover shadow-soft"
                   />
                 </div>
               </div>

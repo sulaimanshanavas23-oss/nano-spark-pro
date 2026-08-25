@@ -407,7 +407,7 @@ export default function Contact() {
                 <SmartImage
                   src="/images/msme-certificate.jpg"
                   alt="MSME (Udyam) Registration Certificate"
-                  className="aspect-[4/3] w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
+                  className="w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
                 />
               </div>
             </Reveal>
@@ -433,7 +433,7 @@ export default function Contact() {
                 <SmartImage
                   src="/images/startup-tn.jpg"
                   alt="StartupTN Recognition"
-                  className="aspect-[4/3] w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
+                  className="w-full rounded-2xl border-2 border-nsBlack/10 object-cover"
                 />
               </div>
             </Reveal>

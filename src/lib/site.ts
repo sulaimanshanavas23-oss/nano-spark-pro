@@ -34,8 +34,8 @@ export const SITE = {
   msme: {
     registered: true,
     startupTn: true,
-    // TODO: replace with the real Udyam (MSME) registration number once provided
-    number: 'MSME Udyam No. — (to be updated)',
+    number: 'UDYAM-TN-02-0467983',
+    startupTnNumber: 'STN95128',
   },
   socials: [
     { label: 'Email', href: 'mailto:nanospark46@gmail.com', icon: 'email' },

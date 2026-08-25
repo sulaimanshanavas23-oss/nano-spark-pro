@@ -1,20 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   FiArrowRight,
-  FiChevronDown,
+  FiArrowLeft,
   FiLinkedin,
   FiUsers,
-  FiBriefcase,
-  FiStar,
   FiTarget,
 } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
-import { WordReveal } from '../components/WordReveal'
 
 interface TeamMember {
   name: string
@@ -105,214 +102,178 @@ const TEAM: TeamMember[] = [
   },
 ]
 
-function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
-  const [expanded, setExpanded] = useState(false)
+const CARD_INTERVAL = 4000
+
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? 400 : -400, opacity: 0, scale: 0.9 }),
+  center: { x: 0, opacity: 1, scale: 1 },
+  exit: (dir: number) => ({ x: dir > 0 ? -400 : 400, opacity: 0, scale: 0.9 }),
+}
+
+function TeamCarousel() {
+  const [index, setIndex] = useState(0)
+  const [dir, setDir] = useState(1)
+  const [paused, setPaused] = useState(false)
+  const member = TEAM[index]
+
+  const go = useCallback((next: number) => {
+    setDir(next > index ? 1 : -1)
+    setIndex((next + TEAM.length) % TEAM.length)
+  }, [index])
+
+  const next = useCallback(() => go(index + 1), [go, index])
+  const prev = useCallback(() => go(index - 1), [go, index])
+
+  useEffect(() => {
+    if (paused) return
+    const t = setInterval(next, CARD_INTERVAL)
+    return () => clearInterval(t)
+  }, [next, paused])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.15,
-        type: 'spring',
-        stiffness: 120,
-        damping: 20,
-      }}
-      layout
-      className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+    <div
+      className="relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      <div className="flex flex-col lg:flex-row">
-        {/* LEFT: Photo + Basic Info */}
-        <div className="relative lg:w-[340px] shrink-0">
-          <div className="relative overflow-hidden">
-            <img
-              src={member.photo}
-              alt={`${member.name} — ${member.role}`}
-              className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
-              draggable={false}
-            />
-            <motion.span
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.3, type: 'spring', stiffness: 300 }}
-              animate={{ boxShadow: ['0 0 0 0 rgba(255,193,7,0.4)', '0 0 0 8px rgba(255,193,7,0)', '0 0 0 0 rgba(255,193,7,0)'] }}
-              className="absolute left-4 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-base font-extrabold text-nsBlack shadow-soft"
-            >
-              {member.roleShort}
-            </motion.span>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-6 pb-5 pt-14">
-              <p className="font-heading text-2xl font-extrabold text-nsWhite sm:text-3xl">
-                {member.name}
-              </p>
-              <p className="mt-1 text-base font-semibold text-nsYellow">{member.role}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT: Details */}
-        <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
-          {/* Headline */}
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm font-semibold uppercase tracking-wider text-nsYellow"
+      {/* Flash card container */}
+      <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-nsBlack/10 bg-nsWhite shadow-soft">
+        <AnimatePresence custom={dir} mode="wait">
+          <motion.div
+            key={member.name}
+            custom={dir}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-col lg:flex-row"
           >
-            <WordReveal text={member.headline} delay={0.3} stagger={0.07} />
-          </motion.p>
-
-          {/* Summary */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-5 text-base leading-relaxed text-nsBlack/75"
-          >
-            {member.summary}
-          </motion.p>
-
-          {/* Focus Areas */}
-          <div className="mt-6">
-            <h4 className="flex items-center gap-2 font-heading text-base font-extrabold text-nsBlack">
-              <FiTarget size={16} className="text-nsYellow" /> Focus Areas
-            </h4>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {member.focus.map((f, fi) => (
+            {/* Photo */}
+            <div className="relative lg:w-[340px] shrink-0">
+              <div className="relative overflow-hidden">
+                <img
+                  src={member.photo}
+                  alt={`${member.name} — ${member.role}`}
+                  className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
+                  draggable={false}
+                />
                 <motion.span
-                  key={f}
-                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: 0.6 + fi * 0.08, type: 'spring', stiffness: 200 }}
-                  whileHover={{ scale: 1.08, backgroundColor: '#1A1A2E', color: '#FFC107' }}
-                  className="cursor-default rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-1.5 text-sm font-bold text-nsBlack transition-colors"
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, type: 'spring', stiffness: 300 }}
+                  className="absolute left-4 top-4 rounded-full bg-nsYellow px-4 py-1.5 font-heading text-base font-extrabold text-nsBlack shadow-soft"
                 >
-                  {f}
+                  {member.roleShort}
                 </motion.span>
-              ))}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-6 pb-5 pt-14">
+                  <p className="font-heading text-2xl font-extrabold text-nsWhite sm:text-3xl">{member.name}</p>
+                  <p className="mt-1 text-base font-semibold text-nsYellow">{member.role}</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Expandable Section */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-5 py-2.5 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
-            >
-              {expanded ? 'Hide Profile' : 'View Full Profile'}
-              <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                <FiChevronDown size={16} />
-              </motion.span>
-            </button>
-            <a
-              href={member.linkedin}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="flex items-center gap-2 rounded-xl border-2 border-[#0A66C2] bg-[#0A66C2] px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#004182]"
-            >
-              <FiLinkedin size={16} /> LinkedIn
-            </a>
-            <a
-              href={`mailto:${member.email}`}
-              className="flex items-center gap-2 rounded-xl border-2 border-nsBlack bg-white px-4 py-2.5 text-sm font-bold text-nsBlack transition-all hover:bg-nsBlack hover:text-nsYellow"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              Gmail
-            </a>
-          </div>
+            {/* Details */}
+            <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-sm font-semibold uppercase tracking-wider text-nsYellow"
+              >
+                {member.headline}
+              </motion.p>
 
-            <AnimatePresence>
-              {expanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: 'easeInOut' }}
-                  className="overflow-hidden"
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                className="mt-5 text-base leading-relaxed text-nsBlack/75"
+              >
+                {member.summary}
+              </motion.p>
+
+              {/* Focus Areas */}
+              <div className="mt-6">
+                <h4 className="flex items-center gap-2 font-heading text-base font-extrabold text-nsBlack">
+                  <FiTarget size={16} className="text-nsYellow" /> Focus Areas
+                </h4>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {member.focus.map((f, fi) => (
+                    <motion.span
+                      key={f}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 + fi * 0.06, type: 'spring', stiffness: 200 }}
+                      className="rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-1.5 text-sm font-bold text-nsBlack"
+                    >
+                      {f}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Links */}
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center gap-2 rounded-xl border-2 border-[#0A66C2] bg-[#0A66C2] px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#004182]"
                 >
-                  <div className="mt-5 space-y-5 border-t border-nsBlack/10 pt-5">
-                    {/* Responsibilities */}
-                    <div>
-                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
-                        <FiBriefcase size={14} className="text-nsYellow" /> Responsibilities at Nano Spark
-                      </h4>
-                      <ul className="mt-2.5 space-y-2">
-                        {member.responsibilities.map((r, ri) => (
-                          <motion.li
-                            key={r}
-                            initial={{ opacity: 0, x: -15 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.35, delay: ri * 0.07 }}
-                            className="flex items-start gap-2.5 text-sm text-nsBlack/75"
-                          >
-                            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded bg-nsYellow text-[9px] font-extrabold text-nsBlack">
-                              &#10003;
-                            </span>
-                            {r}
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
+                  <FiLinkedin size={16} /> LinkedIn
+                </a>
+                <a
+                  href={`mailto:${member.email}`}
+                  className="flex items-center gap-2 rounded-xl border-2 border-nsBlack bg-white px-4 py-2.5 text-sm font-bold text-nsBlack transition-all hover:bg-nsBlack hover:text-nsYellow"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  Gmail
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-                    {/* Skills */}
-                    <div>
-                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
-                        <FiStar size={14} className="text-nsYellow" /> Key Skills
-                      </h4>
-                      <div className="mt-2.5 flex flex-wrap gap-2">
-                        {member.skills.map((s, si) => (
-                          <motion.span
-                            key={s}
-                            initial={{ opacity: 0, scale: 0.7 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: 0.2 + si * 0.06, type: 'spring', stiffness: 260 }}
-                            whileHover={{ scale: 1.1, backgroundColor: '#FFC107', color: '#1A1A2E' }}
-                            className="cursor-default rounded-full border border-nsBlack bg-nsBlack px-3 py-1 text-xs font-bold text-nsYellow transition-colors"
-                          >
-                            {s}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </div>
+        {/* Left arrow */}
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Previous profile"
+          className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
+        >
+          <FiArrowLeft size={20} />
+        </button>
 
-                    {/* Education */}
-                    <div>
-                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
-                        <FiUsers size={14} className="text-nsYellow" /> Education
-                      </h4>
-                      <p className="mt-2 text-sm text-nsBlack/75">{member.education}</p>
-                    </div>
+        {/* Right arrow */}
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Next profile"
+          className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
+        >
+          <FiArrowRight size={20} />
+        </button>
+      </div>
 
-                    {/* Contact Links */}
-                    <div className="flex flex-wrap gap-3">
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="btn-yellow !px-4 !py-2 text-sm"
-                      >
-                        <FiLinkedin size={16} /> LinkedIn
-                      </a>
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="btn-outline !px-4 !py-2 text-sm"
-                      >
-                        {member.email}
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </motion.div>
+      {/* Progress dots */}
+      <div className="mt-6 flex items-center justify-center gap-3">
+        {TEAM.map((m, i) => (
+          <button
+            key={m.name}
+            type="button"
+            onClick={() => go(i)}
+            aria-label={`View ${m.name}`}
+            className={`h-2.5 rounded-full transition-all duration-300 ${
+              i === index ? 'w-8 bg-nsYellow' : 'w-2.5 bg-nsBlack/20 hover:bg-nsBlack/40'
+            }`}
+          />
+        ))}
+        <span className="ml-3 text-xs font-bold text-nsBlack/40">
+          {index + 1} / {TEAM.length}
+        </span>
+      </div>
+    </div>
   )
 }
 
@@ -343,14 +304,10 @@ export default function Team() {
         </div>
       </section>
 
-      {/* ============ TEAM PROFILES ============ */}
+      {/* ============ TEAM PROFILES — Flash Card Carousel ============ */}
       <section className="bg-nsGray-light py-20">
         <div className="mx-auto max-w-6xl px-6 sm:px-8">
-          <div className="space-y-10">
-            {TEAM.map((member, i) => (
-              <ProfileCard key={member.name} member={member} index={i} />
-            ))}
-          </div>
+          <TeamCarousel />
 
           {/* Leadership Statement */}
           <Reveal delay={0.3}>
