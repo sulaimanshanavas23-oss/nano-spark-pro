@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   FiArrowRight,
-  FiChevronLeft,
-  FiChevronRight,
+  FiChevronDown,
   FiLinkedin,
-  FiMail,
-  FiPhone,
   FiUsers,
+  FiBriefcase,
+  FiStar,
+  FiTarget,
 } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
@@ -16,219 +16,245 @@ import SectionHeading from '../components/SectionHeading'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
 
-// Each flashcard stays on screen for this long before the next one appears.
-const FLASH_DURATION_MS = 5_000
-
 interface TeamMember {
   name: string
   role: string
   roleShort: string
+  headline: string
+  photo: string
+  linkedin: string
   email: string
   phone: string
   phoneDisplay: string
-  linkedin: string
-  photo: string
+  summary: string
+  focus: string[]
+  responsibilities: string[]
+  education: string
+  skills: string[]
 }
 
 const TEAM: TeamMember[] = [
   {
-    name: 'E. Dharshan',
+    name: 'Dharshan E.',
     role: 'Chief Operating Officer (COO)',
     roleShort: 'COO',
+    headline: 'Operations · Business Execution · Partnerships · Growth',
+    photo: '/images/dharshan-e.jpeg',
+    linkedin: 'https://www.linkedin.com/in/dharshan-e-694a82329/',
     email: 'dharshane21@gmail.com',
     phone: 'tel:+919840363412',
     phoneDisplay: '+91 98403 63412',
-    linkedin: 'https://www.linkedin.com/in/dharshan-e-694a82329',
-    photo: '/images/dharshan-e.jpeg',
+    summary:
+      'Driving Nano Spark\'s day-to-day operations, business execution and strategic partnerships. Dharshan oversees workflow coordination, team alignment and growth initiatives to ensure the company delivers on its mission of making STEM education practical and accessible.',
+    focus: ['Operations', 'Business Execution', 'Partnerships', 'Team Coordination', 'Growth Strategy'],
+    responsibilities: [
+      'Overseeing daily operations and workflow coordination',
+      'Building and managing strategic school and institutional partnerships',
+      'Ensuring cross-functional team alignment and execution',
+      'Driving business growth and operational efficiency',
+      'Managing logistics for workshops, lab setups and kit deliveries',
+    ],
+    education: 'Electronics & Communication Engineering',
+    skills: ['Operations Management', 'Business Development', 'Partnership Building', 'Team Leadership', 'Strategic Planning', 'Process Optimization'],
   },
   {
-    name: 'A. Mohammed Thariq',
+    name: 'Mohammed Thariq A.',
     role: 'Chief Marketing Officer (CMO)',
     roleShort: 'CMO',
+    headline: 'Marketing · Branding · Digital Presence · Customer Acquisition',
+    photo: '/images/mohammed-thariq.jpeg',
+    linkedin: 'https://www.linkedin.com/in/mohammed-thariq-a-68100433b/',
     email: 'mohammedthariq26@gmail.com',
     phone: 'tel:+918015808897',
     phoneDisplay: '+91 80158 08897',
-    linkedin: 'https://www.linkedin.com/in/mohammed-thariq-a-68100433b',
-    photo: '/images/mohammed-thariq.jpeg',
+    summary:
+      'Leading Nano Spark\'s marketing strategy, brand identity and digital presence. Mohammed Thariq drives customer acquisition, community engagement and content creation to build Nano Spark\'s visibility across schools, colleges and the wider STEM education ecosystem.',
+    focus: ['Marketing Strategy', 'Branding', 'Digital Presence', 'Customer Acquisition', 'Community Building'],
+    responsibilities: [
+      'Developing and executing marketing strategies for school outreach',
+      'Building Nano Spark\'s brand identity and visual presence',
+      'Managing social media, content and digital marketing channels',
+      'Driving customer acquisition and school partnership pipelines',
+      'Creating campaigns that highlight student projects and workshop impact',
+    ],
+    education: 'Electronics & Communication Engineering',
+    skills: ['Digital Marketing', 'Brand Strategy', 'Social Media Management', 'Content Creation', 'Market Research', 'Community Engagement'],
   },
   {
-    name: 'R. S. Tejasri',
-    role: 'Chief Information Officer (CIO)',
+    name: 'Tejasri R. S.',
+    role: 'Chief Innovation Officer (CIO)',
     roleShort: 'CIO',
+    headline: 'Innovation · Technology Strategy · Product Development · Research',
+    photo: '/images/tejasri-rs.jpeg',
+    linkedin: 'https://www.linkedin.com/in/tejasri-r-s-a31a57329/',
     email: 'tejasrirs2006@gmail.com',
     phone: 'tel:+917305395117',
     phoneDisplay: '+91 73053 95117',
-    linkedin: 'https://www.linkedin.com/in/tejasri-r-s-a31a57329',
-    photo: '/images/tejasri-rs.jpeg',
+    summary:
+      'Leading Nano Spark\'s innovation pipeline, technology strategy and product development. Tejasri drives research into emerging technologies, oversees curriculum design for workshops and ensures the company stays at the forefront of STEM education tools and methods.',
+    focus: ['Innovation', 'Technology Strategy', 'Product Development', 'Research', 'Curriculum Design'],
+    responsibilities: [
+      'Driving technology strategy and innovation initiatives',
+      'Overseeing product development for STEM kits and lab solutions',
+      'Researching emerging technologies like IoT, AI and embedded systems',
+      'Designing curriculum and project-based learning content',
+      'Ensuring quality and relevance of workshop technology and tools',
+    ],
+    education: 'Electronics & Communication Engineering',
+    skills: ['Technology Strategy', 'Product Development', 'IoT & Embedded Systems', 'Python Programming', 'AI & Computer Vision', 'Curriculum Design'],
   },
 ]
 
-function TeamFlashcard() {
-  const [[index, direction], setPage] = useState<[number, number]>([0, 0])
-  const touchX = useRef<number | null>(null)
-  const member = TEAM[index]
-
-  const paginate = useCallback((dir: number) => {
-    setPage(([i]) => [(i + dir + TEAM.length) % TEAM.length, dir])
-  }, [])
-
-  // Auto-advance: every 5 seconds a new flashcard appears on EVERY device.
-  // Restarts whenever the user manually flips (index changes).
-  useEffect(() => {
-    const t = window.setInterval(() => {
-      setPage(([i]) => [(i + 1) % TEAM.length, 1])
-    }, FLASH_DURATION_MS)
-    return () => window.clearInterval(t)
-  }, [index])
-
-  // Touch swipe support for mobiles/tablets.
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchX.current = e.touches[0].clientX
-  }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchX.current == null) return
-    const dx = e.changedTouches[0].clientX - touchX.current
-    if (Math.abs(dx) > 48) paginate(dx > 0 ? -1 : 1)
-    touchX.current = null
-  }
-
-  const cardVariants = {
-    enter: (dir: number) => ({
-      opacity: 0,
-      x: dir > 0 ? 90 : -90,
-      rotateY: dir > 0 ? 16 : -16,
-      scale: 0.94,
-    }),
-    center: { opacity: 1, x: 0, rotateY: 0, scale: 1 },
-    exit: (dir: number) => ({
-      opacity: 0,
-      x: dir > 0 ? -90 : 90,
-      rotateY: dir > 0 ? -16 : 16,
-      scale: 0.94,
-    }),
-  }
+function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
+  const [expanded, setExpanded] = useState(false)
 
   return (
-    <div
-      className="mx-auto w-full max-w-[24rem]"
-      style={{ perspective: 1400 }}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      <div className="relative">
-        <AnimatePresence mode="wait" custom={direction} initial={false}>
-          <motion.article
-            key={index}
-            custom={direction}
-            variants={cardVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-            className="relative overflow-hidden rounded-3xl border-4 border-nsYellow bg-nsWhite shadow-lift"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            {/* Photo — full portrait image, no zooming/cropping */}
+    <Reveal delay={index * 0.15}>
+      <motion.div
+        layout
+        className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
+      >
+        {/* Desktop: side-by-side layout */}
+        <div className="flex flex-col lg:flex-row">
+          {/* LEFT: Photo + Basic Info */}
+          <div className="relative lg:w-[280px] shrink-0">
             <div className="relative overflow-hidden">
               <img
                 src={member.photo}
                 alt={`${member.name} — ${member.role}`}
-                className="aspect-[4/5] w-full object-cover object-top"
+                className="aspect-[3/4] w-full object-cover object-top lg:aspect-[4/5]"
                 draggable={false}
               />
-              <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-3.5 py-1.5 font-heading text-sm font-extrabold text-nsBlack shadow-soft">
+              <span className="absolute left-4 top-4 rounded-full bg-nsYellow px-3 py-1 font-heading text-sm font-extrabold text-nsBlack shadow-soft">
                 {member.roleShort}
               </span>
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/45 to-transparent px-5 pb-4 pt-14">
-                <p className="font-heading text-2xl font-extrabold text-nsWhite">{member.name}</p>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/90 via-nsBlack/40 to-transparent px-5 pb-4 pt-12">
+                <p className="font-heading text-xl font-extrabold text-nsWhite sm:text-2xl">
+                  {member.name}
+                </p>
+                <p className="mt-1 text-sm font-semibold text-nsYellow">{member.role}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: Details */}
+          <div className="flex flex-1 flex-col p-5 sm:p-6 lg:p-8">
+            {/* Headline */}
+            <p className="text-sm font-semibold uppercase tracking-wider text-nsYellow">
+              {member.headline}
+            </p>
+
+            {/* Summary */}
+            <p className="mt-4 text-sm leading-relaxed text-nsBlack/75">
+              {member.summary}
+            </p>
+
+            {/* Focus Areas */}
+            <div className="mt-5">
+              <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
+                <FiTarget size={14} className="text-nsYellow" /> Focus Areas
+              </h4>
+              <div className="mt-2.5 flex flex-wrap gap-2">
+                {member.focus.map((f) => (
+                  <span
+                    key={f}
+                    className="rounded-full border border-nsBlack/10 bg-nsGray-light px-3 py-1 text-xs font-bold text-nsBlack"
+                  >
+                    {f}
+                  </span>
+                ))}
               </div>
             </div>
 
-            {/* Details */}
-            <div className="flex flex-col gap-4 p-5 sm:p-6">
-              <h3 className="font-heading text-xl font-extrabold text-nsBlack">{member.role}</h3>
-              <div className="grid gap-2.5 text-sm sm:grid-cols-2">
-                <a
-                  href={`mailto:${member.email}`}
-                  className="flex items-center gap-2.5 rounded-xl border border-nsBlack/10 bg-nsGray-light px-3 py-2.5 text-nsBlack/75 transition-colors hover:border-nsBlack"
-                >
-                  <FiMail className="shrink-0 text-nsYellow" size={16} />
-                  <span className="truncate">{member.email}</span>
-                </a>
-                <a
-                  href={member.phone}
-                  className="flex items-center gap-2.5 rounded-xl border border-nsBlack/10 bg-nsGray-light px-3 py-2.5 text-nsBlack/75 transition-colors hover:border-nsBlack"
-                >
-                  <FiPhone className="shrink-0 text-nsYellow" size={16} />
-                  <span>{member.phoneDisplay}</span>
-                </a>
-              </div>
-              <div className="grid gap-2.5 sm:grid-cols-2">
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="btn-yellow justify-center !px-2 !py-2.5 text-sm"
-                >
-                  <FiLinkedin size={16} /> LinkedIn
-                </a>
-                <a href={`mailto:${member.email}`} className="btn-outline justify-center !px-2 !py-2.5 text-sm">
-                  <FiMail size={16} /> Email
-                </a>
-              </div>
-            </div>
-
-            {/* 5-second countdown bar */}
-            <div className="absolute inset-x-0 bottom-0 h-1.5 bg-nsBlack/10">
-              <div
-                key={`progress-${index}`}
-                className="h-full rounded-full bg-nsYellow"
-                style={{ animation: `flash-progress ${FLASH_DURATION_MS}ms linear forwards` }}
-              />
-            </div>
-          </motion.article>
-        </AnimatePresence>
-      </div>
-
-      {/* Controls */}
-      <div className="mt-6 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => paginate(-1)}
-          aria-label="Previous team member"
-          className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsBlack bg-nsWhite text-nsBlack shadow-soft transition-all hover:bg-nsBlack hover:text-nsYellow active:scale-95"
-        >
-          <FiChevronLeft size={22} />
-        </button>
-        <div className="flex items-center gap-2">
-          {TEAM.map((m, i) => (
+            {/* Expandable Section */}
             <button
-              key={m.name}
               type="button"
-              aria-label={`Show ${m.name}`}
-              onClick={() => setPage([i, i > index ? 1 : -1])}
-              className={`h-2.5 rounded-full transition-all ${
-                i === index ? 'w-7 bg-nsYellow' : 'w-2.5 bg-nsBlack/25 hover:bg-nsBlack/50'
-              }`}
-            />
-          ))}
+              onClick={() => setExpanded(!expanded)}
+              className="mt-5 flex items-center gap-2 self-start rounded-xl border-2 border-nsBlack bg-nsBlack px-4 py-2 font-heading text-sm font-extrabold text-nsYellow transition-all hover:bg-nsYellow hover:text-nsBlack"
+            >
+              {expanded ? 'Hide Profile' : 'View Full Profile'}
+              <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                <FiChevronDown size={16} />
+              </motion.span>
+            </button>
+
+            <AnimatePresence>
+              {expanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="mt-5 space-y-5 border-t border-nsBlack/10 pt-5">
+                    {/* Responsibilities */}
+                    <div>
+                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
+                        <FiBriefcase size={14} className="text-nsYellow" /> Responsibilities at Nano Spark
+                      </h4>
+                      <ul className="mt-2.5 space-y-2">
+                        {member.responsibilities.map((r) => (
+                          <li key={r} className="flex items-start gap-2.5 text-sm text-nsBlack/75">
+                            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded bg-nsYellow text-[9px] font-extrabold text-nsBlack">
+                              &#10003;
+                            </span>
+                            {r}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Skills */}
+                    <div>
+                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
+                        <FiStar size={14} className="text-nsYellow" /> Key Skills
+                      </h4>
+                      <div className="mt-2.5 flex flex-wrap gap-2">
+                        {member.skills.map((s) => (
+                          <span
+                            key={s}
+                            className="rounded-full border border-nsBlack bg-nsBlack px-3 py-1 text-xs font-bold text-nsYellow"
+                          >
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Education */}
+                    <div>
+                      <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
+                        <FiUsers size={14} className="text-nsYellow" /> Education
+                      </h4>
+                      <p className="mt-2 text-sm text-nsBlack/75">{member.education}</p>
+                    </div>
+
+                    {/* Contact Links */}
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="btn-yellow !px-4 !py-2 text-sm"
+                      >
+                        <FiLinkedin size={16} /> LinkedIn
+                      </a>
+                      <a
+                        href={`mailto:${member.email}`}
+                        className="btn-outline !px-4 !py-2 text-sm"
+                      >
+                        {member.email}
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-        <span className="font-heading text-sm font-extrabold tracking-widest text-nsBlack/60">
-          {String(index + 1).padStart(2, '0')} / {String(TEAM.length).padStart(2, '0')}
-        </span>
-        <button
-          type="button"
-          onClick={() => paginate(1)}
-          aria-label="Next team member"
-          className="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-nsBlack bg-nsWhite text-nsBlack shadow-soft transition-all hover:bg-nsBlack hover:text-nsYellow active:scale-95"
-        >
-          <FiChevronRight size={22} />
-        </button>
-      </div>
-      <p className="mt-3 text-center text-xs font-semibold text-nsBlack/50">
-        Swipe or use the buttons to flip
-      </p>
-    </div>
+      </motion.div>
+    </Reveal>
   )
 }
 
@@ -241,41 +267,50 @@ export default function Team() {
         <div className="relative mx-auto max-w-6xl px-6 py-16 text-center sm:px-8 lg:py-20">
           <Reveal>
             <span className="section-heading-bullet justify-center">
-              <span className="text-nsYellow">&#9654;</span> Our Team
+              <span className="text-nsYellow">&#9654;</span> Meet The Team
             </span>
             <h1 className="mt-3 font-heading text-4xl font-extrabold sm:text-5xl">
               <LetterReveal
-                texts={[{ text: 'The minds behind' }, { text: 'Nano Spark', color: 'text-nsYellow' }]}
+                texts={[
+                  { text: 'Building the future of' },
+                  { text: ' STEM Education', color: 'text-nsYellow' },
+                ]}
               />
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-nsWhite/70">
-              Young engineers and innovators leading Nano Spark's operations, marketing and
-              technology — turning curiosity into real-world innovation.
+              Meet the team working to make technology learning more practical, accessible and
+              innovation-driven.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* ============ CORE TEAM — FLASHCARD CAROUSEL ============ */}
-      <section className="relative overflow-hidden bg-nsWhite py-20">
-        <CircuitBackground variant="light" className="opacity-50" />
-        <div className="relative mx-auto max-w-6xl px-6 sm:px-8">
-          <SectionHeading
-            eyebrow="Core Team"
-            title="Meet the team"
-            highlight="one flashcard at a time"
-            subtitle="A young leadership team that runs Nano Spark — from daily operations to community growth."
-          />
-          <div className="mt-14">
-            <Reveal>
-              <TeamFlashcard />
-            </Reveal>
+      {/* ============ TEAM PROFILES ============ */}
+      <section className="bg-nsGray-light py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <div className="space-y-10">
+            {TEAM.map((member, i) => (
+              <ProfileCard key={member.name} member={member} index={i} />
+            ))}
           </div>
+
+          {/* Leadership Statement */}
+          <Reveal delay={0.3}>
+            <div className="mt-16 rounded-2xl border-2 border-nsYellow/30 bg-nsWhite p-8 text-center shadow-soft">
+              <p className="mx-auto max-w-3xl text-base leading-relaxed text-nsBlack/75">
+                Together, our team combines{' '}
+                <span className="font-extrabold text-nsBlack">operations</span>,{' '}
+                <span className="font-extrabold text-nsBlack">marketing</span> and{' '}
+                <span className="font-extrabold text-nsBlack">innovation</span> to build Nano Spark
+                into a practical STEM learning ecosystem for the next generation.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ============ CTA ============ */}
-      <section className="bg-nsGray-light py-20">
+      <section className="bg-nsWhite py-20">
         <motion.div
           whileHover={{ scale: 1.01 }}
           className="mx-auto max-w-4xl rounded-3xl bg-gold-gradient px-8 py-12 text-center shadow-lift"
