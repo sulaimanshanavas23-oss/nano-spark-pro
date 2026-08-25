@@ -4,7 +4,6 @@ import { IconType } from 'react-icons'
 import {
   FiAward,
   FiCheck,
-  FiChevronDown,
   FiMail,
   FiMapPin,
   FiPhone,
@@ -111,198 +110,16 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ============ FOUNDER (LEFT) + MESSAGE FORM (RIGHT) ============ */}
+      {/* ============ CONTACT FORM + FOUNDER INFO ============ */}
       <section className="bg-nsGray-light py-20">
         <div className="mx-auto grid max-w-6xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-2">
-          {/* ===== LEFT: About the Founder — goes BELOW the form on mobile ===== */}
-          <div className="space-y-6 order-2 lg:order-none">
-            <Reveal>
-              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:text-left">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="mx-auto shrink-0 overflow-hidden rounded-2xl border-4 border-nsYellow bg-white shadow-lift sm:mx-0"
-                  >
-                    <img
-                      src={SITE.founderPhoto}
-                      alt={SITE.founder.name}
-                      className="h-36 w-36 object-cover object-top sm:h-44 sm:w-44"
-                    />
-                  </motion.div>
-                  <div className="text-center sm:text-left">
-                    <p className="text-xs font-extrabold tracking-[0.25em] text-nsYellow">
-                      {FOUNDER.heading}
-                    </p>
-                    <h2 className="mt-1 font-heading text-3xl font-extrabold text-nsBlack">
-                      {FOUNDER.name}
-                    </h2>
-                    <p className="mt-0.5 text-sm font-bold text-nsBlack/60">{FOUNDER.role}</p>
-                    <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-nsBlack/60 sm:justify-start">
-                      <FiMapPin /> {FOUNDER.location}, India
-                    </p>
-                    <span className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-nsGray-light px-3 py-1 text-[11px] font-bold text-nsBlack/70">
-                      <FiShield className="text-nsYellow" /> MSME Registered · StartupTN Recognized
-                    </span>
-                  </div>
-                </div>
-
-                {/* Contacts — labeled Gmail / Contact / WhatsApp */}
-                <div className="mt-6 space-y-3 border-t border-nsBlack/10 pt-5 text-sm">
-                  <a
-                    href={`mailto:${SITE.email}`}
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
-                      <FiMail />
-                    </span>
-                    <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        GMAIL
-                      </span>
-                      <span className="break-all font-semibold">{SITE.email}</span>
-                    </span>
-                  </a>
-                  <a
-                    href={SITE.socials[5].href}
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
-                      <FiPhone />
-                    </span>
-                    <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        CONTACT
-                      </span>
-                      <span className="font-semibold">{SITE.phoneDisplay}</span>
-                    </span>
-                  </a>
-                  <a
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#25D366] text-white">
-                      <FaWhatsapp size={18} />
-                    </span>
-                    <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        WHATSAPP
-                      </span>
-                      <span className="font-semibold">Message us — quick reply</span>
-                    </span>
-                  </a>
-                </div>
-
-                <div className="mt-6 border-t border-nsBlack/10 pt-5">
-                  <p className="mb-3 text-xs font-bold tracking-widest text-nsBlack/50">FIND US</p>
-                  <div className="flex gap-2.5">
-                    {SITE.socials
-                      .filter((s) => SOCIAL_ICONS[s.icon])
-                      .map((social) => {
-                        const Icon = SOCIAL_ICONS[social.icon]
-                        return (
-                          <a
-                            key={social.label}
-                            href={social.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            aria-label={social.label}
-                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack/70 transition-all hover:border-nsYellow hover:bg-nsYellow hover:text-nsBlack"
-                          >
-                            <Icon size={18} />
-                          </a>
-                        )
-                      })}
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* About the Founder story */}
-            <Reveal delay={0.05}>
-              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
-                <div className="space-y-4">
-                  {FOUNDER.intro.map((para, i) => (
-                    <p key={i} className="text-base leading-relaxed text-nsBlack/80">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-
-                {/* His Approach */}
-                <div className="mt-7 rounded-2xl bg-nsGray-light p-6">
-                  <h3 className="font-heading text-lg font-extrabold text-nsBlack">His Approach</h3>
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    {FOUNDER.approach.map((step, i) => (
-                      <span key={step} className="flex items-center gap-2">
-                        <span className="rounded-xl bg-nsYellow px-3 py-2 font-heading text-sm font-extrabold text-nsBlack">
-                          {step}
-                        </span>
-                        {i < FOUNDER.approach.length - 1 && (
-                          <FiChevronDown className="rotate-[-90deg] text-nsYellow" />
-                        )}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="mt-4 text-sm leading-relaxed text-nsBlack/70">{FOUNDER.approachNote}</p>
-                </div>
-
-                {/* Vision */}
-                <div className="mt-6 relative overflow-hidden rounded-2xl bg-gold-gradient px-6 py-7 shadow-soft">
-                  <span className="absolute -top-2 left-4 font-heading text-7xl text-nsBlack/15">“</span>
-                  <p className="relative mt-4 font-heading text-lg font-extrabold leading-relaxed text-nsBlack">
-                    {FOUNDER.visionQuote}
-                  </p>
-                  <p className="mt-3 text-right text-xs font-extrabold tracking-[0.2em] text-nsBlack/60">
-                    {FOUNDER.visionHeading}
-                  </p>
-                </div>
-
-                {/* Bigger vision */}
-                <div className="mt-7">
-                  <h3 className="font-heading text-lg font-extrabold text-nsBlack">
-                    {FOUNDER.biggerVisionHeading}
-                  </h3>
-                  <div className="mt-4 flex flex-col gap-2">
-                    {FOUNDER.biggerVision.map((step, i) => (
-                      <div key={step} className="flex items-center gap-3">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-nsBlack font-heading text-xs font-extrabold text-nsYellow">
-                          {i + 1}
-                        </span>
-                        <span className="font-heading text-sm font-extrabold text-nsBlack">{step}</span>
-                        {i < FOUNDER.biggerVision.length - 1 && (
-                          <FiChevronDown className="ml-auto text-nsYellow" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="mt-6 border-t border-nsBlack/10 pt-4 text-right">
-                    <span className="font-heading text-base font-extrabold text-nsBlack">
-                      S. Shanavas
-                    </span>
-                    <span className="mx-2 text-nsYellow">•</span>
-                    <span className="text-sm text-nsBlack/60">Founder & CEO, Nano Spark</span>
-                    <span className="mt-1 block text-[11px] font-extrabold tracking-[0.22em] text-nsYellow">
-                      {SITE.tagline}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* ===== RIGHT: Message form — comes FIRST on mobile ===== */}
-          <Reveal delay={0.1} className="order-first lg:order-none">
+          {/* ===== LEFT: Message Form — comes FIRST on mobile ===== */}
+          <Reveal className="order-first lg:order-none">
             <div className="lg:sticky lg:top-24">
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
                 <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Send a message</h2>
                 <p className="mt-1 text-sm text-nsBlack/60">
-                  Your filled message goes straight to our{' '}
-                  <a href={`mailto:${SITE.email}`} className="font-bold text-nsBlack underline">
-                    Gmail ({SITE.email})
-                  </a>{' '}
-                  and opens WhatsApp automatically.
+                  Your message goes straight to our Gmail and WhatsApp — we reply within a day.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -334,7 +151,7 @@ export default function Contact() {
                       rows={5}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      placeholder="Tell us what you'd like to explore…"
+                      placeholder="Tell us what you'd like to explore — workshops, STEM labs, kits, or partnerships..."
                       className={inputClass}
                     />
                   </div>
@@ -378,6 +195,42 @@ export default function Contact() {
                 </form>
               </div>
 
+              {/* Quick Contact Cards */}
+              <div className="mt-6 grid grid-cols-3 gap-3">
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-[#25D366] hover:bg-[#25D366]/5"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-white">
+                    <FaWhatsapp size={18} />
+                  </span>
+                  <span className="text-xs font-bold text-nsBlack">WhatsApp</span>
+                  <span className="text-[10px] text-nsBlack/50">Quick reply</span>
+                </a>
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
+                    <FiMail size={18} />
+                  </span>
+                  <span className="text-xs font-bold text-nsBlack">Gmail</span>
+                  <span className="text-[10px] text-nsBlack/50">Email us</span>
+                </a>
+                <a
+                  href={`tel:${SITE.phoneTel}`}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsBlack text-nsYellow">
+                    <FiPhone size={18} />
+                  </span>
+                  <span className="text-xs font-bold text-nsBlack">Call</span>
+                  <span className="text-[10px] text-nsBlack/50">{SITE.phoneDisplay}</span>
+                </a>
+              </div>
+
               {/* Location */}
               <div className="circuit-bg-light relative mt-6 overflow-hidden rounded-3xl bg-nsBlack p-8 text-nsWhite shadow-lift">
                 <CircuitBackground variant="dark" className="opacity-50" />
@@ -389,11 +242,137 @@ export default function Contact() {
                   <p className="mt-2 text-sm text-nsWhite/60">
                     Serving schools and innovators across the Chennai region — and beyond, online.
                   </p>
-                  {/* TODO: embed a Google Maps iframe here when ready */}
                 </div>
               </div>
             </div>
           </Reveal>
+
+          {/* ===== RIGHT: Founder Info Card ===== */}
+          <div className="space-y-6 order-2 lg:order-none">
+            <Reveal>
+              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:text-left">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="mx-auto shrink-0 overflow-hidden rounded-2xl border-4 border-nsYellow bg-white shadow-lift sm:mx-0"
+                  >
+                    <img
+                      src={SITE.founderPhoto}
+                      alt={SITE.founder.name}
+                      className="h-36 w-36 object-cover object-top sm:h-44 sm:w-44"
+                    />
+                  </motion.div>
+                  <div className="text-center sm:text-left">
+                    <p className="text-xs font-extrabold tracking-[0.25em] text-nsYellow">
+                      {FOUNDER.heading}
+                    </p>
+                    <h2 className="mt-1 font-heading text-3xl font-extrabold text-nsBlack">
+                      {FOUNDER.name}
+                    </h2>
+                    <p className="mt-0.5 text-sm font-bold text-nsBlack/60">{FOUNDER.role}</p>
+                    <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-nsBlack/60 sm:justify-start">
+                      <FiMapPin /> {FOUNDER.location}, India
+                    </p>
+                    <span className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-nsGray-light px-3 py-1 text-[11px] font-bold text-nsBlack/70">
+                      <FiShield className="text-nsYellow" /> MSME Registered · StartupTN Recognized
+                    </span>
+                  </div>
+                </div>
+
+                {/* Contacts */}
+                <div className="mt-6 space-y-3 border-t border-nsBlack/10 pt-5 text-sm">
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
+                      <FiMail />
+                    </span>
+                    <span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
+                        GMAIL
+                      </span>
+                      <span className="break-all font-semibold">{SITE.email}</span>
+                    </span>
+                  </a>
+                  <a
+                    href={`tel:${SITE.phoneTel}`}
+                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
+                      <FiPhone />
+                    </span>
+                    <span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
+                        CONTACT
+                      </span>
+                      <span className="font-semibold">{SITE.phoneDisplay}</span>
+                    </span>
+                  </a>
+                  <a
+                    href={WHATSAPP_LINK}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#25D366] text-white">
+                      <FaWhatsapp size={18} />
+                    </span>
+                    <span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
+                        WHATSAPP
+                      </span>
+                      <span className="font-semibold">Message us — quick reply</span>
+                    </span>
+                  </a>
+                </div>
+
+                {/* Social Links */}
+                <div className="mt-6 border-t border-nsBlack/10 pt-5">
+                  <p className="mb-3 text-xs font-bold tracking-widest text-nsBlack/50">FIND US</p>
+                  <div className="flex gap-2.5">
+                    {SITE.socials
+                      .filter((s) => SOCIAL_ICONS[s.icon])
+                      .map((social) => {
+                        const Icon = SOCIAL_ICONS[social.icon]
+                        return (
+                          <a
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            aria-label={social.label}
+                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack/70 transition-all hover:border-nsYellow hover:bg-nsYellow hover:text-nsBlack"
+                          >
+                            <Icon size={18} />
+                          </a>
+                        )
+                      })}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* What We Offer — quick summary */}
+            <Reveal delay={0.1}>
+              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
+                <h3 className="font-heading text-lg font-extrabold text-nsBlack">What we offer</h3>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {[
+                    { label: 'STEM Lab Setup', desc: 'Complete lab solutions for schools' },
+                    { label: 'Workshops', desc: 'Robotics, IoT, Arduino & more' },
+                    { label: 'STEM Kits', desc: 'Hands-on learning kits for students' },
+                    { label: 'Innovation Programs', desc: 'Hackathons, competitions & exhibitions' },
+                  ].map((item) => (
+                    <div key={item.label} className="rounded-xl bg-nsGray-light p-3">
+                      <p className="text-sm font-bold text-nsBlack">{item.label}</p>
+                      <p className="mt-0.5 text-xs text-nsBlack/55">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
