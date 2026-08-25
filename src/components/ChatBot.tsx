@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCpu, FiSend, FiX, FiRotateCcw, FiMessageSquare } from 'react-icons/fi'
 
@@ -74,6 +75,9 @@ const STEPS: Step[] = [
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
+  const [showBubble, setShowBubble] = useState(true)
+  const location = useLocation()
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 1, from: 'bot', text: 'Hi! I am the Nano Spark AI assistant. I can help you pick the right STEM kit or program — your details go straight to our team on WhatsApp (+91 8148774546).' },
   ])
@@ -117,6 +121,13 @@ export default function ChatBot() {
       ])
     }
   }, [stepIndex])
+
+  useEffect(() => {
+    if (open) return
+    setShowBubble(true)
+    const t = setTimeout(() => setShowBubble(false), 1000)
+    return () => clearTimeout(t)
+  }, [location.pathname, open])
 
   const submit = (value?: string) => {
     const v = (value ?? input).trim()
@@ -170,26 +181,28 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Mascot + Speech Bubble — below WhatsApp button */}
+      {/* Mascot button — always visible when chat is closed */}
       {!open && (
         <motion.div
           className="fixed bottom-[8.5rem] right-5 z-50 flex items-end gap-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
         >
-          {/* Speech bubble */}
-          <motion.div
-            className="relative mb-2 rounded-2xl rounded-br-sm bg-white px-4 py-2.5 shadow-lg"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.8, type: 'spring', stiffness: 300 }}
-          >
-            <p className="whitespace-nowrap text-sm font-bold text-nsBlack">
-              May I help you?
-            </p>
-            <span className="absolute -bottom-1.5 right-2 h-3 w-3 rotate-45 bg-white" />
-          </motion.div>
+          {/* Speech bubble — auto-hides after 1s, re-shows on page switch */}
+          <AnimatePresence>
+            {showBubble && (
+              <motion.div
+                className="relative mb-2 rounded-2xl rounded-br-sm bg-white px-4 py-2.5 shadow-lg"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 300, duration: 0.3 }}
+              >
+                <p className="whitespace-nowrap text-sm font-bold text-nsBlack">
+                  May I help you?
+                </p>
+                <span className="absolute -bottom-1.5 right-2 h-3 w-3 rotate-45 bg-white" />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Mascot button */}
           <motion.button

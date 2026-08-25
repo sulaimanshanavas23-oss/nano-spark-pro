@@ -281,20 +281,24 @@ function VideoHero() {
 
   const playVideo = useCallback(() => {
     const video = videoRef.current
-    if (!video || !isVisible) return
+    if (!video) return
     video.muted = false
     video.volume = 0.3
     video.play().catch(() => {
       video.muted = true
       video.play().catch(() => {})
     })
-  }, [isVisible])
+  }, [])
 
   const pauseVideo = useCallback(() => {
     videoRef.current?.pause()
   }, [])
 
-  // IntersectionObserver: play when visible, pause when off-screen
+  useEffect(() => {
+    const timer = setTimeout(() => playVideo(), 100)
+    return () => clearTimeout(timer)
+  }, [playVideo])
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -311,7 +315,6 @@ function VideoHero() {
     else pauseVideo()
   }, [isVisible, playVideo, pauseVideo])
 
-  // Handle tab visibility: resume when user returns
   useEffect(() => {
     const onVisible = () => { if (!document.hidden) playVideo() }
     document.addEventListener('visibilitychange', onVisible)
