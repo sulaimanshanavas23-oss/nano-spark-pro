@@ -110,145 +110,11 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ============ CONTACT FORM + FOUNDER INFO ============ */}
+      {/* ============ FOUNDER INFO (LEFT) + CONTACT FORM (RIGHT) ============ */}
       <section className="bg-nsGray-light py-20">
         <div className="mx-auto grid max-w-6xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-2">
-          {/* ===== LEFT: Message Form — comes FIRST on mobile ===== */}
-          <Reveal className="order-first lg:order-none">
-            <div className="lg:sticky lg:top-24">
-              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
-                <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Send a message</h2>
-                <p className="mt-1 text-sm text-nsBlack/60">
-                  Your message goes straight to our Gmail and WhatsApp — we reply within a day.
-                </p>
-
-                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                  {fields.map((field) => (
-                    <div key={field.key}>
-                      <label htmlFor={field.key} className="mb-1.5 block text-sm font-bold text-nsBlack">
-                        {field.label}
-                      </label>
-                      <input
-                        id={field.key}
-                        type={field.type}
-                        required={field.required}
-                        maxLength={field.maxLength}
-                        value={form[field.key]}
-                        onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                        placeholder={field.label}
-                        className={inputClass}
-                      />
-                    </div>
-                  ))}
-                  <div>
-                    <label htmlFor="message" className="mb-1.5 block text-sm font-bold text-nsBlack">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      required
-                      maxLength={2000}
-                      rows={5}
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      placeholder="Tell us what you'd like to explore — workshops, STEM labs, kits, or partnerships..."
-                      className={inputClass}
-                    />
-                  </div>
-
-                  {error && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      role="alert"
-                      className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm font-semibold text-red-600"
-                    >
-                      {error}
-                    </motion.p>
-                  )}
-
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="btn-yellow w-full"
-                    disabled={status === 'sending'}
-                  >
-                    {status === 'sending'
-                      ? 'Opening Gmail & WhatsApp…'
-                      : status === 'sent'
-                        ? 'Message Ready!'
-                        : 'Send Message'}
-                    {status === 'sent' ? <FiCheck /> : <FiSend />}
-                  </motion.button>
-
-                  {status === 'sent' && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="rounded-xl bg-nsYellow/15 px-4 py-3 text-center text-sm font-semibold text-nsBlack"
-                    >
-                      Your message has been opened in Gmail and WhatsApp, {form.name.split(' ')[0]}.
-                      Hit send there and we'll reply within a day!
-                    </motion.p>
-                  )}
-                </form>
-              </div>
-
-              {/* Quick Contact Cards */}
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-[#25D366] hover:bg-[#25D366]/5"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-white">
-                    <FaWhatsapp size={18} />
-                  </span>
-                  <span className="text-xs font-bold text-nsBlack">WhatsApp</span>
-                  <span className="text-[10px] text-nsBlack/50">Quick reply</span>
-                </a>
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
-                    <FiMail size={18} />
-                  </span>
-                  <span className="text-xs font-bold text-nsBlack">Gmail</span>
-                  <span className="text-[10px] text-nsBlack/50">Email us</span>
-                </a>
-                <a
-                  href={`tel:${SITE.phoneTel}`}
-                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsBlack text-nsYellow">
-                    <FiPhone size={18} />
-                  </span>
-                  <span className="text-xs font-bold text-nsBlack">Call</span>
-                  <span className="text-[10px] text-nsBlack/50">{SITE.phoneDisplay}</span>
-                </a>
-              </div>
-
-              {/* Location */}
-              <div className="circuit-bg-light relative mt-6 overflow-hidden rounded-3xl bg-nsBlack p-8 text-nsWhite shadow-lift">
-                <CircuitBackground variant="dark" className="opacity-50" />
-                <div className="relative">
-                  <h3 className="font-heading text-xl font-extrabold text-nsYellow">Location</h3>
-                  <p className="mt-2 flex items-center gap-2 text-sm text-nsWhite/80">
-                    <FiMapPin /> Chennai, Tamil Nadu, India
-                  </p>
-                  <p className="mt-2 text-sm text-nsWhite/60">
-                    Serving schools and innovators across the Chennai region — and beyond, online.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* ===== RIGHT: Founder Info Card ===== */}
-          <div className="space-y-6 order-2 lg:order-none">
+          {/* ===== LEFT: Founder Info Card ===== */}
+          <div className="space-y-6">
             <Reveal>
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:text-left">
@@ -281,47 +147,24 @@ export default function Contact() {
 
                 {/* Contacts */}
                 <div className="mt-6 space-y-3 border-t border-nsBlack/10 pt-5 text-sm">
-                  <a
-                    href={`mailto:${SITE.email}`}
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
-                      <FiMail />
-                    </span>
+                  <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack"><FiMail /></span>
                     <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        GMAIL
-                      </span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">GMAIL</span>
                       <span className="break-all font-semibold">{SITE.email}</span>
                     </span>
                   </a>
-                  <a
-                    href={`tel:${SITE.phoneTel}`}
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack">
-                      <FiPhone />
-                    </span>
+                  <a href={`tel:${SITE.phoneTel}`} className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-nsGray-light text-nsBlack"><FiPhone /></span>
                     <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        CONTACT
-                      </span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">CONTACT</span>
                       <span className="font-semibold">{SITE.phoneDisplay}</span>
                     </span>
                   </a>
-                  <a
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#25D366] text-white">
-                      <FaWhatsapp size={18} />
-                    </span>
+                  <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer noopener" className="flex items-center gap-3 text-nsBlack/75 hover:text-nsBlack">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#25D366] text-white"><FaWhatsapp size={18} /></span>
                     <span>
-                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">
-                        WHATSAPP
-                      </span>
+                      <span className="block text-[11px] font-extrabold tracking-widest text-nsBlack/45">WHATSAPP</span>
                       <span className="font-semibold">Message us — quick reply</span>
                     </span>
                   </a>
@@ -331,29 +174,21 @@ export default function Contact() {
                 <div className="mt-6 border-t border-nsBlack/10 pt-5">
                   <p className="mb-3 text-xs font-bold tracking-widest text-nsBlack/50">FIND US</p>
                   <div className="flex gap-2.5">
-                    {SITE.socials
-                      .filter((s) => SOCIAL_ICONS[s.icon])
-                      .map((social) => {
-                        const Icon = SOCIAL_ICONS[social.icon]
-                        return (
-                          <a
-                            key={social.label}
-                            href={social.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            aria-label={social.label}
-                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack/70 transition-all hover:border-nsYellow hover:bg-nsYellow hover:text-nsBlack"
-                          >
-                            <Icon size={18} />
-                          </a>
-                        )
-                      })}
+                    {SITE.socials.filter((s) => SOCIAL_ICONS[s.icon]).map((social) => {
+                      const Icon = SOCIAL_ICONS[social.icon]
+                      return (
+                        <a key={social.label} href={social.href} target="_blank" rel="noreferrer noopener" aria-label={social.label}
+                          className="flex h-10 w-10 items-center justify-center rounded-xl border border-nsBlack/15 text-nsBlack/70 transition-all hover:border-nsYellow hover:bg-nsYellow hover:text-nsBlack">
+                          <Icon size={18} />
+                        </a>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
             </Reveal>
 
-            {/* What We Offer — quick summary */}
+            {/* What We Offer */}
             <Reveal delay={0.1}>
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
                 <h3 className="font-heading text-lg font-extrabold text-nsBlack">What we offer</h3>
@@ -373,6 +208,86 @@ export default function Contact() {
               </div>
             </Reveal>
           </div>
+
+          {/* ===== RIGHT: Message Form ===== */}
+          <Reveal delay={0.1}>
+            <div className="lg:sticky lg:top-24">
+              <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
+                <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Send a message</h2>
+                <p className="mt-1 text-sm text-nsBlack/60">
+                  Your message goes straight to our Gmail and WhatsApp — we reply within a day.
+                </p>
+
+                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                  {fields.map((field) => (
+                    <div key={field.key}>
+                      <label htmlFor={field.key} className="mb-1.5 block text-sm font-bold text-nsBlack">{field.label}</label>
+                      <input id={field.key} type={field.type} required={field.required} maxLength={field.maxLength}
+                        value={form[field.key]} onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                        placeholder={field.label} className={inputClass} />
+                    </div>
+                  ))}
+                  <div>
+                    <label htmlFor="message" className="mb-1.5 block text-sm font-bold text-nsBlack">Message</label>
+                    <textarea id="message" required maxLength={2000} rows={5} value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      placeholder="Tell us what you'd like to explore — workshops, STEM labs, kits, or partnerships..."
+                      className={inputClass} />
+                  </div>
+
+                  {error && (
+                    <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} role="alert"
+                      className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm font-semibold text-red-600">{error}</motion.p>
+                  )}
+
+                  <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                    className="btn-yellow w-full" disabled={status === 'sending'}>
+                    {status === 'sending' ? 'Opening Gmail & WhatsApp…' : status === 'sent' ? 'Message Ready!' : 'Send Message'}
+                    {status === 'sent' ? <FiCheck /> : <FiSend />}
+                  </motion.button>
+
+                  {status === 'sent' && (
+                    <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                      className="rounded-xl bg-nsYellow/15 px-4 py-3 text-center text-sm font-semibold text-nsBlack">
+                      Your message has been opened in Gmail and WhatsApp, {form.name.split(' ')[0]}. Hit send there and we'll reply within a day!
+                    </motion.p>
+                  )}
+                </form>
+              </div>
+
+              {/* Quick Contact Cards */}
+              <div className="mt-6 grid grid-cols-3 gap-3">
+                <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer noopener"
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-[#25D366] hover:bg-[#25D366]/5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-white"><FaWhatsapp size={18} /></span>
+                  <span className="text-xs font-bold text-nsBlack">WhatsApp</span>
+                  <span className="text-[10px] text-nsBlack/50">Quick reply</span>
+                </a>
+                <a href={`mailto:${SITE.email}`}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsYellow text-nsBlack"><FiMail size={18} /></span>
+                  <span className="text-xs font-bold text-nsBlack">Gmail</span>
+                  <span className="text-[10px] text-nsBlack/50">Email us</span>
+                </a>
+                <a href={`tel:${SITE.phoneTel}`}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-nsBlack/10 bg-nsWhite p-4 text-center shadow-soft transition-all hover:border-nsYellow hover:bg-nsYellow/5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-nsBlack text-nsYellow"><FiPhone size={18} /></span>
+                  <span className="text-xs font-bold text-nsBlack">Call</span>
+                  <span className="text-[10px] text-nsBlack/50">{SITE.phoneDisplay}</span>
+                </a>
+              </div>
+
+              {/* Location */}
+              <div className="circuit-bg-light relative mt-6 overflow-hidden rounded-3xl bg-nsBlack p-8 text-nsWhite shadow-lift">
+                <CircuitBackground variant="dark" className="opacity-50" />
+                <div className="relative">
+                  <h3 className="font-heading text-xl font-extrabold text-nsYellow">Location</h3>
+                  <p className="mt-2 flex items-center gap-2 text-sm text-nsWhite/80"><FiMapPin /> Chennai, Tamil Nadu, India</p>
+                  <p className="mt-2 text-sm text-nsWhite/60">Serving schools and innovators across the Chennai region — and beyond, online.</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

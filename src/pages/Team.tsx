@@ -171,10 +171,62 @@ function TeamCarousel() {
                   <p className="mt-1 text-base font-semibold text-nsYellow">{member.role}</p>
                 </div>
               </div>
+
+              {/* ===== MOBILE ONLY: Arrows + Focus + Social below image ===== */}
+              <div className="lg:hidden space-y-5 p-6">
+                {/* Left/Right arrows */}
+                <div className="flex items-center justify-center gap-4">
+                  <button type="button" onClick={prev} aria-label="Previous profile"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-soft active:scale-95 transition-transform">
+                    <FiArrowLeft size={20} />
+                  </button>
+                  <span className="text-xs font-bold text-nsBlack/40">{index + 1} / {TEAM.length}</span>
+                  <button type="button" onClick={next} aria-label="Next profile"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-soft active:scale-95 transition-transform">
+                    <FiArrowRight size={20} />
+                  </button>
+                </div>
+
+                {/* Focus Areas */}
+                <div>
+                  <h4 className="flex items-center gap-2 font-heading text-sm font-extrabold text-nsBlack">
+                    <FiTarget size={14} className="text-nsYellow" /> Focus Areas
+                  </h4>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {member.focus.map((f, fi) => (
+                      <motion.span
+                        key={f}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4 + fi * 0.06, type: 'spring', stiffness: 200 }}
+                        className="rounded-full border border-nsBlack/10 bg-nsGray-light px-3 py-1 text-xs font-bold text-nsBlack"
+                      >
+                        {f}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* LinkedIn & Gmail tabs */}
+                <div className="flex gap-3">
+                  <a href={member.linkedin} target="_blank" rel="noreferrer noopener"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-[#0A66C2] bg-[#0A66C2] px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#004182]">
+                    <FiLinkedin size={16} /> LinkedIn
+                  </a>
+                  <a href={`mailto:${member.email}`}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-nsBlack bg-white px-4 py-2.5 text-sm font-bold text-nsBlack transition-all hover:bg-nsBlack hover:text-nsYellow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Gmail
+                  </a>
+                </div>
+
+                {/* Summary */}
+                <p className="text-sm leading-relaxed text-nsBlack/70">{member.summary}</p>
+              </div>
             </div>
 
-            {/* Details */}
-            <div className="flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
+            {/* Details — desktop only */}
+            <div className="hidden lg:flex flex-1 flex-col p-6 sm:p-7 lg:p-10">
               <motion.p
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -235,22 +287,22 @@ function TeamCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Left arrow */}
+        {/* Left arrow — desktop only */}
         <button
           type="button"
           onClick={prev}
           aria-label="Previous profile"
-          className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
+          className="hidden lg:flex absolute left-3 top-1/2 z-10 h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
         >
           <FiArrowLeft size={20} />
         </button>
 
-        {/* Right arrow */}
+        {/* Right arrow — desktop only */}
         <button
           type="button"
           onClick={next}
           aria-label="Next profile"
-          className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
+          className="hidden lg:flex absolute right-3 top-1/2 z-10 h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-nsBlack/70 text-nsWhite backdrop-blur transition-all hover:bg-nsYellow hover:text-nsBlack"
         >
           <FiArrowRight size={20} />
         </button>

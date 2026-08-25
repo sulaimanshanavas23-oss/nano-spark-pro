@@ -275,126 +275,45 @@ function CodingSimulationTools() {
 }
 
 function VideoHero() {
-  // Keep inline video for desktop as fallback/placeholder
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
+
+  const playVideo = useCallback(() => {
+    const video = videoRef.current
+    if (!video || !isVisible) return
+    video.play().catch(() => {})
+  }, [isVisible])
 
   const pauseVideo = useCallback(() => {
     videoRef.current?.pause()
   }, [])
 
-  const playVideo = useCallback((forceUnmuted = false) => {
-    const video = videoRef.current
-    if (!video || !isVisible) return
-
-    if (hasInteracted || forceUnmuted) {
-      video.muted = false
-      video.volume = 0.3
-      video.play().catch(() => {
-        video.muted = true
-        video.play().catch(() => {})
-      })
-    } else {
-      video.muted = true
-      video.play().catch(() => {})
-    }
-  }, [isVisible, hasInteracted])
-
+  // IntersectionObserver: play when visible, pause when off-screen
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const visible = entry.isIntersecting
-        setIsVisible(visible)
-        if (videoRef.current) {
-          if (visible) {
-            playVideo(true)
-          } else {
-            pauseVideo()
-          }
-        }
+        setIsVisible(entry.isIntersecting)
       },
-      { threshold: 0.1, rootMargin: '0px' }
+      { threshold: 0.1 }
     )
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current)
-    }
+    if (containerRef.current) observer.observe(containerRef.current)
     return () => observer.disconnect()
-  }, [playVideo, pauseVideo])
+  }, [])
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      const nowVisible = !document.hidden
-      if (nowVisible && isVisible) {
-        playVideo(true)
-      } else if (!nowVisible) {
-        pauseVideo()
-      }
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+    if (isVisible) playVideo()
+    else pauseVideo()
   }, [isVisible, playVideo, pauseVideo])
 
+  // Unmute on first user interaction (click/touch)
   useEffect(() => {
-    const video = videoRef.current
-    if (video && isVisible) {
-      video.muted = true
-      video.play().catch(() => {})
-    }
-  }, [isVisible])
-
-  useEffect(() => {
+    if (hasInteracted) return
     const enableAudio = () => {
-      if (!hasInteracted && videoRef.current && isVisible) {
-        setHasInteracted(true)
-        videoRef.current!.muted = false
-        videoRef.current!.volume = 0.3
-        videoRef.current!.play().catch(() => {
-          videoRef.current!.muted = true
-          videoRef.current!.play().catch(() => {})
-        })
-      }
-    }
-
-    document.addEventListener('click', enableAudio, { passive: true })
-    document.addEventListener('touchstart', enableAudio, { passive: true })
-    document.addEventListener('keydown', enableAudio)
-
-    return () => {
-      document.removeEventListener('click', enableAudio)
-      document.removeEventListener('touchstart', enableAudio)
-      document.removeEventListener('keydown', enableAudio)
-    }
-  }, [hasInteracted, isVisible])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!videoRef.current) return
-      const currentScrollY = window.scrollY || window.pageYOffset
-      const isScrollingUp = currentScrollY < lastScrollY
-
-      if (isVisible) {
-        if (isScrollingUp) {
-          playVideo(true)
-        } else {
-          pauseVideo()
-        }
-      }
-      setLastScrollY(currentScrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [isVisible, hasInteracted, lastScrollY, pauseVideo, playVideo])
-
-  // Auto-play with sound on initial load for mobile
-  useEffect(() => {
-    const video = videoRef.current
-    if (video && isVisible) {
+      const video = videoRef.current
+      if (!video || hasInteracted) return
+      setHasInteracted(true)
       video.muted = false
       video.volume = 0.3
       video.play().catch(() => {
@@ -402,9 +321,22 @@ function VideoHero() {
         video.play().catch(() => {})
       })
     }
-  }, [isVisible])
+    document.addEventListener('click', enableAudio, { once: true, passive: true })
+    document.addEventListener('touchstart', enableAudio, { once: true, passive: true })
+    return () => {
+      document.removeEventListener('click', enableAudio)
+      document.removeEventListener('touchstart', enableAudio)
+    }
+  }, [hasInteracted])
 
-return (
+  // Handle tab visibility: resume when user returns
+  useEffect(() => {
+    const onVisible = () => { if (!document.hidden) playVideo() }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
+  }, [playVideo])
+
+  return (
     <div
       ref={containerRef}
       className="relative w-full rounded-2xl overflow-hidden border border-nsYellow/20 shadow-[0_0_100px_rgba(255,193,7,0.3)] lg:shadow-[0_0_150px_rgba(255,193,7,0.35)] lg:aspect-[16/9] xl:aspect-[21/9] 2xl:aspect-[2/1] lg:min-h-[450px] xl:min-h-[500px] 2xl:min-h-[550px]"
@@ -415,6 +347,7 @@ return (
         loop
         playsInline
         muted
+        preload="auto"
         className="w-full h-auto object-contain"
       >
         <source src="/hero-video.mp4" type="video/mp4" />
