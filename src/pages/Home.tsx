@@ -188,7 +188,7 @@ function CoreTechnologies() {
           subtitle="Seventeen core technologies woven through the Nano Spark STEM ecosystem — each introduced at the right stage of the journey."
         />
         <div className="mt-12 flex flex-wrap justify-center gap-2.5">
-          {CORE_TECHNOLOGIES.map((tech, i) => (
+          {CORE_TECHNOLOGIES.map((tech) => (
             <span key={tech} className="inline-flex items-center gap-2 rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-2 text-sm font-bold text-nsBlack shadow-soft">
               <FiZap size={13} className="text-nsYellow" />
               {tech}
@@ -529,15 +529,6 @@ export default function Home() {
         </div>
       </section>
 
-  {/* ============ TECHNOLOGY JOURNEY ============ */}
-  <TechStackJourney />
-
-  {/* ============ CORE TECHNOLOGIES ============ */}
-  <CoreTechnologies />
-
-  {/* ============ CODING & SIMULATION TOOLS ============ */}
-  <CodingSimulationTools />
-
 {/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
       <section className="bg-nsBlack py-2">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 text-center sm:flex-row sm:gap-6 sm:px-8">
@@ -577,6 +568,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============ TECHNOLOGY JOURNEY ============ */}
+      <TechStackJourney />
+
+      {/* ============ CORE TECHNOLOGIES ============ */}
+      <CoreTechnologies />
+
+      {/* ============ CODING & SIMULATION TOOLS ============ */}
+      <CodingSimulationTools />
 
       {/* ============ WHO WE ARE ============ */}
       <section className="relative bg-nsGray-light py-20">
