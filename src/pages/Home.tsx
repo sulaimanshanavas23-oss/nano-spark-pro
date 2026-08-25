@@ -179,7 +179,7 @@ function TechStackJourney() {
 
 function CoreTechnologies() {
   return (
-    <section className="bg-nsWhite py-20">
+    <section className="bg-nsWhite py-20 overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
         <SectionHeading
           eyebrow="Core Technologies"
@@ -187,12 +187,44 @@ function CoreTechnologies() {
           highlight="every program"
           subtitle="Seventeen core technologies woven through the Nano Spark STEM ecosystem — each introduced at the right stage of the journey."
         />
-        <div className="mt-12 flex flex-wrap justify-center gap-2.5">
-          {CORE_TECHNOLOGIES.map((tech) => (
-            <span key={tech} className="inline-flex items-center gap-2 rounded-full border border-nsBlack/10 bg-nsGray-light px-4 py-2 text-sm font-bold text-nsBlack shadow-soft">
-              <FiZap size={13} className="text-nsYellow" />
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
+          {CORE_TECHNOLOGIES.map((tech, i) => (
+            <motion.span
+              key={tech}
+              initial={{ opacity: 0, scale: 0.3, rotate: -10 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.4,
+                delay: i * 0.06,
+                type: 'spring',
+                stiffness: 200,
+                damping: 15,
+              }}
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -3, 3, -2, 2, 0],
+                transition: { rotate: { duration: 0.5 } },
+              }}
+              animate={{
+                y: [0, -3, 0],
+                transition: {
+                  duration: 2 + (i % 3) * 0.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: i * 0.15,
+                },
+              }}
+              className="inline-flex cursor-default items-center gap-2 rounded-full border-2 border-nsBlack bg-nsYellow px-4 py-2 text-sm font-extrabold text-nsBlack shadow-[2px_2px_0px_#111] transition-shadow hover:shadow-[4px_4px_0px_#111]"
+            >
+              <motion.span
+                animate={{ rotate: [0, 15, -15, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+              >
+                <FiZap size={13} className="text-nsBlack" />
+              </motion.span>
               {tech}
-            </span>
+            </motion.span>
           ))}
         </div>
       </div>
