@@ -97,7 +97,12 @@ export default function ChatBot() {
   }, [messages, busy])
 
   useEffect(() => {
-    if (!open || done || busy) return
+    if (!open || done || busy || stepIndex !== 0) return
+    setBusy(true)
+  }, [open, done, busy, stepIndex])
+
+  useEffect(() => {
+    if (!open || done || busy || stepIndex === 0) return
     const t = setTimeout(() => {
       setMessages((m) => [...m, { id: idRef.current++, from: 'bot', text: step.question }])
       setBusy(true)
@@ -125,7 +130,7 @@ export default function ChatBot() {
   useEffect(() => {
     if (open) return
     setShowBubble(true)
-    const t = setTimeout(() => setShowBubble(false), 1000)
+    const t = setTimeout(() => setShowBubble(false), 4000)
     return () => clearTimeout(t)
   }, [location.pathname, open])
 
