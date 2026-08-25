@@ -12,7 +12,6 @@ import {
 } from 'react-icons/fi'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
-import SectionHeading from '../components/SectionHeading'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
 
@@ -262,7 +261,6 @@ function ProfileCard({ member, index }: { member: TeamMember; index: number }) {
           </div>
         </div>
       </motion.div>
-    </Reveal>
   )
 }
 

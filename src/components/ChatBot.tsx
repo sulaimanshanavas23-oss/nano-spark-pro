@@ -170,22 +170,78 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* FAB — sits just above the WhatsApp button */}
-      <motion.button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close AI assistant' : 'Open AI assistant'}
-        title="Nano Spark AI Assistant"
-        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.92 }}
-        transition={{ delay: 0.7 }}
-      >
-        <span className="absolute inset-0 rounded-full border-2 border-nsYellow/60" />
-        {open ? <FiX size={24} className="relative" /> : <FiCpu size={24} className="relative" />}
-      </motion.button>
+      {/* Mascot + Speech Bubble */}
+      {!open && (
+        <motion.div
+          className="fixed bottom-20 right-3 z-50 flex items-end gap-1 sm:right-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+        >
+          {/* Speech bubble */}
+          <motion.div
+            className="relative mb-2 rounded-2xl rounded-br-sm bg-white px-4 py-2.5 shadow-lg"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 1.8, type: 'spring', stiffness: 300 }}
+          >
+            <p className="whitespace-nowrap text-sm font-bold text-nsBlack">
+              May I help you? 👋
+            </p>
+            <span className="absolute -bottom-1.5 right-2 h-3 w-3 rotate-45 bg-white" />
+          </motion.div>
+
+          {/* Mascot button */}
+          <motion.button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open AI assistant"
+            title="Nano Spark AI Assistant"
+            className="relative h-20 w-20 shrink-0 cursor-pointer overflow-hidden rounded-full border-3 border-nsYellow bg-white shadow-lift"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+            transition={{ delay: 0.7, type: 'spring', stiffness: 260 }}
+          >
+            <img
+              src="/images/chat-mascot.svg"
+              alt="Nano Spark Assistant"
+              className="h-full w-full object-cover"
+              draggable={false}
+            />
+            {/* Waving hand overlay */}
+            <motion.span
+              className="absolute -right-1 -top-1 text-xl"
+              animate={{ rotate: [0, 20, -10, 20, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            >
+              👋
+            </motion.span>
+          </motion.button>
+        </motion.div>
+      )}
+
+      {/* FAB — close button when chat is open */}
+      <AnimatePresence>
+        {open && (
+          <motion.button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close AI assistant"
+            title="Close AI assistant"
+            className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-nsBlack text-nsYellow shadow-lift"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <span className="absolute inset-0 rounded-full border-2 border-nsYellow/60" />
+            <FiX size={24} className="relative" />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Chat window */}
       <AnimatePresence>

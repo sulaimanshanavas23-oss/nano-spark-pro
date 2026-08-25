@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <!-- Body / Jacket -->
+  <rect x="55" y="120" width="90" height="80" rx="16" fill="#1A1A2E"/>
+  <rect x="55" y="120" width="90" height="80" rx="16" stroke="#FFC107" stroke-width="3"/>
+  <!-- Jacket collar -->
+  <path d="M80 120 L100 140 L120 120" stroke="#FFC107" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Jacket zipper line -->
+  <line x1="100" y1="130" x2="100" y2="195" stroke="#FFC107" stroke-width="2" stroke-dasharray="4 3"/>
+  <!-- Jacket pocket left -->
+  <rect x="68" y="155" width="24" height="18" rx="4" stroke="#FFC107" stroke-width="1.5" fill="none"/>
+  <!-- Jacket pocket right -->
+  <rect x="108" y="155" width="24" height="18" rx="4" stroke="#FFC107" stroke-width="1.5" fill="none"/>
+
+  <!-- Left arm (down) -->
+  <path d="M55 130 Q30 155 40 180" stroke="#1A1A2E" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M55 130 Q30 155 40 180" stroke="#FFC107" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Left hand -->
+  <circle cx="40" cy="180" r="10" fill="#FFD4A0"/>
+
+  <!-- Right arm (waving!) -->
+  <path d="M145 130 Q170 100 165 70" stroke="#1A1A2E" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M145 130 Q170 100 165 70" stroke="#FFC107" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Right hand (waving) -->
+  <circle cx="165" cy="68" r="11" fill="#FFD4A0"/>
+  <!-- Fingers spread for wave -->
+  <line x1="160" y1="60" x2="155" y2="50" stroke="#FFD4A0" stroke-width="4" stroke-linecap="round"/>
+  <line x1="165" y1="58" x2="163" y2="47" stroke="#FFD4A0" stroke-width="4" stroke-linecap="round"/>
+  <line x1="170" y1="60" x2="173" y2="50" stroke="#FFD4A0" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Head -->
+  <circle cx="100" cy="80" r="45" fill="#FFD4A0"/>
+  <!-- Hair -->
+  <ellipse cx="100" cy="52" rx="48" ry="28" fill="#2D1B0E"/>
+  <ellipse cx="60" cy="62" rx="12" ry="18" fill="#2D1B0E"/>
+  <ellipse cx="140" cy="62" rx="12" ry="18" fill="#2D1B0E"/>
+  <!-- Hair tuft -->
+  <path d="M88 34 Q95 22 100 30 Q105 22 112 34" fill="#2D1B0E"/>
+
+  <!-- Eyes -->
+  <ellipse cx="82" cy="78" rx="7" ry="8" fill="white"/>
+  <ellipse cx="118" cy="78" rx="7" ry="8" fill="white"/>
+  <circle cx="84" cy="78" r="4.5" fill="#1A1A2E"/>
+  <circle cx="120" cy="78" r="4.5" fill="#1A1A2E"/>
+  <circle cx="86" cy="76" r="1.8" fill="white"/>
+  <circle cx="122" cy="76" r="1.8" fill="white"/>
+
+  <!-- Eyebrows -->
+  <path d="M74 67 Q82 62 90 67" stroke="#2D1B0E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M110 67 Q118 62 126 67" stroke="#2D1B0E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Smile -->
+  <path d="M86 94 Q100 108 114 94" stroke="#C4804A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Cheeks -->
+  <ellipse cx="72" cy="90" rx="7" ry="4" fill="#FF9999" opacity="0.4"/>
+  <ellipse cx="128" cy="90" rx="7" ry="4" fill="#FF9999" opacity="0.4"/>
+
+  <!-- Legs -->
+  <rect x="72" y="195" width="22" height="30" rx="8" fill="#2D3748"/>
+  <rect x="106" y="195" width="22" height="30" rx="8" fill="#2D3748"/>
+
+  <!-- Shoes -->
+  <ellipse cx="83" cy="227" rx="16" ry="8" fill="#1A1A2E"/>
+  <ellipse cx="117" cy="227" rx="16" ry="8" fill="#1A1A2E"/>
+  <ellipse cx="83" cy="225" rx="16" ry="8" fill="#FFC107" opacity="0.3"/>
+  <ellipse cx="117" cy="225" rx="16" ry="8" fill="#FFC107" opacity="0.3"/>
+
+  <!-- Nano Spark logo on jacket -->
+  <circle cx="100" cy="145" r="8" fill="#FFC107" opacity="0.9"/>
+  <text x="100" y="149" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="10" font-weight="900" fill="#1A1A2E">NS</text>
+</svg>
