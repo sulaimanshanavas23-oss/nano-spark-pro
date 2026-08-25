@@ -343,7 +343,7 @@ export default function Contact() {
                   initiative) — part of Tamil Nadu's thriving innovation ecosystem for education
                   technology and STEM solutions.
                 </p>
-                <p className="text-sm font-bold text-nsBlack/60">{SITE.msme.startupTnNumber}</p>
+                <p className="text-sm font-bold text-nsBlack/60">StartupTN Registration — ({SITE.msme.startupTnNumber})</p>
                 {/* TODO: drop StartupTN recognition letter/image as public/images/startup-tn.jpg */}
                 <SmartImage
                   src="/images/startup-tn.jpg"
