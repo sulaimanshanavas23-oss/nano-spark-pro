@@ -15,7 +15,7 @@ import {
   FiCode,
   FiLayers,
 } from 'react-icons/fi'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
@@ -277,11 +277,12 @@ function CodingSimulationTools() {
 function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const isPlayingRef = useRef(false)
 
   const playVideo = useCallback(() => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || isPlayingRef.current) return
+    isPlayingRef.current = true
     video.muted = false
     video.volume = 0.3
     video.play().catch(() => {
@@ -291,35 +292,35 @@ function VideoHero() {
   }, [])
 
   const pauseVideo = useCallback(() => {
-    videoRef.current?.pause()
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    isPlayingRef.current = false
   }, [])
-
-  useEffect(() => {
-    const timer = setTimeout(() => playVideo(), 100)
-    return () => clearTimeout(timer)
-  }, [playVideo])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting)
+        if (entry.isIntersecting) {
+          playVideo()
+        } else {
+          pauseVideo()
+        }
       },
-      { threshold: 0.1 }
+      { threshold: 0.5 }
     )
     if (containerRef.current) observer.observe(containerRef.current)
     return () => observer.disconnect()
-  }, [])
+  }, [playVideo, pauseVideo])
 
   useEffect(() => {
-    if (isVisible) playVideo()
-    else pauseVideo()
-  }, [isVisible, playVideo, pauseVideo])
-
-  useEffect(() => {
-    const onVisible = () => { if (!document.hidden) playVideo() }
+    const onVisible = () => {
+      if (!document.hidden) playVideo()
+      else pauseVideo()
+    }
     document.addEventListener('visibilitychange', onVisible)
     return () => document.removeEventListener('visibilitychange', onVisible)
-  }, [playVideo])
+  }, [playVideo, pauseVideo])
 
   return (
     <div
@@ -328,7 +329,6 @@ function VideoHero() {
     >
       <video
         ref={videoRef}
-        autoPlay
         loop
         playsInline
         muted={false}

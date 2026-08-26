@@ -114,7 +114,7 @@ export default function Contact() {
       <section className="bg-nsGray-light py-20">
         <div className="mx-auto grid max-w-6xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-2">
           {/* ===== LEFT: Founder Info Card ===== */}
-          <div className="space-y-6">
+          <div className="order-2 space-y-6 lg:order-1">
             <Reveal>
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:text-left">
@@ -210,7 +210,7 @@ export default function Contact() {
           </div>
 
           {/* ===== RIGHT: Message Form ===== */}
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="order-1 lg:order-2">
             <div className="lg:sticky lg:top-24">
               <div className="rounded-3xl border border-nsBlack/10 bg-nsWhite p-8 shadow-soft">
                 <h2 className="font-heading text-2xl font-extrabold text-nsBlack">Send a message</h2>

@@ -160,7 +160,7 @@ export default function Careers() {
           </div>
           <Reveal delay={0.2}>
             <div className="mt-10 text-center">
-              <Link to="/ambassador" className="btn-yellow">
+              <Link to="/ambassador/apply" className="btn-yellow">
                 Apply as an Ambassador <FiArrowRight />
               </Link>
             </div>
