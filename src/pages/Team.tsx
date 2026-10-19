@@ -100,6 +100,29 @@ const TEAM: TeamMember[] = [
     education: 'Electronics & Communication Engineering',
     skills: ['Technology Strategy', 'Product Development', 'IoT & Embedded Systems', 'Python Programming', 'AI & Computer Vision', 'Curriculum Design'],
   },
+  {
+    name: 'Vishal S.',
+    role: 'Chief Technology Officer (CTO)',
+    roleShort: 'CTO',
+    headline: 'Technology Strategy · Software Development · System Architecture · Product Engineering · Technical Leadership',
+    photo: '/images/VISHAL%20S%20CTO.png',
+    linkedin: 'https://www.linkedin.com/in/vishal-saravanan-98ab28372',
+    email: 'vishal.st2772@gmail.com',
+    phone: 'tel:+919876543210',
+    phoneDisplay: '+91 98765 43210',
+    summary:
+      'Leading Nano Spark\'s technology vision, software architecture and product engineering. Vishal drives the technical strategy, oversees platform development, and ensures scalable, secure systems that power the company\'s STEM education ecosystem.',
+    focus: ['Technology Strategy', 'Software Development', 'System Architecture', 'Product Engineering', 'Technical Leadership'],
+    responsibilities: [
+      'Defining and executing technology strategy aligned with business goals',
+      'Architecting scalable software systems and platform infrastructure',
+      'Leading product engineering for STEM learning platforms and tools',
+      'Building and mentoring high-performing engineering teams',
+      'Ensuring security, performance and reliability across all technical systems',
+    ],
+    education: 'Computer Science Engineering',
+    skills: ['Technology Strategy', 'Software Development', 'System Architecture', 'Product Engineering', 'Technical Leadership', 'Cloud Computing', 'DevOps', 'Team Building'],
+  },
 ]
 
 const CARD_INTERVAL = 4000
