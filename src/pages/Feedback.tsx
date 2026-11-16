@@ -197,7 +197,7 @@ export default function Feedback() {
           </div>
           <Reveal delay={0.15}>
             <p className="mt-8 text-center font-heading text-2xl font-extrabold text-nsBlack">
-              {SITE.studentsTrained}+ <span className="text-nsYellow">students trained</span> and counting!
+              {SITE.studentsTrained.toLocaleString('en-US')}+ <span className="text-nsYellow">students trained</span> and counting!
             </p>
           </Reveal>
         </div>

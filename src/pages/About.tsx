@@ -249,7 +249,7 @@ export default function About() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl bg-nsYellow p-6 shadow-soft">
                   <p className="font-heading text-4xl font-extrabold text-nsBlack">
-                    {SITE.studentsTrained}+
+                    {SITE.studentsTrained.toLocaleString('en-US')}+
                   </p>
                   <p className="mt-1 text-sm font-semibold text-nsBlack/70">students trained</p>
                 </div>

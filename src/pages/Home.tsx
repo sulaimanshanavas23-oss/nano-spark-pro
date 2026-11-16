@@ -26,6 +26,9 @@ import ClientMarquee from '../components/ClientMarquee'
 import { Reveal } from '../components/Reveal'
 import { ConnectedSteps } from '../components/ConnectedSteps'
 import { LetterReveal } from '../components/LetterReveal'
+import CountUp from '../components/CountUp'
+import ToolsPlatformsSection from '../components/ToolsPlatformsSection'
+import ToolboxSection from '../components/ToolboxSection'
 import { FOUNDER, SITE } from '../lib/site'
 
 const JOURNEY = ['LEARN', 'SIMULATE', 'BUILD', 'DEBUG', 'INNOVATE']
@@ -141,7 +144,10 @@ function TechStackJourney() {
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
           {LEVELS.map((level, _i) => (
-            <div className="flex h-full flex-col rounded-2xl border border-nsWhite/10 bg-nsWhite/5 p-6">
+            <div
+              key={level.name}
+              className="flex h-full flex-col rounded-2xl border border-nsWhite/10 bg-nsWhite/5 p-6"
+            >
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-nsYellow px-3 py-1 text-[10px] font-extrabold tracking-[0.18em] text-nsBlack">
                   {level.classes}
@@ -493,11 +499,11 @@ export default function Home() {
         </div>
       </section>
 
-{/* ============ 550+ STUDENTS TRAINED STRIP ============ */}
+{/* ============ 2,000+ STUDENTS TRAINED STRIP ============ */}
       <section className="bg-nsBlack py-2">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 text-center sm:flex-row sm:gap-6 sm:px-8">
           <p className="font-heading text-3xl font-extrabold text-nsYellow sm:text-4xl">
-            {SITE.studentsTrained}+
+            <CountUp to={SITE.studentsTrained} suffix="+" />
           </p>
           <p className="font-heading text-lg font-bold text-white">
             Students trained through Nano Spark workshops & programs
@@ -555,6 +561,12 @@ export default function Home() {
 
       {/* ============ CODING & SIMULATION TOOLS ============ */}
       <CodingSimulationTools />
+
+      {/* ============ TOOLS & PLATFORMS (3D SHOWROOM) ============ */}
+      <ToolsPlatformsSection />
+
+      {/* ============ THE TOOLBOX STUDENTS LEARN WITH ============ */}
+      <ToolboxSection />
 
       {/* ============ WHO WE ARE ============ */}
       <section className="relative bg-nsGray-light py-20">

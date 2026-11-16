@@ -11,9 +11,9 @@ import { LetterReveal } from '../components/LetterReveal'
 import { SITE } from '../lib/site'
 
 // TODO: Fill remaining stats with REAL, verified numbers once confirmed.
-// Only "Students Trained" (550) is verified so far.
+// "Students Trained" has been updated to 2,000+.
 const STATS: { label: string; value: number | null; suffix: string }[] = [
-  { label: 'Students Trained', value: 550, suffix: '+' },
+  { label: 'Students Trained', value: 2000, suffix: '+' },
   { label: 'Workshops Conducted', value: 10, suffix: '+' },
   { label: 'School Partnerships', value: 5, suffix: '+' },
   { label: 'Projects Built', value: 100, suffix: '+' },
@@ -23,7 +23,7 @@ const MILESTONES: { year: string; title: string; note: string }[] = [
   { year: 'FOUNDED', title: 'Nano Spark is born', note: 'Founded by S. Shanavas in Chennai with a vision for hands-on STEM education.' },
   { year: 'MILESTONE 01', title: 'First workshops', note: 'Early workshops that validated our learn-by-building approach. (Details to be added)' },
   { year: 'MILESTONE 02', title: 'Recognition', note: 'MSME registration and StartupTN recognition. (Certificates to be added)' },
-  { year: 'TODAY', title: 'Growing everyday', note: `${SITE.studentsTrained}+ students trained and a growing community of young innovators.` },
+  { year: 'TODAY', title: 'Growing everyday', note: `${SITE.studentsTrained.toLocaleString('en-US')}+ students trained and a growing community of young innovators.` },
 ]
 
 function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: number }) {
@@ -50,7 +50,7 @@ function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: numbe
         className="min-w-0 rounded-2xl bg-nsWhite p-4 text-center shadow-soft sm:p-6"
       >
         <p className="whitespace-nowrap font-heading text-3xl font-extrabold text-nsBlack min-[420px]:text-4xl sm:text-5xl">
-          {stat.value != null ? display + stat.suffix : '—'}
+          {stat.value != null ? display.toLocaleString('en-US') + stat.suffix : '—'}
         </p>
         <p className="mt-2 text-xs font-bold leading-snug text-nsBlack/60 sm:text-sm">{stat.label}</p>
       </motion.div>

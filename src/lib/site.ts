@@ -30,7 +30,7 @@ export const SITE = {
     tagline: 'Founder & CEO — Nano Spark | Pre-Final Year ECE Student | SIH Finalist 2025 (Software Edition)',
     location: 'Chennai, Tamil Nadu',
   },
-  studentsTrained: 550,
+  studentsTrained: 2000,
   msme: {
     registered: true,
     startupTn: true,

@@ -64,9 +64,9 @@ const FORMATS = [
 ]
 
 // TODO: Fill the rest with REAL, verified numbers from Nano Spark before launch.
-// Do not publish unverified stats. "Students Trained" (550) has been confirmed.
+// Do not publish unverified stats. "Students Trained" has been updated to 2,000+.
 const STATS: { label: string; value: number | null; suffix: string }[] = [
-  { label: 'Students Trained', value: 550, suffix: '+' },
+  { label: 'Students Trained', value: 2000, suffix: '+' },
   { label: 'Workshops Conducted', value: null, suffix: '+' },
   { label: 'School Partnerships', value: null, suffix: '+' },
   { label: 'Projects Built', value: null, suffix: '+' },
@@ -179,7 +179,7 @@ function StatBlock({ stat, index }: { stat: (typeof STATS)[number]; index: numbe
         className="rounded-2xl bg-nsWhite p-6 text-center shadow-soft"
       >
         <p className="font-heading text-4xl font-extrabold text-nsBlack sm:text-5xl">
-          {stat.value != null ? display + stat.suffix : '—'}
+          {stat.value != null ? display.toLocaleString('en-US') + stat.suffix : '—'}
         </p>
         <p className="mt-2 text-sm font-bold text-nsBlack/60">{stat.label}</p>
       </motion.div>
@@ -491,7 +491,7 @@ export default function Workshops() {
           <SectionHeading
             dark
             eyebrow="Our Impact"
-            title="550+ students"
+            title="2,000+ students"
             highlight="and counting"
             subtitle="We only publish real, verified impact data. Counters for the remaining numbers will start ticking as soon as they are confirmed."
           />

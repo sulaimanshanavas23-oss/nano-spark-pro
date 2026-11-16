@@ -179,7 +179,7 @@ export default function Community() {
           className="mx-auto max-w-4xl rounded-3xl bg-nsBlack px-8 py-12 text-center text-nsWhite shadow-lift"
         >
           <h2 className="font-heading text-3xl font-extrabold sm:text-4xl">
-            Be part of <span className="text-nsYellow">{SITE.studentsTrained}+ students</span> building the future
+            Be part of <span className="text-nsYellow">{SITE.studentsTrained.toLocaleString('en-US')}+ students</span> building the future
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-nsWhite/70">
             Join the WhatsApp community, attend events, or start a student club at your school.
