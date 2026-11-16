@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import HoverLift from '../components/HoverLift'
 import {
   FiArrowRight,
   FiAward,
@@ -218,15 +219,12 @@ export default function Services() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {WORKSHOP_TOPICS.map((topic, i) => (
               <Reveal key={topic.label} delay={(i % 3) * 0.1}>
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft"
-                >
+                <HoverLift className="flex items-center gap-4 rounded-2xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack">
                     {topic.icon}
                   </span>
                   <span className="font-heading text-lg font-extrabold text-nsBlack">{topic.label}</span>
-                </motion.div>
+                </HoverLift>
               </Reveal>
             ))}
           </div>
@@ -289,10 +287,7 @@ export default function Services() {
               { src: '/images/workshop-3.jpg', label: 'Student Projects' },
             ].map((item, i) => (
               <Reveal key={item.src} delay={(i % 3) * 0.08}>
-                <motion.figure
-                  whileHover={{ y: -6 }}
-                  className="group relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
-                >
+                <HoverLift className="group relative overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft">
                   <SmartImage
                     src={item.src}
                     alt={item.label}
@@ -301,7 +296,7 @@ export default function Services() {
                   <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-nsBlack/80 to-transparent px-4 pb-3 pt-10 text-xs font-bold text-nsWhite">
                     {item.label}
                   </figcaption>
-                </motion.figure>
+                </HoverLift>
               </Reveal>
             ))}
           </div>

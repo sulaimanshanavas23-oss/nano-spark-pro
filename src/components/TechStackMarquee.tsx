@@ -12,6 +12,7 @@ import {
   FiWifi,
   FiZap,
 } from 'react-icons/fi'
+import HoverLift from './HoverLift'
 
 /**
  * Auto-floating chips of the technology stacks Nano Spark uses, in the same
@@ -41,15 +42,12 @@ export default function TechStackMarquee() {
 
       <div className="animate-marquee flex w-max items-center gap-3 py-2">
         {[...STACKS, ...STACKS].map((s, i) => (
-          <div
-            key={`${s.label}-${i}`}
-            className="flex min-w-max items-center gap-2.5 rounded-full border border-nsBlack/10 bg-nsWhite px-5 py-2.5 shadow-soft"
-          >
+          <HoverLift key={`${s.label}-${i}`} className="flex min-w-max items-center gap-2.5 rounded-full border border-nsBlack/10 bg-nsWhite px-5 py-2.5 shadow-soft">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-nsYellow text-nsBlack">
               {s.icon}
             </span>
             <span className="font-heading text-sm font-extrabold text-nsBlack">{s.label}</span>
-          </div>
+          </HoverLift>
         ))}
       </div>
     </div>
