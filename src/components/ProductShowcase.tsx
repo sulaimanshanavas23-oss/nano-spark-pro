@@ -1,25 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FiArrowRight, FiCheck } from 'react-icons/fi'
 import SectionHeading from './SectionHeading'
 import ProductImage from './ProductImage'
 import { SpecIcon } from './SpecIcon'
 import { STEM_PRODUCTS, StemProduct } from '../lib/products'
-
-function useSmallScreen() {
-  const [small, setSmall] = useState(false)
-
-  useEffect(() => {
-    const query = window.matchMedia('(max-width: 1023px)')
-    const update = () => setSmall(query.matches)
-    update()
-    query.addEventListener('change', update)
-    return () => query.removeEventListener('change', update)
-  }, [])
-
-  return small
-}
 
 function ShowcaseRow({
   product,
@@ -30,49 +15,19 @@ function ShowcaseRow({
   direction: 'left' | 'right'
   index: number
 }) {
-  const rowRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
-  const small = useSmallScreen()
-  const { scrollYProgress } = useScroll({
-    target: rowRef,
-    offset: ['start end', 'center center'],
-  })
-
-  const distance = small ? 110 : 70
-  const tilt = small ? 4 : 15
-  const fromX = direction === 'left' ? -distance : distance
-  const startX = small ? `${fromX}%` : `${fromX}vw`
-  const endX = small ? '0%' : '0vw'
-
-  const x = useTransform(scrollYProgress, [0, 1], [startX, endX])
-  const rotateY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [direction === 'left' ? tilt : -tilt, 0],
-  )
-  const rotateZ = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [direction === 'left' ? -3 : 3, 0],
-  )
-  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1])
-  const opacity = useTransform(scrollYProgress, [0, 0.18, 1], [0.35, 0.8, 1])
-
   const imageFirst = direction === 'left'
 
   return (
-    <div
-      ref={rowRef}
-      className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
-      style={{ perspective: 1400 }}
-    >
+    <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
       <motion.div
-        style={
-          reduceMotion
-            ? undefined
-            : { x, rotateY, rotateZ, scale, opacity, transformStyle: 'preserve-3d' }
-        }
-        className={`relative ${imageFirst ? 'lg:order-1' : 'lg:order-2'}`}
+        initial={reduceMotion ? false : { opacity: 0, y: 28, scale: 0.96 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+        className={`relative mx-auto w-full max-w-md lg:max-w-none ${
+          imageFirst ? 'lg:order-1' : 'lg:order-2'
+        }`}
       >
         <div className="absolute -inset-4 rounded-[2rem] bg-nsYellow/15 blur-2xl" aria-hidden="true" />
         <div className="relative rounded-[2rem] border-2 border-nsBlack/10 bg-white p-2 shadow-lift sm:p-3">
@@ -87,14 +42,14 @@ function ShowcaseRow({
         </div>
       </motion.div>
 
-      <div className={imageFirst ? 'lg:order-2' : 'lg:order-1'}>
+      <div className={`text-center lg:text-left ${imageFirst ? 'lg:order-2' : 'lg:order-1'}`}>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.6, delay: 0.05 }}
         >
-          <span className="section-heading-bullet">
+          <span className="section-heading-bullet justify-center lg:justify-start">
             <span className="text-nsYellow">&#9654;</span> Kit {String(index + 1).padStart(2, '0')}
           </span>
           <h3 className="mt-2 font-heading text-3xl font-extrabold leading-tight text-nsBlack sm:text-4xl">
@@ -103,7 +58,7 @@ function ShowcaseRow({
               STEM Project Kit
             </span>
           </h3>
-          <p className="mt-4 max-w-xl text-nsBlack/70">{product.description}</p>
+          <p className="mx-auto mt-4 max-w-xl text-nsBlack/70 lg:mx-0">{product.description}</p>
         </motion.div>
 
         <ul className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -115,7 +70,7 @@ function ShowcaseRow({
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.45, delay: i * 0.06 }}
               whileHover={{ y: -4, scale: 1.015 }}
-              className="group flex items-center gap-3 rounded-2xl border border-nsBlack/10 bg-nsGray-light px-4 py-3 shadow-soft transition-colors hover:border-nsYellow hover:bg-nsYellow/10"
+              className="group flex items-center gap-3 rounded-2xl border border-nsBlack/10 bg-nsGray-light px-4 py-3 text-left shadow-soft transition-colors hover:border-nsYellow hover:bg-nsYellow/10"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-nsYellow text-nsBlack transition-transform group-hover:scale-110">
                 <SpecIcon icon={spec.icon} size={19} />
@@ -130,7 +85,7 @@ function ShowcaseRow({
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-7 flex flex-wrap items-center gap-4"
+          className="mt-7 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
         >
           <Link to={`/products/${product.slug}`} className="btn-yellow group">
             EXPLORE THIS KIT
@@ -168,7 +123,7 @@ export default function ProductShowcase() {
           subtitle="From intelligent automation to wireless robotics, turn your ideas into real-world innovations."
         />
 
-        <div className="mt-16 space-y-24 sm:space-y-28">
+        <div className="mt-16 space-y-20 sm:space-y-28">
           {STEM_PRODUCTS.map((product, index) => (
             <ShowcaseRow
               key={product.slug}

@@ -21,6 +21,7 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import ProductShowcase from '../components/ProductShowcase'
+import ELearningSection from '../components/ELearningSection'
 
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import ClientMarquee from '../components/ClientMarquee'
@@ -626,6 +627,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============ PROGRESSIVE E-LEARNING TECHNOLOGY ============ */}
+      <ELearningSection />
 
       {/* ============ ECOSYSTEM STRIP ============ */}
       <section className="bg-nsGray-light py-20">
