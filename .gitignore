@@ -28,3 +28,4 @@ dist-ssr
 
 # Local certificate store (dev only)
 server/data/
+.env*
