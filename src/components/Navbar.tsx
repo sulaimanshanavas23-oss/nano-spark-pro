@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { FiMenu, FiShield, FiX } from 'react-icons/fi'
 import { NAV_LINKS, SITE } from '../lib/site'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
@@ -82,6 +82,15 @@ export default function Navbar() {
               ))}
             </div>
           </div>
+
+          {/* Always-visible verification CTA on desktop */}
+          <Link
+            to="/verify-certificate"
+            className="hidden shrink-0 items-center gap-2 rounded-xl bg-nsYellow px-4 py-2 font-heading text-sm font-extrabold text-nsBlack shadow-soft transition-colors hover:bg-nsBlack hover:text-nsYellow xl:inline-flex"
+          >
+            <FiShield size={16} />
+            Verify
+          </Link>
 
           {/* Mobile hamburger with toggle animation */}
           <motion.button

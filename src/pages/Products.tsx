@@ -6,6 +6,7 @@ import {
   FiCpu,
   FiExternalLink,
   FiLayers,
+  FiShield,
   FiSun,
   FiMonitor,
   FiSettings,
@@ -18,8 +19,11 @@ import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
+import ProductImage from '../components/ProductImage'
+import { SpecIcon } from '../components/SpecIcon'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
+import { STEM_PRODUCTS } from '../lib/products'
 
 /** Nano Spark e-commerce store — buy kits and components online. */
 const STORE_URL = 'https://steamkit.vercel.app?_vercel_share=7ukv0YU8P7vDTkteRArd7b5GBy0Sn411'
@@ -69,6 +73,19 @@ export default function Products() {
               Hands-on kits and technology solutions that take young innovators from their first
               component to complete working projects.
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link to="/verify-certificate" className="btn-dark">
+                <FiShield /> Verify Certificate
+              </Link>
+              <a
+                href={STORE_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="btn-outline"
+              >
+                Shop Kits Online <FiExternalLink />
+              </a>
+            </div>
           </Reveal>
 
           {/* Product image strip right at the top of the page — drop photos into
@@ -87,11 +104,11 @@ export default function Products() {
                   whileHover={{ y: -5, scale: 1.02 }}
                   className="overflow-hidden rounded-2xl border border-nsBlack/10 bg-nsWhite shadow-soft"
                 >
-                  <div className="relative aspect-square overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden bg-nsGray-light p-2">
                     <SmartImage
                       src={p.src}
                       alt={p.label}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-contain object-center"
                     />
                   </div>
                   <p className="px-3 py-2.5 text-center text-xs font-bold text-nsBlack">
@@ -101,6 +118,93 @@ export default function Products() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ============ FEATURED INNOVATION KITS ============ */}
+      <section className="bg-nsGray-light py-20">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="Innovation Kits"
+            title="Explore our"
+            highlight="STEM project kits"
+            subtitle="Complete, guided builds that turn core concepts into working technology — with every component and specification included."
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {STEM_PRODUCTS.map((product, index) => (
+              <Reveal key={product.slug} delay={index * 0.1}>
+                <motion.article
+                  whileHover={{ y: -6 }}
+                  className="flex h-full flex-col rounded-3xl border border-nsBlack/10 bg-nsWhite p-5 shadow-soft sm:p-6"
+                >
+                  <ProductImage src={product.image} alt={product.imageAlt} />
+                  <div className="mt-5 flex flex-1 flex-col">
+                    <span className="section-heading-bullet">
+                      <span className="text-nsYellow">&#9654;</span> STEM Project Kit
+                    </span>
+                    <h3 className="mt-1 font-heading text-2xl font-extrabold text-nsBlack sm:text-3xl">
+                      {product.name}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-nsBlack/65">
+                      {product.description}
+                    </p>
+                    <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                      {product.specs.map((spec) => (
+                        <li key={spec.label} className="flex items-center gap-2 rounded-xl bg-nsGray-light px-3 py-2">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-nsYellow text-nsBlack">
+                            <SpecIcon icon={spec.icon} size={14} />
+                          </span>
+                          <span className="text-xs font-bold leading-snug text-nsBlack/80">
+                            {spec.label}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto flex flex-wrap gap-3 pt-6">
+                      <Link to={`/products/${product.slug}`} className="btn-yellow group">
+                        View Details
+                        <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+                      </Link>
+                      <a
+                        href={STORE_URL}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="btn-outline"
+                      >
+                        Shop Kit <FiExternalLink />
+                      </a>
+                    </div>
+                  </div>
+                </motion.article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CERTIFICATE VERIFICATION ============ */}
+      <section className="bg-nsWhite py-16">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <Reveal>
+            <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-nsBlack px-6 py-8 text-center shadow-lift sm:px-10 lg:flex-row lg:text-left">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:text-left">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-nsYellow text-nsBlack">
+                  <FiShield size={26} />
+                </span>
+                <div>
+                  <h2 className="font-heading text-2xl font-extrabold text-nsWhite">
+                    Verify a Nano Spark certificate
+                  </h2>
+                  <p className="mt-1 max-w-xl text-sm text-nsWhite/65">
+                    Confirm a certificate ID instantly against our official issued-certificate registry.
+                  </p>
+                </div>
+              </div>
+              <Link to="/verify-certificate" className="btn-yellow shrink-0">
+                Verify Certificate <FiArrowRight />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -201,11 +305,11 @@ export default function Products() {
       <section className="bg-nsYellow/15 py-16">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2">
           <Reveal>
-            <div className="circuit-bg-light relative mx-auto max-w-md overflow-hidden rounded-3xl border-4 border-nsBlack bg-white shadow-lift">
+            <div className="circuit-bg-light relative mx-auto max-w-md overflow-hidden rounded-3xl border-4 border-nsBlack bg-white p-3 shadow-lift">
               <SmartImage
                 src="/images/stem-lab-kit.jpg"
                 alt="Nano Spark STEM Lab Kits"
-                className="aspect-[4/3] w-full object-cover"
+                className="aspect-[4/3] w-full object-contain object-center"
               />
             </div>
           </Reveal>
@@ -303,7 +407,7 @@ export default function Products() {
                   <SmartImage
                     src={item.src}
                     alt={item.label}
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="aspect-[4/3] w-full bg-nsGray-light object-contain object-center p-3 transition-transform duration-500 group-hover:scale-105"
                     fallback={
                       <div className="circuit-bg-light flex h-full aspect-[4/3] items-center justify-center rounded-2xl border-2 border-dashed border-nsYellow/60 bg-nsGray-light p-6">
                         <div className="text-center">

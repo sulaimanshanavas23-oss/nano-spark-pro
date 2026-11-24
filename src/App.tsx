@@ -13,6 +13,9 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
 import Products from './pages/Products'
+import ProductDetail from './pages/ProductDetail'
+import VerifyCertificate from './pages/VerifyCertificate'
+import AdminCertificates from './pages/AdminCertificates'
 import Services from './pages/Services'
 import Workshops from './pages/Workshops'
 import Community from './pages/Community'
@@ -34,6 +37,9 @@ function AnimatedRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/team" element={<Team />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:slug" element={<ProductDetail />} />
+        <Route path="/verify-certificate" element={<VerifyCertificate />} />
+        <Route path="/admin" element={<AdminCertificates />} />
         <Route path="/services" element={<Services />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/community" element={<Community />} />

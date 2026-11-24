@@ -20,6 +20,7 @@ import Page from '../components/Page'
 import CircuitBackground from '../components/CircuitBackground'
 import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
+import ProductShowcase from '../components/ProductShowcase'
 
 import TestimonialMarquee from '../components/TestimonialMarquee'
 import ClientMarquee from '../components/ClientMarquee'
@@ -499,7 +500,10 @@ export default function Home() {
         </div>
       </section>
 
-{/* ============ 2,000+ STUDENTS TRAINED STRIP ============ */}
+      {/* ============ NANO SPARK INNOVATION KITS ============ */}
+      <ProductShowcase />
+
+      {/* ============ 2,000+ STUDENTS TRAINED STRIP ============ */}
       <section className="bg-nsBlack py-2">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 text-center sm:flex-row sm:gap-6 sm:px-8">
           <p className="font-heading text-3xl font-extrabold text-nsYellow sm:text-4xl">

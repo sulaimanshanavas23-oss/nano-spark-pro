@@ -23,6 +23,7 @@ const PROGRAM_LINKS = [
   { label: 'About Us', to: '/about' },
   { label: 'Team', to: '/team' },
   { label: 'STEM Kits', to: '/products' },
+  { label: 'Verify Certificate', to: '/verify-certificate' },
   { label: 'School STEM Labs', to: '/services' },
   { label: 'Robotics Workshops', to: '/workshops' },
   { label: 'Book a Session', to: '/book' },
@@ -143,7 +144,15 @@ export default function Footer() {
       <div className="border-t border-nsWhite/10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-5 text-center text-xs text-nsWhite/55 sm:flex-row sm:px-8 sm:text-left">
           <p>© 2026 Nano Spark. Building the future, one innovation at a time.</p>
-          <p className="tracking-[0.2em] text-nsYellow/80 font-bold">{SITE.tagline}</p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/verify-certificate" className="font-bold text-nsYellow/90 transition-colors hover:text-nsYellow">
+              Verify Certificate
+            </Link>
+            <Link to="/admin" className="text-nsWhite/45 transition-colors hover:text-nsYellow">
+              Admin
+            </Link>
+            <p className="tracking-[0.2em] text-nsYellow/80 font-bold">{SITE.tagline}</p>
+          </div>
         </div>
       </div>
     </footer>
