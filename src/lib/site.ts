@@ -3,7 +3,6 @@ export const NAV_LINKS = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Products', to: '/products' },
-  { label: 'Verify Certificate', to: '/verify-certificate' },
   { label: 'Team', to: '/team' },
   { label: 'Workshops', to: '/workshops' },
   { label: 'Community', to: '/community' },

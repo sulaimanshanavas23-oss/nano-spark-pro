@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { FiArrowRight, FiCheck, FiShield } from 'react-icons/fi'
+import { FiArrowRight, FiCheck } from 'react-icons/fi'
 import SectionHeading from './SectionHeading'
 import ProductImage from './ProductImage'
 import { SpecIcon } from './SpecIcon'
@@ -177,25 +177,6 @@ export default function ProductShowcase() {
               index={index}
             />
           ))}
-        </div>
-
-        <div className="mt-20 flex flex-col items-center justify-between gap-5 rounded-3xl bg-nsBlack px-6 py-8 text-center shadow-lift sm:px-10 lg:flex-row lg:text-left">
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-nsYellow text-nsBlack">
-              <FiShield size={26} />
-            </span>
-            <div>
-              <p className="font-heading text-2xl font-extrabold text-nsWhite">
-                Earned a Nano Spark certificate?
-              </p>
-              <p className="mt-1 max-w-xl text-sm text-nsWhite/65">
-                Verify it instantly with the Certificate ID printed on your certificate.
-              </p>
-            </div>
-          </div>
-          <Link to="/verify-certificate" className="btn-yellow shrink-0">
-            Verify Certificate <FiArrowRight />
-          </Link>
         </div>
       </div>
     </section>

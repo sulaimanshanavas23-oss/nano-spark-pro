@@ -24,6 +24,7 @@ import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import TestimonialMarquee from '../components/TestimonialMarquee'
+import CertificateVerifyTab from '../components/CertificateVerifyTab'
 import { Reveal } from '../components/Reveal'
 import { WHATSAPP_LINK } from '../lib/site'
 
@@ -525,6 +526,8 @@ export default function Workshops() {
           </div>
         </motion.div>
       </section>
+
+      <CertificateVerifyTab />
     </Page>
   )
 }

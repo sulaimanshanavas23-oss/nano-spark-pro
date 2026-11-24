@@ -6,7 +6,6 @@ import {
   FiCpu,
   FiExternalLink,
   FiLayers,
-  FiShield,
   FiSun,
   FiMonitor,
   FiSettings,
@@ -23,6 +22,7 @@ import ProductImage from '../components/ProductImage'
 import { SpecIcon } from '../components/SpecIcon'
 import { Reveal } from '../components/Reveal'
 import { LetterReveal } from '../components/LetterReveal'
+import CertificateVerifyTab from '../components/CertificateVerifyTab'
 import { STEM_PRODUCTS } from '../lib/products'
 
 /** Nano Spark e-commerce store — buy kits and components online. */
@@ -74,9 +74,6 @@ export default function Products() {
               component to complete working projects.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link to="/verify-certificate" className="btn-dark">
-                <FiShield /> Verify Certificate
-              </Link>
               <a
                 href={STORE_URL}
                 target="_blank"
@@ -179,32 +176,6 @@ export default function Products() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ============ CERTIFICATE VERIFICATION ============ */}
-      <section className="bg-nsWhite py-16">
-        <div className="mx-auto max-w-6xl px-6 sm:px-8">
-          <Reveal>
-            <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-nsBlack px-6 py-8 text-center shadow-lift sm:px-10 lg:flex-row lg:text-left">
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:text-left">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-nsYellow text-nsBlack">
-                  <FiShield size={26} />
-                </span>
-                <div>
-                  <h2 className="font-heading text-2xl font-extrabold text-nsWhite">
-                    Verify a Nano Spark certificate
-                  </h2>
-                  <p className="mt-1 max-w-xl text-sm text-nsWhite/65">
-                    Confirm a certificate ID instantly against our official issued-certificate registry.
-                  </p>
-                </div>
-              </div>
-              <Link to="/verify-certificate" className="btn-yellow shrink-0">
-                Verify Certificate <FiArrowRight />
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -446,6 +417,8 @@ export default function Products() {
           </div>
         </div>
       </section>
+
+      <CertificateVerifyTab />
     </Page>
   )
 }

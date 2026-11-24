@@ -23,6 +23,7 @@ import SectionHeading from '../components/SectionHeading'
 import Card from '../components/Card'
 import SmartImage from '../components/SmartImage'
 import BrochureFlipbook from '../components/BrochureFlipbook'
+import CertificateVerifyTab from '../components/CertificateVerifyTab'
 import { downloadBrochurePdf } from '../lib/brochure'
 import { Reveal } from '../components/Reveal'
 import { useState } from 'react'
@@ -302,6 +303,8 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      <CertificateVerifyTab />
 
       {/* ============ JOURNEY TIMELINE ============ */}
       <section className="relative overflow-hidden bg-nsBlack py-20">
